@@ -45,14 +45,102 @@ console.log('Compilers:', {
     java: javaPath || 'NOT FOUND'
 });
 
-const executeJavaScript = async (code, testcases) => {
+const executeJavaScript = async (code, testcases, problemId) => {
     const results = [];
     for (const testcase of [...testcases.visible, ...testcases.hidden]) {
         try {
-            const funcMatch = code.match(/function\s+(\w+)/);
+            // Match function definition, but not in comments (lines starting with //)
+            const codeLines = code.split('\n').filter(line => !line.trim().startsWith('//'));
+            const codeWithoutComments = codeLines.join('\n');
+            const funcMatch = codeWithoutComments.match(/function\s+(\w+)/);
             if (!funcMatch) throw new Error('No function found');
-            const func = new Function(`${code}\nreturn ${funcMatch[1]};`)();
-            const result = func(...Object.values(testcase.input));
+
+            let fullCode = code;
+            let result;
+
+            // Add data structure definitions for specific problems
+            if (problemId === 'merge-sorted-lists' || problemId === 'reverse-linked-list' || problemId === 'remove-duplicates-sorted-list') {
+                const {
+                    list1,
+                    list2,
+                    head
+                } = testcase.input;
+                const arr1 = list1 || head || [];
+                const arr2 = list2 || [];
+
+                const helperCode = `
+class ListNode {
+    constructor(val = 0, next = null) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
+function buildList(arr) {
+    if (!arr || arr.length === 0) return null;
+    const head = new ListNode(arr[0]);
+    let current = head;
+    for (let i = 1; i < arr.length; i++) {
+        current.next = new ListNode(arr[i]);
+        current = current.next;
+    }
+    return head;
+}
+
+function listToArray(head) {
+    const result = [];
+    let current = head;
+    while (current) {
+        result.push(current.val);
+        current = current.next;
+    }
+    return result;
+}
+
+${code}
+
+const l1 = buildList(${JSON.stringify(arr1)});
+${problemId === 'merge-sorted-lists' ? `const l2 = buildList(${JSON.stringify(arr2)});` : ''}
+const resultNode = ${funcMatch[1]}(l1${problemId === 'merge-sorted-lists' ? ', l2' : ''});
+return listToArray(resultNode);
+`;
+                const func = new Function(helperCode);
+                result = func();
+            } else if (problemId === 'max-depth-binary-tree') {
+                const {
+                    root
+                } = testcase.input;
+
+                const helperCode = `
+class TreeNode {
+    constructor(val = 0, left = null, right = null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+function buildTree(arr, idx = 0) {
+    if (idx >= arr.length || arr[idx] === null) return null;
+    const node = new TreeNode(arr[idx]);
+    node.left = buildTree(arr, 2*idx+1);
+    node.right = buildTree(arr, 2*idx+2);
+    return node;
+}
+
+${code}
+
+const tree = buildTree(${JSON.stringify(root)});
+return ${funcMatch[1]}(tree);
+`;
+                const func = new Function(helperCode);
+                result = func();
+            } else {
+                // Default execution for simple problems
+                const func = new Function(`${code}\nreturn ${funcMatch[1]};`)();
+                result = func(...Object.values(testcase.input));
+            }
+
             const passed = JSON.stringify(result) === JSON.stringify(testcase.output);
             results.push({
                 passed,
@@ -73,7 +161,7 @@ const executeJavaScript = async (code, testcases) => {
     };
 };
 
-const executePython = async (code, testcases) => {
+const executePython = async (code, testcases, problemId) => {
     if (!pythonPath) return {
         error: 'Python not found',
         allPassed: false,
@@ -84,9 +172,89 @@ const executePython = async (code, testcases) => {
         const testcase = [...testcases.visible, ...testcases.hidden][i];
         const tempFile = path.join(tempDir, `py_${Date.now()}_${i}.py`);
         try {
-            const funcMatch = code.match(/def\s+(\w+)/);
+            // Match function definition, but not in comments (lines starting with #)
+            const codeLines = code.split('\n').filter(line => !line.trim().startsWith('#'));
+            const codeWithoutComments = codeLines.join('\n');
+            const funcMatch = codeWithoutComments.match(/def\s+(\w+)/);
             if (!funcMatch) throw new Error('No function found');
-            fs.writeFileSync(tempFile, `import json\n${code}\nresult = ${funcMatch[1]}(*${JSON.stringify(Object.values(testcase.input))})\nprint(json.dumps(result))`);
+
+            let wrapper = '';
+
+            // Add data structure definitions for specific problems
+            if (problemId === 'merge-sorted-lists' || problemId === 'reverse-linked-list' || problemId === 'remove-duplicates-sorted-list') {
+                const {
+                    list1,
+                    list2,
+                    head
+                } = testcase.input;
+                const arr1 = list1 || head || [];
+                const arr2 = list2 || [];
+
+                wrapper = `import json
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def build_list(arr):
+    if not arr:
+        return None
+    head = ListNode(arr[0])
+    current = head
+    for val in arr[1:]:
+        current.next = ListNode(val)
+        current = current.next
+    return head
+
+def list_to_array(head):
+    result = []
+    current = head
+    while current:
+        result.append(current.val)
+        current = current.next
+    return result
+
+${code}
+
+l1 = build_list(${JSON.stringify(arr1)})
+${problemId === 'merge-sorted-lists' ? `l2 = build_list(${JSON.stringify(arr2)})` : ''}
+result_node = ${funcMatch[1]}(l1${problemId === 'merge-sorted-lists' ? ', l2' : ''})
+result = list_to_array(result_node)
+print(json.dumps(result))`;
+            } else if (problemId === 'max-depth-binary-tree') {
+                const {
+                    root
+                } = testcase.input;
+
+                // Convert JavaScript array to Python list (null -> None)
+                const pythonArray = JSON.stringify(root).replace(/null/g, 'None');
+
+                wrapper = `import json
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def build_tree(arr, idx=0):
+    if idx >= len(arr) or arr[idx] is None:
+        return None
+    node = TreeNode(arr[idx])
+    node.left = build_tree(arr, 2*idx+1)
+    node.right = build_tree(arr, 2*idx+2)
+    return node
+
+${code}
+
+tree = build_tree(${pythonArray})
+result = ${funcMatch[1]}(tree)
+print(json.dumps(result))`;
+            } else {
+                // Default execution for simple problems
+                wrapper = `import json\n${code}\nresult = ${funcMatch[1]}(*${JSON.stringify(Object.values(testcase.input))})\nprint(json.dumps(result))`;
+            }
+
+            fs.writeFileSync(tempFile, wrapper);
             const {
                 stdout
             } = await execAsync(`"${pythonPath}" "${tempFile}"`, {
@@ -363,11 +531,13 @@ const executeCPP = async (code, testcases, problemId) => {
                 } = testcase.input;
                 const arr1 = list1 || head || [];
                 const arr2 = list2 || [];
-                const buildList = `
+                const structDef = `
 struct ListNode {
   int val;
   ListNode *next;
 };
+`;
+                const buildList = `
 ListNode* build(const std::vector<int>& arr) {
   if (arr.empty()) return nullptr;
   ListNode* head = new ListNode{arr[0], nullptr};
@@ -387,11 +557,11 @@ void printList(ListNode* head){
 void freeList(ListNode* head){ while(head){ ListNode* nxt=head->next; delete head; head=nxt; } }
 `;
                 if (problemId === 'merge-sorted-lists') {
-                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\n${buildList}\nint main(){\n  vector<int> a1 = ${formatCVectorInit(arr1)};\n  vector<int> a2 = ${formatCVectorInit(arr2)};\n  ListNode* l1 = build(a1);\n  ListNode* l2 = build(a2);\n  ListNode* res = mergeTwoLists(l1,l2);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
+                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${structDef}\n${code}\n${buildList}\nint main(){\n  vector<int> a1 = ${formatCVectorInit(arr1)};\n  vector<int> a2 = ${formatCVectorInit(arr2)};\n  ListNode* l1 = build(a1);\n  ListNode* l2 = build(a2);\n  ListNode* res = mergeTwoLists(l1,l2);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
                 } else if (problemId === 'reverse-linked-list') {
-                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\n${buildList}\nint main(){\n  vector<int> a = ${formatCVectorInit(arr1)};\n  ListNode* head = build(a);\n  ListNode* res = reverseList(head);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
+                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${structDef}\n${code}\n${buildList}\nint main(){\n  vector<int> a = ${formatCVectorInit(arr1)};\n  ListNode* head = build(a);\n  ListNode* res = reverseList(head);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
                 } else { // remove-duplicates-sorted-list
-                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\n${buildList}\nint main(){\n  vector<int> a = ${formatCVectorInit(arr1)};\n  ListNode* head = build(a);\n  ListNode* res = deleteDuplicates(head);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
+                    wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${structDef}\n${code}\n${buildList}\nint main(){\n  vector<int> a = ${formatCVectorInit(arr1)};\n  ListNode* head = build(a);\n  ListNode* res = deleteDuplicates(head);\n  printList(res);\n  freeList(res);\n  return 0;\n}`;
                 }
             } else if (problemId === 'valid-parentheses') {
                 const {
@@ -413,12 +583,14 @@ void freeList(ListNode* head){ while(head){ ListNode* nxt=head->next; delete hea
                 const {
                     root
                 } = testcase.input;
-                const buildTree = `
+                const structDef = `
 struct TreeNode {
   int val;
   TreeNode *left;
   TreeNode *right;
 };
+`;
+                const buildTree = `
 TreeNode* build(const vector<int>& arr, int idx) {
   if (idx >= arr.size() || arr[idx] == -1001) return nullptr;
   TreeNode* node = new TreeNode{arr[idx], nullptr, nullptr};
@@ -434,7 +606,7 @@ void freeTree(TreeNode* root) {
 }
 `;
                 const arrStr = root.map(v => v === null ? -1001 : v).join(',');
-                wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\n${buildTree}\nint main(){\n  vector<int> arr = {${arrStr}};\n  TreeNode* tree = build(arr, 0);\n  int res = maxDepth(tree);\n  cout << res;\n  freeTree(tree);\n  return 0;\n}`;
+                wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${structDef}\n${code}\n${buildTree}\nint main(){\n  vector<int> arr = {${arrStr}};\n  TreeNode* tree = build(arr, 0);\n  int res = maxDepth(tree);\n  cout << res;\n  freeTree(tree);\n  return 0;\n}`;
             } else if (problemId === 'majority-element') {
                 const {
                     nums
@@ -596,29 +768,38 @@ const buildJavaMain = (problemId, testcase) => {
         case 'merge-sorted-lists': {
             const list1 = formatJavaIntArray(input.list1 || []);
             const list2 = formatJavaIntArray(input.list2 || []);
-            lines.unshift(listHelpers);
+            const solutionListHelpers = '  private static Solution.ListNode build(int[] arr, Solution sol){ if(arr.length==0) return null; Solution.ListNode h=sol.new ListNode(arr[0]); Solution.ListNode c=h; for(int i=1;i<arr.length;i++){ c.next=sol.new ListNode(arr[i]); c=c.next; } return h; }\n' +
+                '  private static String listToStr(Solution.ListNode head){ StringBuilder sb=new StringBuilder(); sb.append("["); Solution.ListNode c=head; while(c!=null){ sb.append(c.val); if(c.next!=null) sb.append(","); c=c.next; } sb.append("]"); return sb.toString(); }\n';
+            lines.unshift(solutionListHelpers);
             lines.push(`    int[] a1 = ${list1};`);
             lines.push(`    int[] a2 = ${list2};`);
-            lines.push('    ListNode l1 = build(a1); ListNode l2 = build(a2);');
-            lines.push('    ListNode res = new Solution().mergeTwoLists(l1, l2);');
+            lines.push('    Solution sol = new Solution();');
+            lines.push('    Solution.ListNode l1 = build(a1, sol); Solution.ListNode l2 = build(a2, sol);');
+            lines.push('    Solution.ListNode res = sol.mergeTwoLists(l1, l2);');
             lines.push('    System.out.print(listToStr(res));');
             break;
         }
         case 'reverse-linked-list': {
             const head = formatJavaIntArray(input.head || []);
-            lines.unshift(listHelpers);
+            const solutionListHelpers = '  private static Solution.ListNode build(int[] arr, Solution sol){ if(arr.length==0) return null; Solution.ListNode h=sol.new ListNode(arr[0]); Solution.ListNode c=h; for(int i=1;i<arr.length;i++){ c.next=sol.new ListNode(arr[i]); c=c.next; } return h; }\n' +
+                '  private static String listToStr(Solution.ListNode head){ StringBuilder sb=new StringBuilder(); sb.append("["); Solution.ListNode c=head; while(c!=null){ sb.append(c.val); if(c.next!=null) sb.append(","); c=c.next; } sb.append("]"); return sb.toString(); }\n';
+            lines.unshift(solutionListHelpers);
             lines.push(`    int[] a = ${head};`);
-            lines.push('    ListNode h = build(a);');
-            lines.push('    ListNode res = new Solution().reverseList(h);');
+            lines.push('    Solution sol = new Solution();');
+            lines.push('    Solution.ListNode h = build(a, sol);');
+            lines.push('    Solution.ListNode res = sol.reverseList(h);');
             lines.push('    System.out.print(listToStr(res));');
             break;
         }
         case 'remove-duplicates-sorted-list': {
             const head = formatJavaIntArray(input.head || []);
-            lines.unshift(listHelpers);
+            const solutionListHelpers = '  private static Solution.ListNode build(int[] arr, Solution sol){ if(arr.length==0) return null; Solution.ListNode h=sol.new ListNode(arr[0]); Solution.ListNode c=h; for(int i=1;i<arr.length;i++){ c.next=sol.new ListNode(arr[i]); c=c.next; } return h; }\n' +
+                '  private static String listToStr(Solution.ListNode head){ StringBuilder sb=new StringBuilder(); sb.append("["); Solution.ListNode c=head; while(c!=null){ sb.append(c.val); if(c.next!=null) sb.append(","); c=c.next; } sb.append("]"); return sb.toString(); }\n';
+            lines.unshift(solutionListHelpers);
             lines.push(`    int[] a = ${head};`);
-            lines.push('    ListNode h = build(a);');
-            lines.push('    ListNode res = new Solution().deleteDuplicates(h);');
+            lines.push('    Solution sol = new Solution();');
+            lines.push('    Solution.ListNode h = build(a, sol);');
+            lines.push('    Solution.ListNode res = sol.deleteDuplicates(h);');
             lines.push('    System.out.print(listToStr(res));');
             break;
         }
@@ -629,13 +810,13 @@ const buildJavaMain = (problemId, testcase) => {
             break;
         }
         case 'max-depth-binary-tree': {
-            const treeHelpers = '  private static class TreeNode { int val; TreeNode left; TreeNode right; TreeNode(){} TreeNode(int v){val=v;} TreeNode(int v,TreeNode l,TreeNode r){val=v;left=l;right=r;} }\n' +
-                '  private static TreeNode buildTree(Integer[] arr, int idx){ if(idx>=arr.length||arr[idx]==null) return null; TreeNode n=new TreeNode(arr[idx]); n.left=buildTree(arr,2*idx+1); n.right=buildTree(arr,2*idx+2); return n; }\n';
-            lines.unshift(treeHelpers);
+            const solutionTreeHelpers = '  private static Solution.TreeNode buildTree(Integer[] arr, int idx, Solution sol){ if(idx>=arr.length||arr[idx]==null) return null; Solution.TreeNode n=sol.new TreeNode(arr[idx]); n.left=buildTree(arr,2*idx+1,sol); n.right=buildTree(arr,2*idx+2,sol); return n; }\n';
+            lines.unshift(solutionTreeHelpers);
             const arrStr = input.root.map(v => v === null ? 'null' : v).join(',');
             lines.push(`    Integer[] arr = {${arrStr}};`);
-            lines.push('    TreeNode tree = buildTree(arr, 0);');
-            lines.push('    int res = new Solution().maxDepth(tree);');
+            lines.push('    Solution sol = new Solution();');
+            lines.push('    Solution.TreeNode tree = buildTree(arr, 0, sol);');
+            lines.push('    int res = sol.maxDepth(tree);');
             lines.push('    System.out.print(res);');
             break;
         }
@@ -725,8 +906,8 @@ const executeJava = async (code, testcases, problemId) => {
 
 const executeCode = async (code, language, problemId, testcases) => {
     try {
-        if (language === 'javascript') return await executeJavaScript(code, testcases);
-        if (language === 'python') return await executePython(code, testcases);
+        if (language === 'javascript') return await executeJavaScript(code, testcases, problemId);
+        if (language === 'python') return await executePython(code, testcases, problemId);
         if (language === 'c') return await executeC(code, testcases, problemId);
         if (language === 'cpp') return await executeCPP(code, testcases, problemId);
         if (language === 'java') return await executeJava(code, testcases, problemId);

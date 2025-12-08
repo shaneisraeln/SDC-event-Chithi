@@ -310,19 +310,42 @@ const Dashboard = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
+            className="text-center mb-12"
           >
-            <RippleButton
-              onClick={() => setShowFinalModal(true)}
-              className={`px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg text-xl font-bold neon-border ${challengeOver ? '' : 'animate-pulse-slow'}`}
+            <motion.div
+              className="glass-effect neon-border rounded-2xl p-8 max-w-2xl mx-auto"
+              animate={!reducedMotion ? {
+                boxShadow: [
+                  '0 0 20px rgba(168, 85, 247, 0.5)',
+                  '0 0 40px rgba(168, 85, 247, 0.8)',
+                  '0 0 20px rgba(168, 85, 247, 0.5)'
+                ]
+              } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
             >
-              {challengeOver ? 'Challenge Completed — View Finale' : 'Enter Final Password'}
-            </RippleButton>
-            {challengeOver && (
-              <p className="mt-3 text-green-300 font-semibold">
-                Final password accepted. You have conquered the challenge!
+              <motion.div
+                className="text-6xl mb-4"
+                animate={!reducedMotion ? {
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, -5, 0]
+                } : {}}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🏆
+              </motion.div>
+              <h2 className="text-3xl font-bold text-purple-300 mb-3">
+                All Levels Complete!
+              </h2>
+              <p className="text-purple-400 mb-6">
+                You have collected all 5 clues. The final challenge awaits...
               </p>
-            )}
+              <RippleButton
+                onClick={() => navigate('/victory')}
+                className="px-10 py-5 bg-gradient-to-r from-yellow-500 via-purple-600 to-pink-600 text-white rounded-xl text-2xl font-bold neon-border animate-pulse-slow shadow-2xl"
+              >
+                ⚡ Enter Final Challenge ⚡
+              </RippleButton>
+            </motion.div>
           </motion.div>
         )}
 

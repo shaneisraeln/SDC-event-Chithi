@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard'
 import LevelPage from './pages/LevelPage'
+import VictoryPage from './pages/VictoryPage'
 import AdminCMS from './pages/AdminCMS'
 import CursorTrail from './components/CursorTrail'
 import ParallaxBackground from './components/ParallaxBackground'
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/level/:levelId" element={<LevelPage />} />
+                <Route path="/victory" element={<VictoryPage />} />
                 <Route path="/admin" element={<AdminCMS />} />
               </Routes>
             </AnimatePresence>

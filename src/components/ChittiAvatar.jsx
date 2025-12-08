@@ -30,48 +30,56 @@ const ChittiAvatar = ({ size = 'large', interactive = true }) => {
       animate={!reducedMotion && interactive ? {
         rotateY: mousePos.x * 15,
         rotateX: -mousePos.y * 15,
+        scale: isHovered ? 1.1 : 1
       } : {}}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
-      {/* Robot head */}
+      {/* Logo Container */}
       <motion.div
-        className="relative w-full h-full rounded-2xl glass-effect neon-border"
+        className="relative w-full h-full rounded-full overflow-hidden"
         animate={!reducedMotion ? {
           boxShadow: isHovered
-            ? ['0 0 20px #a855f7', '0 0 40px #a855f7', '0 0 20px #a855f7']
-            : '0 0 10px #a855f7'
+            ? ['0 0 20px #a855f7', '0 0 40px #a855f7', '0 0 60px #a855f7', '0 0 40px #a855f7', '0 0 20px #a855f7']
+            : '0 0 15px #a855f7'
         } : {}}
-        transition={{ duration: 1, repeat: Infinity }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
-        {/* Eyes */}
-        <div className="absolute top-1/3 left-1/4 w-4 h-4 bg-purple-500 rounded-full animate-pulse" />
-        <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-purple-500 rounded-full animate-pulse" />
-        
-        {/* Mouth/Display */}
-        <motion.div
-          className="absolute bottom-1/3 left-1/4 right-1/4 h-2 bg-purple-400 rounded"
-          animate={!reducedMotion && isHovered ? {
-            scaleX: [1, 1.2, 1],
-          } : {}}
-          transition={{ duration: 0.5 }}
+        {/* Logo Image */}
+        <img 
+          src="/chitti-logo.png" 
+          alt="Chitti Robot Logo"
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to a gradient if image not found
+            e.target.style.display = 'none'
+            e.target.nextSibling.style.display = 'block'
+          }}
         />
+        
+        {/* Fallback gradient (hidden by default) */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-800 to-black flex items-center justify-center"
+          style={{ display: 'none' }}
+        >
+          <div className="text-6xl font-bold text-purple-300">C</div>
+        </div>
 
-        {/* Antenna */}
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-1 h-4 bg-purple-500">
+        {/* Animated ring effect */}
+        {!reducedMotion && (
           <motion.div
-            className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-purple-400 rounded-full"
-            animate={!reducedMotion ? {
-              scale: [1, 1.3, 1],
-              opacity: [0.5, 1, 0.5]
-            } : {}}
+            className="absolute inset-0 rounded-full border-4 border-purple-500"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.5, 0, 0.5]
+            }}
             transition={{ duration: 2, repeat: Infinity }}
           />
-        </div>
+        )}
 
         {/* Glitch effect on hover */}
         {isHovered && !reducedMotion && (
           <motion.div
-            className="absolute inset-0 bg-purple-500 mix-blend-overlay rounded-2xl"
+            className="absolute inset-0 bg-purple-500 mix-blend-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 0.3, 0] }}
             transition={{ duration: 0.2, repeat: 3 }}

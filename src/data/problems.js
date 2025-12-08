@@ -118,10 +118,10 @@ export const problems = {
                 'Compare values from both lists and attach the smaller one'
             ],
             starterCode: {
-                python: 'def mergeTwoLists(list1, list2):\n    # Your code here\n    pass',
-                javascript: 'function mergeTwoLists(list1, list2) {\n    // Your code here\n}',
+                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef mergeTwoLists(list1, list2):\n    # Your code here\n    pass',
+                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction mergeTwoLists(list1, list2) {\n    // Your code here\n}',
                 c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {\n    // Your code here\n    return NULL;\n}',
-                cpp: 'struct ListNode {\n    int val;\n    ListNode *next;\n};\nListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n    // Your code here\n    return nullptr;\n}',
+                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n    // Your code here\n    return nullptr;\n}',
                 java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n        // Your code here\n        return null;\n    }\n}'
             }
         },
@@ -144,10 +144,10 @@ export const problems = {
                 'Iterate through the list and reverse the pointers'
             ],
             starterCode: {
-                python: 'def reverseList(head):\n    # Your code here\n    pass',
-                javascript: 'function reverseList(head) {\n    // Your code here\n}',
+                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reverseList(head):\n    # Your code here\n    pass',
+                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction reverseList(head) {\n    // Your code here\n}',
                 c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* reverseList(struct ListNode* head) {\n    // Your code here\n    return NULL;\n}',
-                cpp: 'struct ListNode {\n    int val;\n    ListNode *next;\n};\nListNode* reverseList(ListNode* head) {\n    // Your code here\n    return nullptr;\n}',
+                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* reverseList(ListNode* head) {\n    // Your code here\n    return nullptr;\n}',
                 java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode reverseList(ListNode head) {\n        // Your code here\n        return null;\n    }\n}'
             }
         },
@@ -171,10 +171,10 @@ export const problems = {
                 'Skip nodes with duplicate values'
             ],
             starterCode: {
-                python: 'def deleteDuplicates(head):\n    # Your code here\n    pass',
-                javascript: 'function deleteDuplicates(head) {\n    // Your code here\n}',
+                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef deleteDuplicates(head):\n    # Your code here\n    pass',
+                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction deleteDuplicates(head) {\n    // Your code here\n}',
                 c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* deleteDuplicates(struct ListNode* head) {\n    // Your code here\n    return head;\n}',
-                cpp: 'struct ListNode {\n    int val;\n    ListNode *next;\n};\nListNode* deleteDuplicates(ListNode* head) {\n    // Your code here\n    return head;\n}',
+                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* deleteDuplicates(ListNode* head) {\n    // Your code here\n    return head;\n}',
                 java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode deleteDuplicates(ListNode head) {\n        // Your code here\n        return head;\n    }\n}'
             }
         }
@@ -297,10 +297,10 @@ export const problems = {
                 'Base case: if node is null, return 0'
             ],
             starterCode: {
-                python: 'def maxDepth(root):\n    # Your code here\n    pass',
-                javascript: 'function maxDepth(root) {\n    // Your code here\n}',
+                python: '# TreeNode class is already defined:\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef maxDepth(root):\n    # Your code here\n    pass',
+                javascript: '// TreeNode class is already defined:\n// class TreeNode {\n//     constructor(val = 0, left = null, right = null) {\n//         this.val = val;\n//         this.left = left;\n//         this.right = right;\n//     }\n// }\n\nfunction maxDepth(root) {\n    // Your code here\n}',
                 c: '/* struct TreeNode is already defined:\nstruct TreeNode {\n    int val;\n    struct TreeNode *left;\n    struct TreeNode *right;\n};\n*/\n\nint maxDepth(struct TreeNode* root) {\n    // Your code here\n    return 0;\n}',
-                cpp: 'struct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n};\nint maxDepth(TreeNode* root) {\n    // Your code here\n    return 0;\n}',
+                cpp: '/* struct TreeNode is already defined:\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n};\n*/\n\nint maxDepth(TreeNode* root) {\n    // Your code here\n    return 0;\n}',
                 java: 'class Solution {\n    public class TreeNode {\n        int val;\n        TreeNode left;\n        TreeNode right;\n        TreeNode() {}\n        TreeNode(int val) { this.val = val; }\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val;\n            this.left = left;\n            this.right = right;\n        }\n    }\n    public int maxDepth(TreeNode root) {\n        // Your code here\n        return 0;\n    }\n}'
             }
         }
