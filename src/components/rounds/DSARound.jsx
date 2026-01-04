@@ -84,8 +84,8 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         throw new Error(`No test cases found for problem: ${questionId}`)
       }
 
-      // Call the real backend API
-      const response = await fetch('http://localhost:3002/api/execute', {
+      // Call the secure backend API
+      const response = await fetch('http://localhost:3003/api/execute', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
