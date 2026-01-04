@@ -531,5 +531,265 @@ export const testcases = {
                 output: 3
             }
         ]
+    },
+    'reverse-string': {
+        visible: [{
+                input: {
+                    s: ['h', 'e', 'l', 'l', 'o']
+                },
+                output: ['o', 'l', 'l', 'e', 'h']
+            },
+            {
+                input: {
+                    s: ['H', 'a', 'n', 'n', 'a', 'h']
+                },
+                output: ['h', 'a', 'n', 'n', 'a', 'H']
+            }
+        ],
+        hidden: [{
+                input: {
+                    s: ['a']
+                },
+                output: ['a']
+            },
+            {
+                input: {
+                    s: ['a', 'b']
+                },
+                output: ['b', 'a']
+            },
+            {
+                input: {
+                    s: ['1', '2', '3', '4', '5']
+                },
+                output: ['5', '4', '3', '2', '1']
+            }
+        ]
+    },
+    'valid-palindrome': {
+        visible: [{
+                input: {
+                    s: 'A man, a plan, a canal: Panama'
+                },
+                output: true
+            },
+            {
+                input: {
+                    s: 'race a car'
+                },
+                output: false
+            }
+        ],
+        hidden: [{
+                input: {
+                    s: ' '
+                },
+                output: true
+            },
+            {
+                input: {
+                    s: 'a'
+                },
+                output: true
+            },
+            {
+                input: {
+                    s: 'Madam'
+                },
+                output: true
+            }
+        ]
+    },
+    'group-anagrams': {
+        visible: [{
+                input: {
+                    strs: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat']
+                },
+                output: [
+                    ['eat', 'tea', 'ate'],
+                    ['tan', 'nat'],
+                    ['bat']
+                ]
+            },
+            {
+                input: {
+                    strs: ['']
+                },
+                output: [
+                    ['']
+                ]
+            }
+        ],
+        hidden: [{
+                input: {
+                    strs: ['a']
+                },
+                output: [
+                    ['a']
+                ]
+            },
+            {
+                input: {
+                    strs: ['abc', 'bca', 'cab', 'xyz']
+                },
+                output: [
+                    ['abc', 'bca', 'cab'],
+                    ['xyz']
+                ]
+            },
+            {
+                input: {
+                    strs: ['ab', 'ba', 'abc', 'cba']
+                },
+                output: [
+                    ['ab', 'ba'],
+                    ['abc', 'cba']
+                ]
+            }
+        ]
+    },
+    'three-sum': {
+        visible: [{
+                input: {
+                    nums: [-1, 0, 1, 2, -1, -4]
+                },
+                output: [
+                    [-1, -1, 2],
+                    [-1, 0, 1]
+                ]
+            },
+            {
+                input: {
+                    nums: [0, 1, 1]
+                },
+                output: []
+            }
+        ],
+        hidden: [{
+                input: {
+                    nums: [0, 0, 0]
+                },
+                output: [
+                    [0, 0, 0]
+                ]
+            },
+            {
+                input: {
+                    nums: [-2, 0, 1, 1, 2]
+                },
+                output: [
+                    [-2, 0, 2],
+                    [-2, 1, 1]
+                ]
+            },
+            {
+                input: {
+                    nums: [1, 2, -2, -1]
+                },
+                output: []
+            }
+        ]
+    },
+    'container-with-most-water': {
+        visible: [{
+                input: {
+                    height: [1, 8, 6, 2, 5, 4, 8, 3, 7]
+                },
+                output: 49
+            },
+            {
+                input: {
+                    height: [1, 1]
+                },
+                output: 1
+            }
+        ],
+        hidden: [{
+                input: {
+                    height: [1, 2, 1]
+                },
+                output: 2
+            },
+            {
+                input: {
+                    height: [2, 3, 4, 5, 18, 17, 6]
+                },
+                output: 17
+            },
+            {
+                input: {
+                    height: [1, 2, 4, 3]
+                },
+                output: 4
+            }
+        ]
+    },
+    'product-of-array-except-self': {
+        visible: [{
+                input: {
+                    nums: [1, 2, 3, 4]
+                },
+                output: [24, 12, 8, 6]
+            },
+            {
+                input: {
+                    nums: [-1, 1, 0, -3, 3]
+                },
+                output: [0, 0, 9, 0, 0]
+            }
+        ],
+        hidden: [{
+                input: {
+                    nums: [2, 3]
+                },
+                output: [3, 2]
+            },
+            {
+                input: {
+                    nums: [1, 0]
+                },
+                output: [0, 1]
+            },
+            {
+                input: {
+                    nums: [5, 2, 3, 4]
+                },
+                output: [24, 60, 40, 30]
+            }
+        ]
+    },
+    'longest-substring-without-repeating': {
+        visible: [{
+                input: {
+                    s: 'abcabcbb'
+                },
+                output: 3
+            },
+            {
+                input: {
+                    s: 'bbbbb'
+                },
+                output: 1
+            }
+        ],
+        hidden: [{
+                input: {
+                    s: 'pwwkew'
+                },
+                output: 3
+            },
+            {
+                input: {
+                    s: ''
+                },
+                output: 0
+            },
+            {
+                input: {
+                    s: 'dvdf'
+                },
+                output: 3
+            }
+        ]
     }
 }

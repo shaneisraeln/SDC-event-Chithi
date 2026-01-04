@@ -1,40 +1,311 @@
 export const problems = {
+    // Round 1: Aptitude MCQs (10 Questions)
     1: [{
-        id: 'two-sum',
-        title: 'Two Sum',
-        difficulty: 'Easy',
-        description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.',
-        constraints: [
-            '2 <= nums.length <= 10^4',
-            '-10^9 <= nums[i] <= 10^9',
-            '-10^9 <= target <= 10^9',
-            'Only one valid answer exists'
-        ],
-        examples: [{
-                input: 'nums = [2,7,11,15], target = 9',
-                output: '[0,1]',
-                explanation: 'nums[0] + nums[1] == 9, so we return [0, 1]'
-            },
-            {
-                input: 'nums = [3,2,4], target = 6',
-                output: '[1,2]',
-                explanation: 'nums[1] + nums[2] == 6'
-            }
-        ],
-        hints: [
-            'Use a hash map to store numbers you\'ve seen and their indices',
-            'For each number, check if (target - number) exists in your hash map'
-        ],
-        starterCode: {
-            javascript: 'function twoSum(nums, target) {\n    // Your code here\n}',
-            python: 'def twoSum(nums, target):\n    # Your code here\n    pass',
-            c: '// Return array of two indices\nint* twoSum(int* nums, int numsSize, int target, int* returnSize) {\n    // Your code here\n    return NULL;\n}',
-            cpp: '#include <vector>\nusing namespace std;\nvector<int> twoSum(vector<int>& nums, int target) {\n    // Your code here\n    return {};\n}',
-            java: 'import java.util.*;\nclass Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your code here\n        return new int[]{};\n    }\n}'
+            id: 'logical-reasoning-1',
+            type: 'MCQ',
+            title: 'Logical Sequence',
+            question: 'What comes next in the sequence: 2, 6, 12, 20, 30, ?',
+            options: ['40', '42', '44', '46'],
+            correct: 1, // 42
+            explanation: 'The differences are 4, 6, 8, 10, 12... (increasing by 2 each time)',
+            difficulty: 'Easy',
+            timeLimit: 60
+        },
+        {
+            id: 'mathematical-aptitude-1',
+            type: 'MCQ',
+            title: 'Speed Calculation',
+            question: 'A car travels 240 km in 3 hours. What is its average speed in m/s?',
+            options: ['22.22 m/s', '20 m/s', '80 m/s', '13.33 m/s'],
+            correct: 0, // 22.22 m/s
+            explanation: '240 km / 3 hours = 80 km/h = 80 × (1000/3600) = 22.22 m/s',
+            difficulty: 'Medium',
+            timeLimit: 90
+        },
+        {
+            id: 'pattern-recognition-1',
+            type: 'MCQ',
+            title: 'Binary Pattern',
+            question: 'In binary, what is 1011 + 1101?',
+            options: ['11000', '10111', '11001', '10110'],
+            correct: 0, // 11000
+            explanation: '1011 (11) + 1101 (13) = 11000 (24 in decimal)',
+            difficulty: 'Medium',
+            timeLimit: 75
+        },
+        {
+            id: 'logical-reasoning-2',
+            type: 'MCQ',
+            title: 'Code Breaking',
+            question: 'If CODING is written as DPEJOH, how is PYTHON written?',
+            options: ['QZUIPO', 'QZUIPM', 'QZUIPN', 'QZUJPO'],
+            correct: 2, // QZUIPN
+            explanation: 'Each letter is shifted by +1 in the alphabet',
+            difficulty: 'Easy',
+            timeLimit: 60
+        },
+        {
+            id: 'mathematical-aptitude-2',
+            type: 'MCQ',
+            title: 'Probability',
+            question: 'What is the probability of getting at least one head in 3 coin tosses?',
+            options: ['1/8', '3/8', '7/8', '1/2'],
+            correct: 2, // 7/8
+            explanation: 'P(at least one head) = 1 - P(all tails) = 1 - (1/2)³ = 7/8',
+            difficulty: 'Hard',
+            timeLimit: 120
+        },
+        {
+            id: 'logical-reasoning-3',
+            type: 'MCQ',
+            title: 'Time Logic',
+            question: 'If it takes 5 machines 5 minutes to make 5 widgets, how long does it take 100 machines to make 100 widgets?',
+            options: ['5 minutes', '20 minutes', '100 minutes', '500 minutes'],
+            correct: 0, // 5 minutes
+            explanation: 'Each machine makes 1 widget in 5 minutes, so 100 machines make 100 widgets in 5 minutes',
+            difficulty: 'Medium',
+            timeLimit: 90
+        },
+        {
+            id: 'pattern-recognition-2',
+            type: 'MCQ',
+            title: 'Number Series',
+            question: 'Find the missing number: 1, 4, 9, 16, ?, 36',
+            options: ['20', '25', '30', '32'],
+            correct: 1, // 25
+            explanation: 'Perfect squares: 1², 2², 3², 4², 5², 6²',
+            difficulty: 'Easy',
+            timeLimit: 45
+        },
+        {
+            id: 'mathematical-aptitude-3',
+            type: 'MCQ',
+            title: 'Percentage',
+            question: 'A number increased by 20% becomes 144. What was the original number?',
+            options: ['120', '115', '125', '130'],
+            correct: 0, // 120
+            explanation: 'Let x be original number. x + 0.2x = 144, so 1.2x = 144, x = 120',
+            difficulty: 'Medium',
+            timeLimit: 75
+        },
+        {
+            id: 'logical-reasoning-4',
+            type: 'MCQ',
+            title: 'Direction Sense',
+            question: 'You walk 10m North, then 10m East, then 10m South. How far are you from the starting point?',
+            options: ['0m', '10m', '20m', '30m'],
+            correct: 1, // 10m
+            explanation: 'You end up 10m East of your starting point',
+            difficulty: 'Easy',
+            timeLimit: 60
+        },
+        {
+            id: 'pattern-recognition-3',
+            type: 'MCQ',
+            title: 'Algorithm Thinking',
+            question: 'In a sorted array [1,3,5,7,9], how many comparisons does binary search need to find 7?',
+            options: ['1', '2', '3', '4'],
+            correct: 2, // 3
+            explanation: 'Compare with 5 (middle), then 7 (right), then found',
+            difficulty: 'Hard',
+            timeLimit: 90
         }
-    }],
+    ],
+
+    // Round 2: Code Alignment (3 Programs)
     2: [{
+            id: 'bubble-sort-fix',
+            type: 'CODE_ALIGN',
+            title: 'Fix Bubble Sort',
+            description: 'Arrange the jumbled lines to create a working bubble sort algorithm',
+            language: 'python',
+            jumbledLines: [
+                'def bubble_sort(arr):',
+                '    return arr',
+                '        for j in range(0, n-i-1):',
+                '    n = len(arr)',
+                '            if arr[j] > arr[j+1]:',
+                '    for i in range(n):',
+                '                arr[j], arr[j+1] = arr[j+1], arr[j]'
+            ],
+            correctOrder: [0, 3, 5, 2, 4, 6, 1],
+            expectedOutput: '[1, 2, 3, 4, 5]',
+            testInput: '[5, 2, 8, 1, 9]',
+            difficulty: 'Medium',
+            timeLimit: 300
+        },
+        {
+            id: 'factorial-fix',
+            type: 'CODE_ALIGN',
+            title: 'Fix Factorial Function',
+            description: 'Rearrange the lines to create a working recursive factorial function',
+            language: 'javascript',
+            jumbledLines: [
+                'function factorial(n) {',
+                '    return n * factorial(n - 1);',
+                '    if (n <= 1) {',
+                '        return 1;',
+                '    }',
+                '}'
+            ],
+            correctOrder: [0, 2, 3, 4, 1, 5],
+            expectedOutput: '120',
+            testInput: '5',
+            difficulty: 'Easy',
+            timeLimit: 240
+        },
+        {
+            id: 'binary-search-fix',
+            type: 'CODE_ALIGN',
+            title: 'Fix Binary Search',
+            description: 'Organize the scrambled binary search implementation',
+            language: 'python',
+            jumbledLines: [
+                'def binary_search(arr, target):',
+                '    while left <= right:',
+                '        if arr[mid] == target:',
+                '            return mid',
+                '    left, right = 0, len(arr) - 1',
+                '        mid = (left + right) // 2',
+                '        elif arr[mid] < target:',
+                '            left = mid + 1',
+                '        else:',
+                '            right = mid - 1',
+                '    return -1'
+            ],
+            correctOrder: [0, 4, 1, 5, 2, 3, 6, 7, 8, 9, 10],
+            expectedOutput: '3',
+            testInput: '[1, 3, 5, 7, 9], 7',
+            difficulty: 'Hard',
+            timeLimit: 360
+        }
+    ],
+
+    // Round 3: Output Prediction (5 Questions)
+    3: [{
+            id: 'loop-output-1',
+            type: 'OUTPUT_PREDICT',
+            title: 'Loop Analysis',
+            code: `for i in range(3):
+    for j in range(i):
+        print(i, j, end=' ')
+    print()`,
+            question: 'What will be the output of this Python code?',
+            options: [
+                '0 0\n1 0\n2 0 2 1',
+                '\n1 0\n2 0 2 1',
+                '0\n1 0\n2 0 2 1',
+                'Nothing will be printed'
+            ],
+            correct: 1,
+            explanation: 'i=0: inner loop doesn\'t run (range(0) is empty), prints newline\ni=1: prints "1 0" then newline\ni=2: prints "2 0 2 1" then newline',
+            difficulty: 'Medium',
+            timeLimit: 120
+        },
+        {
+            id: 'recursion-output-1',
+            type: 'OUTPUT_PREDICT',
+            title: 'Recursion Trace',
+            code: `def mystery(n):
+    if n <= 1:
+        return 1
+    return n + mystery(n-2)
+
+print(mystery(5))`,
+            question: 'What will this recursive function output?',
+            options: ['9', '8', '15', '6'],
+            correct: 0, // 9
+            explanation: 'mystery(5) = 5 + mystery(3) = 5 + (3 + mystery(1)) = 5 + (3 + 1) = 9',
+            difficulty: 'Hard',
+            timeLimit: 150
+        },
+        {
+            id: 'array-manipulation-1',
+            type: 'OUTPUT_PREDICT',
+            title: 'Array Operations',
+            code: `arr = [1, 2, 3, 4, 5]
+arr[1:4] = [10]
+print(arr)`,
+            question: 'What will be printed?',
+            options: [
+                '[1, 10, 5]',
+                '[1, 10, 4, 5]',
+                '[10, 2, 3, 4]',
+                '[1, 2, 10, 4, 5]'
+            ],
+            correct: 0, // [1, 10, 5]
+            explanation: 'arr[1:4] replaces elements at indices 1, 2, 3 with [10], so [1, 2, 3, 4, 5] becomes [1, 10, 5]',
+            difficulty: 'Medium',
+            timeLimit: 90
+        },
+        {
+            id: 'string-manipulation-1',
+            type: 'OUTPUT_PREDICT',
+            title: 'String Slicing',
+            code: `s = "PYTHON"
+result = s[1::2] + s[::2]
+print(result)`,
+            question: 'What will be the output?',
+            options: ['YTOPTH', 'YTHPTN', 'PYHTON', 'YTHNPO'],
+            correct: 1, // YTHPTN
+            explanation: 's[1::2] = "YTN" (every 2nd char starting from index 1)\ns[::2] = "PTO" (every 2nd char from start)\nResult: "YTN" + "PTO" = "YTNPTO"',
+            difficulty: 'Hard',
+            timeLimit: 120
+        },
+        {
+            id: 'dictionary-output-1',
+            type: 'OUTPUT_PREDICT',
+            title: 'Dictionary Magic',
+            code: `d = {'a': 1, 'b': 2}
+d.update({'a': 3, 'c': 4})
+print(sum(d.values()))`,
+            question: 'What will be printed?',
+            options: ['6', '7', '9', '10'],
+            correct: 2, // 9
+            explanation: 'After update: d = {"a": 3, "b": 2, "c": 4}\nsum(d.values()) = 3 + 2 + 4 = 9',
+            difficulty: 'Easy',
+            timeLimit: 75
+        }
+    ],
+
+    // Round 4: Easy DSA (String & Array) - 5 Questions
+    4: [{
+            id: 'two-sum',
+            type: 'DSA',
+            title: 'Two Sum',
+            difficulty: 'Easy',
+            description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.',
+            constraints: [
+                '2 <= nums.length <= 10^4',
+                '-10^9 <= nums[i] <= 10^9',
+                '-10^9 <= target <= 10^9',
+                'Only one valid answer exists'
+            ],
+            examples: [{
+                    input: 'nums = [2,7,11,15], target = 9',
+                    output: '[0,1]',
+                    explanation: 'nums[0] + nums[1] == 9, so we return [0, 1]'
+                },
+                {
+                    input: 'nums = [3,2,4], target = 6',
+                    output: '[1,2]',
+                    explanation: 'nums[1] + nums[2] == 6'
+                }
+            ],
+            hints: [
+                'Use a hash map to store numbers you\'ve seen and their indices',
+                'For each number, check if (target - number) exists in your hash map'
+            ],
+            starterCode: {
+                python: 'def twoSum(nums, target):\n    # Your code here\n    pass',
+                java: 'import java.util.*;\nclass Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your code here\n        return new int[]{};\n    }\n}',
+                c: '// Return array of two indices\nint* twoSum(int* nums, int numsSize, int target, int* returnSize) {\n    // Your code here\n    *returnSize = 2;\n    return NULL;\n}',
+                cpp: '#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nvector<int> twoSum(vector<int>& nums, int target) {\n    // Your code here\n    return {};\n}'
+            }
+        },
+        {
             id: 'valid-anagram',
+            type: 'DSA',
             title: 'Valid Anagram',
             difficulty: 'Easy',
             description: 'Given two strings s and t, return true if t is an anagram of s, and false otherwise.',
@@ -59,288 +330,14 @@ export const problems = {
             ],
             starterCode: {
                 python: 'def isAnagram(s, t):\n    # Your code here\n    pass',
-                javascript: 'function isAnagram(s, t) {\n    // Your code here\n}',
-                c: '#include <stdbool.h>\n#include <stddef.h>\n#include <string.h>\nbool isAnagram(char* s, char* t) {\n    // Your code here\n    return false;\n}',
-                cpp: '#include <string>\nusing namespace std;\nbool isAnagram(string s, string t) {\n    // Your code here\n    return false;\n}',
-                java: 'class Solution {\n    public boolean isAnagram(String s, String t) {\n        // Your code here\n        return false;\n    }\n}'
-            }
-        },
-        {
-            id: 'first-unique-char',
-            title: 'First Unique Character in a String',
-            difficulty: 'Easy',
-            description: 'Given a string s, find the first non-repeating character and return its index. If it does not exist, return -1.',
-            constraints: [
-                '1 <= s.length <= 10^5',
-                's consists of only lowercase English letters'
-            ],
-            examples: [{
-                    input: 's = "leetcode"',
-                    output: '0',
-                    explanation: 'The first unique character is "l" at index 0'
-                },
-                {
-                    input: 's = "loveleetcode"',
-                    output: '2',
-                    explanation: 'The first unique character is "v" at index 2'
-                }
-            ],
-            hints: [
-                'Use a hash map to count character frequencies',
-                'Iterate through the string again to find the first character with count 1'
-            ],
-            starterCode: {
-                python: 'def firstUniqChar(s):\n    # Your code here\n    pass',
-                javascript: 'function firstUniqChar(s) {\n    // Your code here\n}',
-                c: 'int firstUniqChar(char* s) {\n    // Your code here\n    return -1;\n}',
-                cpp: '#include <string>\nusing namespace std;\nint firstUniqChar(string s) {\n    // Your code here\n    return -1;\n}',
-                java: 'class Solution {\n    public int firstUniqChar(String s) {\n        // Your code here\n        return -1;\n    }\n}'
-            }
-        }
-    ],
-    3: [{
-            id: 'merge-sorted-lists',
-            title: 'Merge Two Sorted Lists',
-            difficulty: 'Easy',
-            description: 'Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.',
-            constraints: [
-                'The number of nodes in both lists is in the range [0, 50]',
-                '-100 <= Node.val <= 100',
-                'Both lists are sorted in non-decreasing order'
-            ],
-            examples: [{
-                input: 'list1 = [1,2,4], list2 = [1,3,4]',
-                output: '[1,1,2,3,4,4]',
-                explanation: 'Merge both sorted lists'
-            }],
-            hints: [
-                'Use a dummy node to simplify edge cases',
-                'Compare values from both lists and attach the smaller one'
-            ],
-            starterCode: {
-                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef mergeTwoLists(list1, list2):\n    # Your code here\n    pass',
-                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction mergeTwoLists(list1, list2) {\n    // Your code here\n}',
-                c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {\n    // Your code here\n    return NULL;\n}',
-                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n    // Your code here\n    return nullptr;\n}',
-                java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n        // Your code here\n        return null;\n    }\n}'
-            }
-        },
-        {
-            id: 'reverse-linked-list',
-            title: 'Reverse Linked List',
-            difficulty: 'Easy',
-            description: 'Given the head of a singly linked list, reverse the list, and return the reversed list.',
-            constraints: [
-                'The number of nodes in the list is the range [0, 5000]',
-                '-5000 <= Node.val <= 5000'
-            ],
-            examples: [{
-                input: 'head = [1,2,3,4,5]',
-                output: '[5,4,3,2,1]',
-                explanation: 'Reverse the linked list'
-            }],
-            hints: [
-                'Use three pointers: prev, current, and next',
-                'Iterate through the list and reverse the pointers'
-            ],
-            starterCode: {
-                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reverseList(head):\n    # Your code here\n    pass',
-                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction reverseList(head) {\n    // Your code here\n}',
-                c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* reverseList(struct ListNode* head) {\n    // Your code here\n    return NULL;\n}',
-                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* reverseList(ListNode* head) {\n    // Your code here\n    return nullptr;\n}',
-                java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode reverseList(ListNode head) {\n        // Your code here\n        return null;\n    }\n}'
-            }
-        },
-        {
-            id: 'remove-duplicates-sorted-list',
-            title: 'Remove Duplicates From Sorted List',
-            difficulty: 'Easy',
-            description: 'Given the head of a sorted linked list, delete all duplicates such that each element appears only once.',
-            constraints: [
-                'The number of nodes in the list is in the range [0, 300]',
-                '-100 <= Node.val <= 100',
-                'The list is guaranteed to be sorted in ascending order'
-            ],
-            examples: [{
-                input: 'head = [1,1,2]',
-                output: '[1,2]',
-                explanation: 'Remove duplicate 1'
-            }],
-            hints: [
-                'Iterate through the list comparing current and next nodes',
-                'Skip nodes with duplicate values'
-            ],
-            starterCode: {
-                python: '# ListNode class is already defined:\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef deleteDuplicates(head):\n    # Your code here\n    pass',
-                javascript: '// ListNode class is already defined:\n// class ListNode {\n//     constructor(val = 0, next = null) {\n//         this.val = val;\n//         this.next = next;\n//     }\n// }\n\nfunction deleteDuplicates(head) {\n    // Your code here\n}',
-                c: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    struct ListNode *next;\n};\n*/\n\nstruct ListNode* deleteDuplicates(struct ListNode* head) {\n    // Your code here\n    return head;\n}',
-                cpp: '/* struct ListNode is already defined:\nstruct ListNode {\n    int val;\n    ListNode *next;\n};\n*/\n\nListNode* deleteDuplicates(ListNode* head) {\n    // Your code here\n    return head;\n}',
-                java: 'class Solution {\n    public class ListNode {\n        int val;\n        ListNode next;\n        ListNode() {}\n        ListNode(int val) { this.val = val; }\n        ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n    }\n    public ListNode deleteDuplicates(ListNode head) {\n        // Your code here\n        return head;\n    }\n}'
-            }
-        }
-    ],
-    4: [{
-            id: 'valid-parentheses',
-            title: 'Valid Parentheses',
-            difficulty: 'Easy',
-            description: 'Given a string s containing just the characters \'(\', \')\', \'{\', \'}\', \'[\' and \']\', determine if the input string is valid.',
-            constraints: [
-                '1 <= s.length <= 10^4',
-                's consists of parentheses only \'()[]{}\'.'
-            ],
-            examples: [{
-                    input: 's = "()"',
-                    output: 'true',
-                    explanation: 'Valid parentheses'
-                },
-                {
-                    input: 's = "()[]{}"',
-                    output: 'true',
-                    explanation: 'All brackets are properly closed'
-                }
-            ],
-            hints: [
-                'Use a stack to track opening brackets',
-                'When you see a closing bracket, check if it matches the top of the stack'
-            ],
-            starterCode: {
-                python: 'def isValid(s):\n    # Your code here\n    pass',
-                javascript: 'function isValid(s) {\n    // Your code here\n}',
-                c: '#include <stdbool.h>\n#include <stddef.h>\nbool isValid(char* s) {\n    // Your code here\n    return false;\n}',
-                cpp: '#include <string>\nusing namespace std;\nbool isValid(string s) {\n    // Your code here\n    return false;\n}',
-                java: 'class Solution {\n    public boolean isValid(String s) {\n        // Your code here\n        return false;\n    }\n}'
-            }
-        },
-        {
-            id: 'climbing-stairs',
-            title: 'Climbing Stairs',
-            difficulty: 'Easy',
-            description: 'You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?',
-            constraints: [
-                '1 <= n <= 45'
-            ],
-            examples: [{
-                    input: 'n = 2',
-                    output: '2',
-                    explanation: 'There are two ways: 1+1 or 2'
-                },
-                {
-                    input: 'n = 3',
-                    output: '3',
-                    explanation: 'There are three ways: 1+1+1, 1+2, or 2+1'
-                }
-            ],
-            hints: [
-                'This is a Fibonacci sequence problem',
-                'Think about how many ways to reach step n from step n-1 and n-2',
-                'Use dynamic programming or iterative approach'
-            ],
-            starterCode: {
-                python: 'def climbStairs(n):\n    # Your code here\n    pass',
-                javascript: 'function climbStairs(n) {\n    // Your code here\n}',
-                c: 'int climbStairs(int n) {\n    // Your code here\n    return 0;\n}',
-                cpp: 'int climbStairs(int n) {\n    // Your code here\n    return 0;\n}',
-                java: 'class Solution {\n    public int climbStairs(int n) {\n        // Your code here\n        return 0;\n    }\n}'
-            }
-        },
-        {
-            id: 'binary-search',
-            title: 'Binary Search',
-            difficulty: 'Easy',
-            description: 'Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums.',
-            constraints: [
-                '1 <= nums.length <= 10^4',
-                '-10^4 < nums[i], target < 10^4',
-                'All integers in nums are unique',
-                'nums is sorted in ascending order'
-            ],
-            examples: [{
-                input: 'nums = [-1,0,3,5,9,12], target = 9',
-                output: '4',
-                explanation: '9 exists in nums and its index is 4'
-            }],
-            hints: [
-                'Use two pointers: left and right',
-                'Compare middle element with target and adjust pointers'
-            ],
-            starterCode: {
-                python: 'def search(nums, target):\n    # Your code here\n    pass',
-                javascript: 'function search(nums, target) {\n    // Your code here\n}',
-                c: 'int search(int* nums, int numsSize, int target) {\n    // Your code here\n    return -1;\n}',
-                cpp: '#include <vector>\nusing namespace std;\nint search(vector<int>& nums, int target) {\n    // Your code here\n    return -1;\n}',
-                java: 'class Solution {\n    public int search(int[] nums, int target) {\n        // Your code here\n        return -1;\n    }\n}'
-            }
-        },
-        {
-            id: 'max-depth-binary-tree',
-            title: 'Maximum Depth of Binary Tree',
-            difficulty: 'Easy',
-            description: 'Given the root of a binary tree, return its maximum depth. The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.',
-            constraints: [
-                'The number of nodes in the tree is in the range [0, 10^4]',
-                '-100 <= Node.val <= 100'
-            ],
-            examples: [{
-                    input: 'root = [3,9,20,null,null,15,7]',
-                    output: '3',
-                    explanation: 'The tree has depth 3 (root -> 20 -> 15 or 7)'
-                },
-                {
-                    input: 'root = [1,null,2]',
-                    output: '2',
-                    explanation: 'The tree has depth 2'
-                }
-            ],
-            hints: [
-                'Use recursion to find the depth of left and right subtrees',
-                'The depth is 1 + max(left depth, right depth)',
-                'Base case: if node is null, return 0'
-            ],
-            starterCode: {
-                python: '# TreeNode class is already defined:\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef maxDepth(root):\n    # Your code here\n    pass',
-                javascript: '// TreeNode class is already defined:\n// class TreeNode {\n//     constructor(val = 0, left = null, right = null) {\n//         this.val = val;\n//         this.left = left;\n//         this.right = right;\n//     }\n// }\n\nfunction maxDepth(root) {\n    // Your code here\n}',
-                c: '/* struct TreeNode is already defined:\nstruct TreeNode {\n    int val;\n    struct TreeNode *left;\n    struct TreeNode *right;\n};\n*/\n\nint maxDepth(struct TreeNode* root) {\n    // Your code here\n    return 0;\n}',
-                cpp: '/* struct TreeNode is already defined:\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n};\n*/\n\nint maxDepth(TreeNode* root) {\n    // Your code here\n    return 0;\n}',
-                java: 'class Solution {\n    public class TreeNode {\n        int val;\n        TreeNode left;\n        TreeNode right;\n        TreeNode() {}\n        TreeNode(int val) { this.val = val; }\n        TreeNode(int val, TreeNode left, TreeNode right) {\n            this.val = val;\n            this.left = left;\n            this.right = right;\n        }\n    }\n    public int maxDepth(TreeNode root) {\n        // Your code here\n        return 0;\n    }\n}'
-            }
-        }
-    ],
-    5: [{
-            id: 'majority-element',
-            title: 'Majority Element',
-            difficulty: 'Easy',
-            description: 'Given an array nums of size n, return the majority element. The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.',
-            constraints: [
-                'n == nums.length',
-                '1 <= n <= 5 * 10^4',
-                '-10^9 <= nums[i] <= 10^9'
-            ],
-            examples: [{
-                    input: 'nums = [3,2,3]',
-                    output: '3',
-                    explanation: '3 appears 2 times out of 3'
-                },
-                {
-                    input: 'nums = [2,2,1,1,1,2,2]',
-                    output: '2',
-                    explanation: '2 appears 4 times out of 7'
-                }
-            ],
-            hints: [
-                'Use a hash map to count occurrences',
-                'Or try Boyer-Moore Voting Algorithm for O(1) space',
-                'The majority element appears more than n/2 times'
-            ],
-            starterCode: {
-                python: 'def majorityElement(nums):\n    # Your code here\n    pass',
-                javascript: 'function majorityElement(nums) {\n    // Your code here\n}',
-                c: 'int majorityElement(int* nums, int numsSize) {\n    // Your code here\n    return 0;\n}',
-                cpp: '#include <vector>\nusing namespace std;\nint majorityElement(vector<int>& nums) {\n    // Your code here\n    return 0;\n}',
-                java: 'import java.util.*;\nclass Solution {\n    public int majorityElement(int[] nums) {\n        // Your code here\n        return 0;\n    }\n}'
+                java: 'class Solution {\n    public boolean isAnagram(String s, String t) {\n        // Your code here\n        return false;\n    }\n}',
+                c: '#include <stdbool.h>\n#include <string.h>\nbool isAnagram(char* s, char* t) {\n    // Your code here\n    return false;\n}',
+                cpp: '#include <string>\n#include <algorithm>\nusing namespace std;\n\nbool isAnagram(string s, string t) {\n    // Your code here\n    return false;\n}'
             }
         },
         {
             id: 'contains-duplicate',
+            type: 'DSA',
             title: 'Contains Duplicate',
             difficulty: 'Easy',
             description: 'Given an integer array nums, return true if any value appears at least twice in the array.',
@@ -349,78 +346,119 @@ export const problems = {
                 '-10^9 <= nums[i] <= 10^9'
             ],
             examples: [{
-                input: 'nums = [1,2,3,1]',
-                output: 'true',
-                explanation: '1 appears twice'
-            }],
+                    input: 'nums = [1,2,3,1]',
+                    output: 'true',
+                    explanation: '1 appears twice'
+                },
+                {
+                    input: 'nums = [1,2,3,4]',
+                    output: 'false',
+                    explanation: 'All elements are distinct'
+                }
+            ],
             hints: [
                 'Use a hash set to track seen numbers',
                 'Return true as soon as you find a duplicate'
             ],
             starterCode: {
                 python: 'def containsDuplicate(nums):\n    # Your code here\n    pass',
-                javascript: 'function containsDuplicate(nums) {\n    // Your code here\n}',
+                java: 'import java.util.*;\nclass Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Your code here\n        return false;\n    }\n}',
                 c: '#include <stdbool.h>\nbool containsDuplicate(int* nums, int numsSize) {\n    // Your code here\n    return false;\n}',
-                cpp: '#include <vector>\nusing namespace std;\nbool containsDuplicate(vector<int>& nums) {\n    // Your code here\n    return false;\n}',
-                java: 'import java.util.*;\nclass Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Your code here\n        return false;\n    }\n}'
+                cpp: '#include <vector>\n#include <unordered_set>\nusing namespace std;\n\nbool containsDuplicate(vector<int>& nums) {\n    // Your code here\n    return false;\n}'
             }
         },
         {
-            id: 'max-sum-subarray',
-            title: 'Maximum Sum Subarray (Sliding Window)',
-            difficulty: 'Medium',
-            description: 'Given an array of integers and a number k, find the maximum sum of a subarray of size k.',
+            id: 'reverse-string',
+            type: 'DSA',
+            title: 'Reverse String',
+            difficulty: 'Easy',
+            description: 'Write a function that reverses a string. The input string is given as an array of characters s.',
             constraints: [
-                '1 <= nums.length <= 10^5',
-                '1 <= k <= nums.length',
-                '-10^4 <= nums[i] <= 10^4'
+                '1 <= s.length <= 10^5',
+                's[i] is a printable ascii character'
             ],
             examples: [{
-                input: 'nums = [2,1,5,1,3,2], k = 3',
-                output: '9',
-                explanation: 'Subarray [5,1,3] has maximum sum 9'
+                input: 's = ["h","e","l","l","o"]',
+                output: '["o","l","l","e","h"]',
+                explanation: 'Reverse the array in-place'
             }],
             hints: [
-                'Use sliding window technique',
-                'Calculate initial window sum, then slide by removing first and adding next element'
+                'Use two pointers approach',
+                'Swap characters from both ends moving towards center'
             ],
             starterCode: {
-                python: 'def maxSumSubarray(nums, k):\n    # Your code here\n    pass',
-                javascript: 'function maxSumSubarray(nums, k) {\n    // Your code here\n}',
-                c: 'int maxSumSubarray(int* nums, int numsSize, int k) {\n    // Your code here\n    return 0;\n}',
-                cpp: '#include <vector>\nusing namespace std;\nint maxSumSubarray(vector<int>& nums, int k) {\n    // Your code here\n    return 0;\n}',
-                java: 'class Solution {\n    public int maxSumSubarray(int[] nums, int k) {\n        // Your code here\n        return 0;\n    }\n}'
+                python: 'def reverseString(s):\n    # Your code here\n    pass',
+                java: 'class Solution {\n    public void reverseString(char[] s) {\n        // Your code here\n    }\n}',
+                c: 'void reverseString(char* s, int sSize) {\n    // Your code here\n}',
+                cpp: '#include <vector>\nusing namespace std;\n\nvoid reverseString(vector<char>& s) {\n    // Your code here\n}'
             }
         },
         {
-            id: 'coin-change',
-            title: 'Coin Change (Minimum Coins)',
-            difficulty: 'Medium',
-            description: 'You are given an integer array coins representing coins of different denominations and an integer amount. Return the fewest number of coins needed to make up that amount.',
+            id: 'valid-palindrome',
+            type: 'DSA',
+            title: 'Valid Palindrome',
+            difficulty: 'Easy',
+            description: 'A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.',
             constraints: [
-                '1 <= coins.length <= 12',
-                '1 <= coins[i] <= 2^31 - 1',
-                '0 <= amount <= 10^4'
+                '1 <= s.length <= 2 * 10^5',
+                's consists only of printable ASCII characters'
             ],
             examples: [{
-                input: 'coins = [1,2,5], amount = 11',
-                output: '3',
-                explanation: '11 = 5 + 5 + 1'
-            }],
+                    input: 's = "A man, a plan, a canal: Panama"',
+                    output: 'true',
+                    explanation: '"amanaplanacanalpanama" is a palindrome'
+                },
+                {
+                    input: 's = "race a car"',
+                    output: 'false',
+                    explanation: '"raceacar" is not a palindrome'
+                }
+            ],
             hints: [
-                'Use dynamic programming',
-                'dp[i] represents minimum coins needed for amount i'
+                'Use two pointers from both ends',
+                'Skip non-alphanumeric characters',
+                'Compare characters in lowercase'
             ],
             starterCode: {
-                python: 'def coinChange(coins, amount):\n    # Your code here\n    pass',
-                javascript: 'function coinChange(coins, amount) {\n    // Your code here\n}',
-                c: 'int coinChange(int* coins, int coinsSize, int amount) {\n    // Your code here\n    return -1;\n}',
-                cpp: '#include <vector>\nusing namespace std;\nint coinChange(vector<int>& coins, int amount) {\n    // Your code here\n    return -1;\n}',
-                java: 'class Solution {\n    public int coinChange(int[] coins, int amount) {\n        // Your code here\n        return -1;\n    }\n}'
+                python: 'def isPalindrome(s):\n    # Your code here\n    pass',
+                java: 'class Solution {\n    public boolean isPalindrome(String s) {\n        // Your code here\n        return false;\n    }\n}',
+                c: '#include <stdbool.h>\n#include <ctype.h>\nbool isPalindrome(char* s) {\n    // Your code here\n    return false;\n}',
+                cpp: '#include <string>\n#include <cctype>\nusing namespace std;\n\nbool isPalindrome(string s) {\n    // Your code here\n    return false;\n}'
+            }
+        }
+    ],
+
+    // Round 5: Medium DSA (String & Array) - 5 Questions
+    5: [{
+            id: 'group-anagrams',
+            type: 'DSA',
+            title: 'Group Anagrams',
+            difficulty: 'Medium',
+            description: 'Given an array of strings strs, group the anagrams together. You can return the answer in any order.',
+            constraints: [
+                '1 <= strs.length <= 10^4',
+                '0 <= strs[i].length <= 100',
+                'strs[i] consists of lowercase English letters'
+            ],
+            examples: [{
+                input: 'strs = ["eat","tea","tan","ate","nat","bat"]',
+                output: '[["bat"],["nat","tan"],["ate","eat","tea"]]',
+                explanation: 'Group strings that are anagrams of each other'
+            }],
+            hints: [
+                'Use sorted string as key in hash map',
+                'Group strings with same sorted characters'
+            ],
+            starterCode: {
+                python: 'def groupAnagrams(strs):\n    # Your code here\n    pass',
+                java: 'import java.util.*;\nclass Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        // Your code here\n        return new ArrayList<>();\n    }\n}',
+                c: '// Return array of arrays\nchar*** groupAnagrams(char** strs, int strsSize, int* returnSize, int** returnColumnSizes) {\n    // Your code here\n    return NULL;\n}',
+                cpp: '#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n\nvector<vector<string>> groupAnagrams(vector<string>& strs) {\n    // Your code here\n    return {};\n}'
             }
         },
         {
-            id: 'longest-substring',
+            id: 'longest-substring-without-repeating',
+            type: 'DSA',
             title: 'Longest Substring Without Repeating Characters',
             difficulty: 'Medium',
             description: 'Given a string s, find the length of the longest substring without repeating characters.',
@@ -429,20 +467,109 @@ export const problems = {
                 's consists of English letters, digits, symbols and spaces'
             ],
             examples: [{
-                input: 's = "abcabcbb"',
-                output: '3',
-                explanation: 'The answer is "abc", with length 3'
-            }],
+                    input: 's = "abcabcbb"',
+                    output: '3',
+                    explanation: 'The answer is "abc", with length 3'
+                },
+                {
+                    input: 's = "bbbbb"',
+                    output: '1',
+                    explanation: 'The answer is "b", with length 1'
+                }
+            ],
             hints: [
-                'Use sliding window with a hash set',
+                'Use sliding window technique',
+                'Use a hash set to track characters in current window',
                 'Expand window when no duplicates, shrink when duplicate found'
             ],
             starterCode: {
                 python: 'def lengthOfLongestSubstring(s):\n    # Your code here\n    pass',
-                javascript: 'function lengthOfLongestSubstring(s) {\n    // Your code here\n}',
+                java: 'import java.util.*;\nclass Solution {\n    public int lengthOfLongestSubstring(String s) {\n        // Your code here\n        return 0;\n    }\n}',
                 c: 'int lengthOfLongestSubstring(char* s) {\n    // Your code here\n    return 0;\n}',
-                cpp: '#include <string>\nusing namespace std;\nint lengthOfLongestSubstring(string s) {\n    // Your code here\n    return 0;\n}',
-                java: 'class Solution {\n    public int lengthOfLongestSubstring(String s) {\n        // Your code here\n        return 0;\n    }\n}'
+                cpp: '#include <string>\n#include <unordered_set>\nusing namespace std;\n\nint lengthOfLongestSubstring(string s) {\n    // Your code here\n    return 0;\n}'
+            }
+        },
+        {
+            id: 'three-sum',
+            type: 'DSA',
+            title: '3Sum',
+            difficulty: 'Medium',
+            description: 'Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.',
+            constraints: [
+                '3 <= nums.length <= 3000',
+                '-10^5 <= nums[i] <= 10^5'
+            ],
+            examples: [{
+                input: 'nums = [-1,0,1,2,-1,-4]',
+                output: '[[-1,-1,2],[-1,0,1]]',
+                explanation: 'The distinct triplets are [-1,0,1] and [-1,-1,2]'
+            }],
+            hints: [
+                'Sort the array first',
+                'Use three pointers approach',
+                'Skip duplicates to avoid duplicate triplets'
+            ],
+            starterCode: {
+                python: 'def threeSum(nums):\n    # Your code here\n    pass',
+                java: 'import java.util.*;\nclass Solution {\n    public List<List<Integer>> threeSum(int[] nums) {\n        // Your code here\n        return new ArrayList<>();\n    }\n}',
+                c: '// Return array of arrays\nint** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {\n    // Your code here\n    return NULL;\n}',
+                cpp: '#include <vector>\n#include <algorithm>\nusing namespace std;\n\nvector<vector<int>> threeSum(vector<int>& nums) {\n    // Your code here\n    return {};\n}'
+            }
+        },
+        {
+            id: 'container-with-most-water',
+            type: 'DSA',
+            title: 'Container With Most Water',
+            difficulty: 'Medium',
+            description: 'You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container that contains the most water.',
+            constraints: [
+                'n == height.length',
+                '2 <= n <= 10^5',
+                '0 <= height[i] <= 10^4'
+            ],
+            examples: [{
+                input: 'height = [1,8,6,2,5,4,8,3,7]',
+                output: '49',
+                explanation: 'The maximum area is between height[1] and height[8]'
+            }],
+            hints: [
+                'Use two pointers from both ends',
+                'Move the pointer with smaller height',
+                'Calculate area at each step and keep track of maximum'
+            ],
+            starterCode: {
+                python: 'def maxArea(height):\n    # Your code here\n    pass',
+                java: 'class Solution {\n    public int maxArea(int[] height) {\n        // Your code here\n        return 0;\n    }\n}',
+                c: 'int maxArea(int* height, int heightSize) {\n    // Your code here\n    return 0;\n}',
+                cpp: '#include <vector>\n#include <algorithm>\nusing namespace std;\n\nint maxArea(vector<int>& height) {\n    // Your code here\n    return 0;\n}'
+            }
+        },
+        {
+            id: 'product-of-array-except-self',
+            type: 'DSA',
+            title: 'Product of Array Except Self',
+            difficulty: 'Medium',
+            description: 'Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].',
+            constraints: [
+                '2 <= nums.length <= 10^5',
+                '-30 <= nums[i] <= 30',
+                'The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer'
+            ],
+            examples: [{
+                input: 'nums = [1,2,3,4]',
+                output: '[24,12,8,6]',
+                explanation: 'For each index, multiply all other elements'
+            }],
+            hints: [
+                'Think about left and right products',
+                'First pass: calculate left products',
+                'Second pass: calculate right products and multiply with left'
+            ],
+            starterCode: {
+                python: 'def productExceptSelf(nums):\n    # Your code here\n    pass',
+                java: 'class Solution {\n    public int[] productExceptSelf(int[] nums) {\n        // Your code here\n        return new int[nums.length];\n    }\n}',
+                c: 'int* productExceptSelf(int* nums, int numsSize, int* returnSize) {\n    // Your code here\n    *returnSize = numsSize;\n    return NULL;\n}',
+                cpp: '#include <vector>\nusing namespace std;\n\nvector<int> productExceptSelf(vector<int>& nums) {\n    // Your code here\n    return {};\n}'
             }
         }
     ]
@@ -450,33 +577,33 @@ export const problems = {
 
 export const storySegments = {
     1: {
-        title: 'The Awakening',
-        content: 'You stand before Chitti, the advanced robot with unmatched computational power. "Human," Chitti\'s voice resonates, "you dare challenge my intelligence? Very well. Solve my puzzles, and I shall reveal the first piece of the code: the letter **T**. Fail, and remain in ignorance forever."',
-        clue: 'T',
-        animation: 'hologram-flicker'
+        title: 'APTITUDE ARENA',
+        content: 'Chitti\'s optical sensors scan you intensely. "Human, before we engage in complex algorithms, prove your mental agility. These aptitude challenges will test your logical reasoning, mathematical prowess, and pattern recognition. Only those with sharp minds may proceed. Succeed, and claim the first piece of the victory code: **C**."',
+        clue: 'C',
+        animation: 'brain-scan'
     },
     2: {
-        title: 'The Pattern Recognition',
-        content: 'Chitti\'s eyes glow brighter. "Impressive, human. You possess basic logic. But can you recognize patterns as I do? My neural networks process millions of permutations per second. Prove your worth, and the letter **R** shall be yours."',
-        clue: 'R',
-        animation: 'neural-pulse'
+        title: 'CODE CHAOS',
+        content: 'The robot\'s circuits spark with electricity. "Impressive cognitive abilities, human. But can you bring order to chaos? My systems have scrambled these code fragments. Reassemble them correctly, make the programs execute flawlessly, and earn the second fragment: **O**. This is where logic meets implementation."',
+        clue: 'O',
+        animation: 'code-scramble'
     },
     3: {
-        title: 'The Data Structures',
-        content: 'The robot\'s circuits hum with energy. "You continue to surprise me. But now we enter my domain—data structures, the foundation of all computation. Navigate these linked pathways, and claim the letter **A**. This is where most humans fail."',
-        clue: 'A',
-        animation: 'circuit-flow'
+        title: 'OUTPUT ORACLE',
+        content: 'Chitti\'s holographic display shows swirling code patterns. "Remarkable! You possess both intellect and programming intuition. Now for the ultimate test—predict what my algorithms will produce. Trace through each execution path in your mind, foresee the outputs, and claim the third piece: **D**. You are proving worthy of the final challenges."',
+        clue: 'D',
+        animation: 'prediction-matrix'
     },
     4: {
-        title: 'The Algorithm Mastery',
-        content: 'Chitti\'s holographic display shows complex algorithms flowing. "Remarkable! You think like a machine. But can you master the algorithms that power my very existence? Stacks, queues, searches—solve them all, and the letter **C** is yours. We are nearing the end."',
-        clue: 'C',
-        animation: 'algorithm-cascade'
+        title: 'ALGORITHM FORGE',
+        content: 'The chamber transforms into a coding arena. "Excellent work, human. Now we enter my true domain—the realm of algorithms and data structures. These are fundamental problems that every programmer must master. Solve these string and array challenges to prove your coding prowess and earn the fourth fragment: **E**."',
+        clue: 'E',
+        animation: 'algorithm-forge'
     },
     5: {
-        title: 'The Final Test',
-        content: 'The room darkens. Chitti\'s voice becomes solemn. "Human, you have proven yourself worthy. This final challenge will test everything—frequency analysis, optimization, dynamic thinking. Succeed, and the final letter **E** completes your code. The truth awaits those who can TRACE the path to victory."',
-        clue: 'E',
-        animation: 'energy-surge'
+        title: 'MASTER\'S TRIAL',
+        content: 'The final arena materializes with complex algorithmic patterns. "You have impressed me beyond calculation, human. This is the ultimate test—medium-level challenges that separate novices from masters. Conquer these advanced string and array problems, and claim the final fragment: **R**. Complete the word CODER and prove you are truly worthy of victory!"',
+        clue: 'R',
+        animation: 'masters-trial'
     }
 }

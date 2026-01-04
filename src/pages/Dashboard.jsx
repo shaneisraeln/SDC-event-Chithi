@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [showFinalModal, setShowFinalModal] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [hoveredLevel, setHoveredLevel] = useState(null)
-  const totalLevels = Object.keys(problems).length
+  const totalLevels = 5 // 5 rounds total
 
   const sortedLevelIds = Object.keys(storySegments)
     .map(Number)
@@ -29,48 +29,58 @@ const Dashboard = () => {
   const levels = [
     { 
       id: 1, 
-      name: 'The Awakening', 
-      subtitle: 'Begin Your Journey',
-      questions: 1, 
-      icon: '⚡',
-      gradient: 'from-purple-500 via-pink-500 to-purple-600',
-      glowColor: 'rgba(168, 85, 247, 0.5)'
+      name: 'APTITUDE ARENA', 
+      subtitle: 'Test Your Mental Speed',
+      questions: 10, 
+      type: 'MCQ',
+      icon: '🧠',
+      gradient: 'from-emerald-500 via-teal-500 to-cyan-500',
+      glowColor: 'rgba(16, 185, 129, 0.6)',
+      description: 'Lightning-fast aptitude questions to warm up your brain'
     },
     { 
       id: 2, 
-      name: 'Pattern Recognition', 
-      subtitle: 'Master the Patterns',
-      questions: 2, 
-      icon: '🧩',
-      gradient: 'from-pink-500 via-purple-500 to-blue-500',
-      glowColor: 'rgba(236, 72, 153, 0.5)'
+      name: 'CODE CHAOS', 
+      subtitle: 'Fix the Scrambled Logic',
+      questions: 3, 
+      type: 'CODE_ALIGN',
+      icon: '🔧',
+      gradient: 'from-orange-500 via-red-500 to-pink-500',
+      glowColor: 'rgba(249, 115, 22, 0.6)',
+      description: 'Drag and drop jumbled code lines to make programs run'
     },
     { 
       id: 3, 
-      name: 'Data Structures', 
-      subtitle: 'Navigate the Pathways',
-      questions: 3, 
-      icon: '🔗',
-      gradient: 'from-blue-500 via-purple-500 to-pink-500',
-      glowColor: 'rgba(59, 130, 246, 0.5)'
+      name: 'OUTPUT ORACLE', 
+      subtitle: 'Predict the Future',
+      questions: 5, 
+      type: 'OUTPUT_PREDICT',
+      icon: '🔮',
+      gradient: 'from-violet-500 via-purple-500 to-indigo-500',
+      glowColor: 'rgba(139, 92, 246, 0.6)',
+      description: 'Analyze code and predict what it will output'
     },
     { 
       id: 4, 
-      name: 'Algorithm Mastery', 
-      subtitle: 'Unlock the Secrets',
-      questions: 4, 
-      icon: '⚙️',
-      gradient: 'from-purple-600 via-blue-600 to-purple-700',
-      glowColor: 'rgba(147, 51, 234, 0.5)'
+      name: 'ALGORITHM FORGE', 
+      subtitle: 'Easy DSA Challenges',
+      questions: 5, 
+      type: 'DSA',
+      icon: '⚔️',
+      gradient: 'from-blue-500 via-indigo-500 to-purple-500',
+      glowColor: 'rgba(59, 130, 246, 0.6)',
+      description: 'Master fundamental string and array problems from LeetCode'
     },
     { 
       id: 5, 
-      name: 'The Final Test', 
-      subtitle: 'Face the Ultimate Challenge',
+      name: 'MASTER\'S TRIAL', 
+      subtitle: 'Medium DSA Mastery',
       questions: 5, 
+      type: 'DSA',
       icon: '👑',
-      gradient: 'from-yellow-500 via-purple-600 to-pink-600',
-      glowColor: 'rgba(234, 179, 8, 0.5)'
+      gradient: 'from-purple-500 via-pink-500 to-red-500',
+      glowColor: 'rgba(168, 85, 247, 0.6)',
+      description: 'Conquer advanced algorithmic challenges and prove your mastery'
     }
   ]
 
@@ -105,11 +115,11 @@ const Dashboard = () => {
           <div className="flex items-center justify-center gap-6 mb-6">
             <ChittiAvatar size="medium" interactive={true} />
             <div>
-              <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-2">
-                MISSION CONTROL
+              <h1 className="text-6xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                BATTLE ARENA
               </h1>
               <p className="text-xl text-purple-300">
-                Choose Your Challenge • Defeat Chitti
+                5 Rounds • 28 Challenges • 1 Ultimate Victory
               </p>
             </div>
           </div>
@@ -118,7 +128,7 @@ const Dashboard = () => {
           <div className="max-w-2xl mx-auto mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-purple-400 font-semibold">Overall Progress</span>
-              <span className="text-purple-300">{progress.completedLevels.length}/{totalLevels} Levels</span>
+              <span className="text-purple-300">{progress.completedLevels.length}/5 Rounds</span>
             </div>
             <div className="h-3 bg-gray-800 rounded-full overflow-hidden neon-border">
               <motion.div
@@ -147,31 +157,41 @@ const Dashboard = () => {
           </div>
         </motion.div>
 
-        {/* Clue Tracker */}
+        {/* Victory Tracker */}
         <div className="max-w-3xl mx-auto mb-10">
           <div className="glass-effect neon-border rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-purple-400 text-glow">Clues Collected</h3>
+              <h3 className="text-2xl font-bold text-purple-400 text-glow">Battle Progress</h3>
               <span className="text-purple-300 font-semibold">
-                {unlockedClues.length}/{totalLevels} clues
+                {unlockedClues.length}/5 rounds conquered
               </span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-              {sortedLevelIds.map((id) => {
-                const unlocked = progress.completedLevels.includes(id)
-                const clue = storySegments[id].clue
+            <div className="grid grid-cols-5 gap-4">
+              {[
+                { id: 1, name: 'APTITUDE', icon: '🧠', color: 'emerald' },
+                { id: 2, name: 'CODE FIX', icon: '🔧', color: 'orange' },
+                { id: 3, name: 'PREDICT', icon: '🔮', color: 'violet' },
+                { id: 4, name: 'EASY DSA', icon: '⚔️', color: 'blue' },
+                { id: 5, name: 'HARD DSA', icon: '👑', color: 'purple' }
+              ].map((round) => {
+                const unlocked = progress.completedLevels.includes(round.id)
+                const clue = storySegments[round.id]?.clue
                 return (
                   <div
-                    key={id}
-                    className={`p-4 rounded-xl border text-center ${
+                    key={round.id}
+                    className={`p-6 rounded-xl border text-center transition-all duration-300 ${
                       unlocked
-                        ? 'border-green-500/60 bg-green-500/10 text-green-300'
+                        ? `border-${round.color}-500/60 bg-${round.color}-500/10 text-${round.color}-300 shadow-lg shadow-${round.color}-500/20`
                         : 'border-purple-500/30 bg-purple-900/20 text-purple-300'
                     }`}
                   >
-                    <div className="text-sm mb-1">Level {id}</div>
-                    <div className="text-3xl font-bold tracking-widest">
+                    <div className="text-4xl mb-2">{round.icon}</div>
+                    <div className="text-sm font-semibold mb-2">{round.name}</div>
+                    <div className="text-2xl font-bold tracking-widest">
                       {unlocked ? clue : '—'}
+                    </div>
+                    <div className="text-xs mt-2 opacity-75">
+                      {unlocked ? 'CONQUERED' : 'LOCKED'}
                     </div>
                   </div>
                 )
@@ -181,7 +201,7 @@ const Dashboard = () => {
         </div>
 
         {/* Levels Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {levels.map((level, index) => {
             const unlocked = isLevelUnlocked(level.id)
             const complete = isLevelComplete(level.id)
@@ -269,6 +289,15 @@ const Dashboard = () => {
                     {/* Stats */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 bg-black/30 rounded-lg border border-purple-500/20">
+                        <span className="text-purple-300">Type</span>
+                        <span className="text-white font-bold text-sm">
+                          {level.type === 'MCQ' ? 'Multiple Choice' : 
+                           level.type === 'CODE_ALIGN' ? 'Code Fixing' : 
+                           'Output Prediction'}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 bg-black/30 rounded-lg border border-purple-500/20">
                         <span className="text-purple-300">Questions</span>
                         <span className="text-white font-bold">{level.questions}</span>
                       </div>
@@ -278,15 +307,20 @@ const Dashboard = () => {
                         <span className="text-white font-bold">{getLevelProgress(level.id)}</span>
                       </div>
 
+                      {/* Description */}
+                      <div className="p-3 bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-lg border border-purple-500/20">
+                        <p className="text-purple-200 text-sm text-center">{level.description}</p>
+                      </div>
+
                       {/* Status Badge */}
-                      <div className={`text-center py-2 rounded-lg font-semibold ${
+                      <div className={`text-center py-3 rounded-lg font-semibold text-lg ${
                         complete 
                           ? 'bg-green-500/20 text-green-400 border border-green-500/50' 
                           : unlocked 
                           ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
                           : 'bg-gray-500/20 text-gray-400 border border-gray-500/50'
                       }`}>
-                        {complete ? '✓ Completed' : unlocked ? '▶ In Progress' : '🔒 Locked'}
+                        {complete ? '🏆 CONQUERED' : unlocked ? '⚔️ BATTLE READY' : '🔒 LOCKED'}
                       </div>
                     </div>
 
@@ -296,7 +330,9 @@ const Dashboard = () => {
                         className="mt-4 text-center text-purple-400 text-sm font-semibold"
                         animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       >
-                        Click to Enter →
+                        {level.type === 'MCQ' ? '🧠 Test Your Speed →' :
+                         level.type === 'CODE_ALIGN' ? '🔧 Fix The Code →' :
+                         '🔮 Predict Output →'}
                       </motion.div>
                     )}
                   </div>
@@ -334,10 +370,10 @@ const Dashboard = () => {
                 🏆
               </motion.div>
               <h2 className="text-3xl font-bold text-purple-300 mb-3">
-                All Levels Complete!
+                All Rounds Conquered!
               </h2>
               <p className="text-purple-400 mb-6">
-                You have collected all 5 clues. The final challenge awaits...
+                You have mastered all 3 battle rounds. The ultimate challenge awaits...
               </p>
               <RippleButton
                 onClick={() => navigate('/victory')}

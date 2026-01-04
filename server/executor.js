@@ -249,6 +249,11 @@ ${code}
 tree = build_tree(${pythonArray})
 result = ${funcMatch[1]}(tree)
 print(json.dumps(result))`;
+            } else if (problemId === 'reverse-string') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `import json\n${code}\ns = ${JSON.stringify(s)}\n${funcMatch[1]}(s)\nprint(json.dumps(s))`;
             } else {
                 // Default execution for simple problems
                 wrapper = `import json\n${code}\nresult = ${funcMatch[1]}(*${JSON.stringify(Object.values(testcase.input))})\nprint(json.dumps(result))`;
@@ -446,6 +451,51 @@ void free_tree(struct TreeNode* root) {
                     s
                 } = testcase.input;
                 wrapper = `#include <stdio.h>\n#include <string.h>\n${code}\nint main(){\n  const char* s = "${s}";\n  int res = lengthOfLongestSubstring((char*)s);\n  printf("%d", res);\n  return 0;\n}`;
+            } else if (problemId === 'reverse-string') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <stdio.h>\n${code}\nint main(){\n  char s[] = {${s.map(c => `'${c}'`).join(',')}};\n  int sSize = ${s.length};\n  reverseString(s, sSize);\n  printf("[");\n  for(int i=0; i<sSize; i++) { printf("\\"%c\\"", s[i]); if(i<sSize-1) printf(","); }\n  printf("]");\n  return 0;\n}`;
+            } else if (problemId === 'valid-palindrome') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <stdio.h>\n#include <string.h>\n#include <stdbool.h>\n#include <ctype.h>\n${code}\nint main(){\n  const char* s = "${s}";\n  bool res = isPalindrome((char*)s);\n  printf(res ? "true" : "false");\n  return 0;\n}`;
+            } else if (problemId === 'group-anagrams') {
+                const {
+                    strs
+                } = testcase.input;
+                // Complex problem - for C, we'll return a simplified error for now
+                return {
+                    error: `C execution for group-anagrams is complex and not implemented yet. Please use Python, Java, or C++.`,
+                    allPassed: false,
+                    results: []
+                };
+            } else if (problemId === 'three-sum') {
+                const {
+                    nums
+                } = testcase.input;
+                // Complex problem - for C, we'll return a simplified error for now
+                return {
+                    error: `C execution for three-sum is complex and not implemented yet. Please use Python, Java, or C++.`,
+                    allPassed: false,
+                    results: []
+                };
+            } else if (problemId === 'container-with-most-water') {
+                const {
+                    height
+                } = testcase.input;
+                wrapper = `#include <stdio.h>\n${code}\nint main(){\n  int height[] = {${height.join(',')}};\n  int heightSize = ${height.length};\n  int res = maxArea(height, heightSize);\n  printf("%d", res);\n  return 0;\n}`;
+            } else if (problemId === 'product-of-array-except-self') {
+                const {
+                    nums
+                } = testcase.input;
+                wrapper = `#include <stdio.h>\n#include <stdlib.h>\n${code}\nint main(){\n  int nums[] = {${nums.join(',')}};\n  int numsSize = ${nums.length};\n  int returnSize = 0;\n  int* result = productExceptSelf(nums, numsSize, &returnSize);\n  printf("[");\n  for(int i=0; i<returnSize; i++) { printf("%d", result[i]); if(i<returnSize-1) printf(","); }\n  printf("]");\n  free(result);\n  return 0;\n}`;
+            } else if (problemId === 'longest-substring-without-repeating') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <stdio.h>\n#include <string.h>\n${code}\nint main(){\n  const char* s = "${s}";\n  int res = lengthOfLongestSubstring((char*)s);\n  printf("%d", res);\n  return 0;\n}`;
             } else {
                 return {
                     error: `C execution is not configured for problem "${problemId}".`,
@@ -634,6 +684,41 @@ void freeTree(TreeNode* root) {
                     s
                 } = testcase.input;
                 wrapper = `#include <iostream>\n#include <string>\nusing namespace std;\n${code}\nint main(){ string s = "${s}"; int res = lengthOfLongestSubstring(s); cout << res; return 0; }`;
+            } else if (problemId === 'reverse-string') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\nint main(){\n  vector<char> s = {${s.map(c => `'${c}'`).join(',')}};\n  reverseString(s);\n  cout << "[";\n  for(size_t i=0; i<s.size(); i++) { cout << "\\"" << s[i] << "\\""; if(i<s.size()-1) cout << ","; }\n  cout << "]";\n  return 0;\n}`;
+            } else if (problemId === 'valid-palindrome') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\n${code}\nint main(){\n  string s = "${s}";\n  bool res = isPalindrome(s);\n  cout << (res ? "true" : "false");\n  return 0;\n}`;
+            } else if (problemId === 'group-anagrams') {
+                const {
+                    strs
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n${code}\nint main(){\n  vector<string> strs = {${strs.map(s => `"${s}"`).join(',')}};\n  vector<vector<string>> result = groupAnagrams(strs);\n  cout << "[";\n  for(size_t i=0; i<result.size(); i++) {\n    cout << "[";\n    for(size_t j=0; j<result[i].size(); j++) {\n      cout << "\\"" << result[i][j] << "\\"";\n      if(j<result[i].size()-1) cout << ",";\n    }\n    cout << "]";\n    if(i<result.size()-1) cout << ",";\n  }\n  cout << "]";\n  return 0;\n}`;
+            } else if (problemId === 'three-sum') {
+                const {
+                    nums
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n${code}\nint main(){\n  vector<int> nums = ${formatCVectorInit(nums)};\n  vector<vector<int>> result = threeSum(nums);\n  cout << "[";\n  for(size_t i=0; i<result.size(); i++) {\n    cout << "[";\n    for(size_t j=0; j<result[i].size(); j++) {\n      cout << result[i][j];\n      if(j<result[i].size()-1) cout << ",";\n    }\n    cout << "]";\n    if(i<result.size()-1) cout << ",";\n  }\n  cout << "]";\n  return 0;\n}`;
+            } else if (problemId === 'container-with-most-water') {
+                const {
+                    height
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n${code}\nint main(){\n  vector<int> height = ${formatCVectorInit(height)};\n  int res = maxArea(height);\n  cout << res;\n  return 0;\n}`;
+            } else if (problemId === 'product-of-array-except-self') {
+                const {
+                    nums
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <vector>\nusing namespace std;\n${code}\nint main(){\n  vector<int> nums = ${formatCVectorInit(nums)};\n  vector<int> result = productExceptSelf(nums);\n  cout << "[";\n  for(size_t i=0; i<result.size(); i++) {\n    cout << result[i];\n    if(i<result.size()-1) cout << ",";\n  }\n  cout << "]";\n  return 0;\n}`;
+            } else if (problemId === 'longest-substring-without-repeating') {
+                const {
+                    s
+                } = testcase.input;
+                wrapper = `#include <iostream>\n#include <string>\n#include <unordered_set>\nusing namespace std;\n${code}\nint main(){\n  string s = "${s}";\n  int res = lengthOfLongestSubstring(s);\n  cout << res;\n  return 0;\n}`;
             } else {
                 return {
                     error: `C++ execution is not configured for problem "${problemId}".`,
@@ -817,6 +902,78 @@ const buildJavaMain = (problemId, testcase) => {
             lines.push('    Solution sol = new Solution();');
             lines.push('    Solution.TreeNode tree = buildTree(arr, 0, sol);');
             lines.push('    int res = sol.maxDepth(tree);');
+            lines.push('    System.out.print(res);');
+            break;
+        }
+        case 'reverse-string': {
+            const s = input.s;
+            lines.push(`    char[] s = {${s.map(c => `'${c}'`).join(',')}};`);
+            lines.push('    new Solution().reverseString(s);');
+            lines.push('    System.out.print("[");');
+            lines.push('    for(int i=0; i<s.length; i++) { System.out.print("\\"" + s[i] + "\\""); if(i<s.length-1) System.out.print(","); }');
+            lines.push('    System.out.print("]");');
+            break;
+        }
+        case 'valid-palindrome': {
+            const s = escapeJavaString(input.s);
+            lines.push(`    String s = "${s}";`);
+            lines.push('    boolean res = new Solution().isPalindrome(s);');
+            lines.push('    System.out.print(res ? "true" : "false");');
+            break;
+        }
+        case 'group-anagrams': {
+            const strs = input.strs;
+            lines.push(`    String[] strs = {${strs.map(s => `"${escapeJavaString(s)}"`).join(',')}};`);
+            lines.push('    java.util.List<java.util.List<String>> result = new Solution().groupAnagrams(strs);');
+            lines.push('    System.out.print("[");');
+            lines.push('    for(int i=0; i<result.size(); i++) {');
+            lines.push('      System.out.print("[");');
+            lines.push('      for(int j=0; j<result.get(i).size(); j++) {');
+            lines.push('        System.out.print("\\"" + result.get(i).get(j) + "\\"");');
+            lines.push('        if(j<result.get(i).size()-1) System.out.print(",");');
+            lines.push('      }');
+            lines.push('      System.out.print("]");');
+            lines.push('      if(i<result.size()-1) System.out.print(",");');
+            lines.push('    }');
+            lines.push('    System.out.print("]");');
+            break;
+        }
+        case 'three-sum': {
+            const nums = formatJavaIntArray(input.nums);
+            lines.push(`    int[] nums = ${nums};`);
+            lines.push('    java.util.List<java.util.List<Integer>> result = new Solution().threeSum(nums);');
+            lines.push('    System.out.print("[");');
+            lines.push('    for(int i=0; i<result.size(); i++) {');
+            lines.push('      System.out.print("[");');
+            lines.push('      for(int j=0; j<result.get(i).size(); j++) {');
+            lines.push('        System.out.print(result.get(i).get(j));');
+            lines.push('        if(j<result.get(i).size()-1) System.out.print(",");');
+            lines.push('      }');
+            lines.push('      System.out.print("]");');
+            lines.push('      if(i<result.size()-1) System.out.print(",");');
+            lines.push('    }');
+            lines.push('    System.out.print("]");');
+            break;
+        }
+        case 'container-with-most-water': {
+            const height = formatJavaIntArray(input.height);
+            lines.push(`    int[] height = ${height};`);
+            lines.push('    int res = new Solution().maxArea(height);');
+            lines.push('    System.out.print(res);');
+            break;
+        }
+        case 'product-of-array-except-self': {
+            const nums = formatJavaIntArray(input.nums);
+            lines.unshift(printArray);
+            lines.push(`    int[] nums = ${nums};`);
+            lines.push('    int[] result = new Solution().productExceptSelf(nums);');
+            lines.push('    System.out.print(arr(result));');
+            break;
+        }
+        case 'longest-substring-without-repeating': {
+            const s = escapeJavaString(input.s);
+            lines.push(`    String s = "${s}";`);
+            lines.push('    int res = new Solution().lengthOfLongestSubstring(s);');
             lines.push('    System.out.print(res);');
             break;
         }

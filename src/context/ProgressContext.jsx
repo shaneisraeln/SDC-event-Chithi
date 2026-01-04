@@ -10,13 +10,41 @@ export const useProgress = () => {
 
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem('chitti-progress')
-    return saved ? JSON.parse(saved) : {
-      completedLevels: [],
-      solvedQuestions: {},
-      hintsUsed: {},
-      collectedClues: [],
-      finalPasswordEntered: false
+    try {
+      const saved = localStorage.getItem('chitti-progress')
+      const defaultProgress = {
+        completedLevels: [],
+        solvedQuestions: {},
+        hintsUsed: {},
+        collectedClues: [],
+        finalPasswordEntered: false,
+        wrongAnswers: {}, // Track wrong answers with timestamps
+        questionAttempts: {} // Track number of attempts per question
+      }
+      
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        // Ensure new fields exist
+        return {
+          ...defaultProgress,
+          ...parsed,
+          wrongAnswers: parsed.wrongAnswers || {},
+          questionAttempts: parsed.questionAttempts || {}
+        }
+      }
+      
+      return defaultProgress
+    } catch (error) {
+      console.error('Error loading progress:', error)
+      return {
+        completedLevels: [],
+        solvedQuestions: {},
+        hintsUsed: {},
+        collectedClues: [],
+        finalPasswordEntered: false,
+        wrongAnswers: {},
+        questionAttempts: {}
+      }
     }
   })
 
@@ -32,6 +60,48 @@ export const ProgressProvider = ({ children }) => {
         [`${levelId}-${questionId}`]: true
       }
     }))
+  }
+
+  const markQuestionWrong = (levelId, questionId) => {
+    const key = `${levelId}-${questionId}`
+    const now = Date.now()
+    setProgress(prev => ({
+      ...prev,
+      wrongAnswers: {
+        ...prev.wrongAnswers,
+        [key]: now
+      },
+      questionAttempts: {
+        ...prev.questionAttempts,
+        [key]: (prev.questionAttempts[key] || 0) + 1
+      }
+    }))
+  }
+
+  const isQuestionInTimeout = (levelId, questionId) => {
+    const key = `${levelId}-${questionId}`
+    const wrongTime = progress.wrongAnswers[key]
+    if (!wrongTime) return false
+    
+    const timeElapsed = Date.now() - wrongTime
+    const timeoutDuration = 10000 // 10 seconds
+    return timeElapsed < timeoutDuration
+  }
+
+  const getTimeoutRemaining = (levelId, questionId) => {
+    const key = `${levelId}-${questionId}`
+    const wrongTime = progress.wrongAnswers[key]
+    if (!wrongTime) return 0
+    
+    const timeElapsed = Date.now() - wrongTime
+    const timeoutDuration = 10000 // 10 seconds
+    const remaining = Math.max(0, timeoutDuration - timeElapsed)
+    return Math.ceil(remaining / 1000) // Return seconds
+  }
+
+  const hasAttemptedQuestion = (levelId, questionId) => {
+    const key = `${levelId}-${questionId}`
+    return (progress.questionAttempts[key] || 0) > 0
   }
 
   const markLevelComplete = (levelId, clue) => {
@@ -63,7 +133,9 @@ export const ProgressProvider = ({ children }) => {
       solvedQuestions: {},
       hintsUsed: {},
       collectedClues: [],
-      finalPasswordEntered: false
+      finalPasswordEntered: false,
+      wrongAnswers: {},
+      questionAttempts: {}
     }
     setProgress(emptyProgress)
     localStorage.setItem('chitti-progress', JSON.stringify(emptyProgress))
@@ -96,6 +168,10 @@ export const ProgressProvider = ({ children }) => {
     <ProgressContext.Provider value={{
       progress,
       markQuestionSolved,
+      markQuestionWrong,
+      isQuestionInTimeout,
+      getTimeoutRemaining,
+      hasAttemptedQuestion,
       markLevelComplete,
       useHint,
       markFinalPasswordEntered,
