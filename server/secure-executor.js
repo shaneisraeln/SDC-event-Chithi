@@ -11,6 +11,60 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 const PORT = process.env.PORT || 3003;
 
+// Compiler detection function
+function findCompiler(compilerName) {
+    const commonPaths = [
+        'C:\\MinGW\\bin',
+        'C:\\mingw64\\bin',
+        'C:\\msys64\\mingw64\\bin',
+        '/usr/bin',
+        '/usr/local/bin'
+    ];
+
+    try {
+        // Try to run the compiler to check if it exists
+        require('child_process').execSync(`${compilerName} --version`, {
+            stdio: 'ignore'
+        });
+        return compilerName;
+    } catch (e) {
+        // If direct execution fails, try common paths
+        for (const dir of commonPaths) {
+            const fullPath = path.join(dir, compilerName + (process.platform === 'win32' ? '.exe' : ''));
+            if (fs.existsSync(fullPath)) return fullPath;
+        }
+    }
+    return null;
+}
+
+// Detect available compilers
+const gccPath = findCompiler('gcc');
+const gppPath = findCompiler('g++');
+const pythonPath = findCompiler(process.platform === 'win32' ? 'python' : 'python3');
+const javacPath = findCompiler('javac');
+const javaPath = findCompiler('java');
+
+console.log('🔧 Compiler Detection Results:');
+console.log('  GCC:', gccPath || '❌ NOT FOUND');
+console.log('  G++:', gppPath || '❌ NOT FOUND');
+console.log('  Python:', pythonPath || '❌ NOT FOUND');
+console.log('  Java Compiler:', javacPath || '❌ NOT FOUND');
+console.log('  Java Runtime:', javaPath || '❌ NOT FOUND');
+
+// Warn about missing compilers
+const missingCompilers = [];
+if (!gccPath) missingCompilers.push('GCC (C compiler)');
+if (!gppPath) missingCompilers.push('G++ (C++ compiler)');
+if (!pythonPath) missingCompilers.push('Python interpreter');
+if (!javacPath) missingCompilers.push('Java compiler (javac)');
+if (!javaPath) missingCompilers.push('Java runtime (java)');
+
+if (missingCompilers.length > 0) {
+    console.log('⚠️  WARNING: Missing compilers:', missingCompilers.join(', '));
+    console.log('   Some programming languages will not work properly.');
+    console.log('   In Docker deployment, all compilers should be available.');
+}
+
 // Security middleware
 app.use(cors({
     origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3001'],
@@ -150,7 +204,10 @@ async function executeTestCase(code, language, problemId, testcase, sessionDir, 
                     fs.writeFileSync(filename, pythonWrapper, {
                         mode: 0o600
                     });
-                    command = process.platform === 'win32' ? 'python' : 'python3';
+                    if (!pythonPath) {
+                        throw new Error('Python interpreter not found');
+                    }
+                    command = pythonPath;
                     args = [filename];
                     break;
 
@@ -162,8 +219,12 @@ async function executeTestCase(code, language, problemId, testcase, sessionDir, 
                         mode: 0o600
                     });
 
+                    if (!javacPath || !javaPath) {
+                        throw new Error('Java compiler or runtime not found');
+                    }
+
                     // Compile Java
-                    const compileChild = spawn('javac', [filename], {
+                    const compileChild = spawn(javacPath || 'javac', [filename], {
                         cwd: sessionDir,
                         timeout: timeout,
                         stdio: ['pipe', 'pipe', 'pipe']
@@ -184,7 +245,7 @@ async function executeTestCase(code, language, problemId, testcase, sessionDir, 
                         }
 
                         // Run Java
-                        const runChild = spawn('java', ['-cp', sessionDir, className], {
+                        const runChild = spawn(javaPath || 'java', ['-cp', sessionDir, className], {
                             cwd: sessionDir,
                             timeout: timeout,
                             stdio: ['pipe', 'pipe', 'pipe']
@@ -235,7 +296,10 @@ async function executeTestCase(code, language, problemId, testcase, sessionDir, 
                     fs.writeFileSync(filename, cWrapper, {
                         mode: 0o600
                     });
-                    command = 'gcc';
+                    if (!gccPath) {
+                        throw new Error('GCC compiler not found');
+                    }
+                    command = gccPath;
                     args = [filename, '-o', path.join(sessionDir, fileId), '-std=c99'];
                     break;
 
@@ -245,7 +309,10 @@ async function executeTestCase(code, language, problemId, testcase, sessionDir, 
                     fs.writeFileSync(filename, cppWrapper, {
                         mode: 0o600
                     });
-                    command = 'g++';
+                    if (!gppPath) {
+                        throw new Error('G++ compiler not found');
+                    }
+                    command = gppPath;
                     args = [filename, '-o', path.join(sessionDir, fileId), '-std=c++17'];
                     break;
 
