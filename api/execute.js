@@ -1,10 +1,5 @@
 import Groq from 'groq-sdk';
 
-// Initialize Groq AI
-const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY
-});
-
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,6 +17,11 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Initialize Groq AI inside the handler
+        const groq = new Groq({
+            apiKey: process.env.GROQ_API_KEY
+        });
+
         const {
             code,
             language,
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
             const testcase = allTests[i];
 
             try {
-                const result = await evaluateCodeWithGroq(code, language, problemId, testcase);
+                const result = await evaluateCodeWithGroq(groq, code, language, problemId, testcase);
                 results.push(result);
             } catch (error) {
                 results.push({
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
     }
 }
 
-async function evaluateCodeWithGroq(code, language, problemId, testcase) {
+async function evaluateCodeWithGroq(groq, code, language, problemId, testcase) {
     const prompt = createEvaluationPrompt(code, language, problemId, testcase);
 
     const completion = await groq.chat.completions.create({
