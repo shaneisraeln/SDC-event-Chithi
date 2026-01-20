@@ -85,7 +85,8 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
       }
 
       // Call the API (Vercel function in production, local dev server in development)
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/execute' : 'http://localhost:3003/api/execute';
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = isLocalhost ? 'http://localhost:3003/api/execute' : '/api/execute';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
