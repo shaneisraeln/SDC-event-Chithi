@@ -84,7 +84,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         throw new Error(`No test cases found for problem: ${questionId}`)
       }
 
-      // Call the secure backend API
+      // Call the API (local dev server or Vercel function)
       const response = await fetch('http://localhost:3003/api/execute', {
         method: 'POST',
         headers: {

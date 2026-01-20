@@ -1,26 +1,25 @@
+import express from 'express';
+import cors from 'cors';
 import Groq from 'groq-sdk';
+import dotenv from 'dotenv';
+
+dotenv.config({
+    path: '.env.local'
+});
+
+const app = express();
+const PORT = 3003;
 
 // Initialize Groq AI
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
 
-export default async function handler(req, res) {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+app.use(cors());
+app.use(express.json());
 
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({
-            error: 'Method not allowed'
-        });
-    }
-
+// API endpoint that matches our Vercel function
+app.post('/api/execute', async (req, res) => {
     try {
         const {
             code,
@@ -64,7 +63,7 @@ export default async function handler(req, res) {
             error: 'Internal server error'
         });
     }
-}
+});
 
 async function evaluateCodeWithGroq(code, language, problemId, testcase) {
     const prompt = createEvaluationPrompt(code, language, problemId, testcase);
@@ -79,8 +78,8 @@ async function evaluateCodeWithGroq(code, language, problemId, testcase) {
                 content: prompt
             }
         ],
-        model: "llama-3.1-8b-instant", // Fast and accurate model
-        temperature: 0, // Deterministic responses
+        model: "llama-3.1-8b-instant",
+        temperature: 0,
         max_tokens: 1000
     });
 
@@ -149,3 +148,8 @@ RESPOND WITH ONLY THIS JSON FORMAT:
 
 REMEMBER: Be extremely strict. Incomplete code = automatic failure.`;
 }
+
+app.listen(PORT, () => {
+    console.log(`🚀 Development API server running on http://localhost:${PORT}`);
+    console.log('Frontend should be running on http://localhost:3002');
+});
