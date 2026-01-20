@@ -84,8 +84,9 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         throw new Error(`No test cases found for problem: ${questionId}`)
       }
 
-      // Call the API (local dev server or Vercel function)
-      const response = await fetch('http://localhost:3003/api/execute', {
+      // Call the API (Vercel function in production, local dev server in development)
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/execute' : 'http://localhost:3003/api/execute';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
