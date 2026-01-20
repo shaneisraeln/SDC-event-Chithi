@@ -1,8 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-const {
-    executeCode
-} = require('./executor')
 
 const app = express()
 const PORT = 3002
@@ -12,21 +9,11 @@ app.use(express.json())
 
 app.post('/api/execute', async (req, res) => {
     try {
-        const {
-            code,
-            language,
-            problemId,
-            testcases
-        } = req.body
-
-        if (!code || !language || !problemId || !testcases) {
-            return res.status(400).json({
-                error: 'Missing required fields'
-            })
-        }
-
-        const results = await executeCode(code, language, problemId, testcases)
-        res.json(results)
+        // For local development, redirect to Vercel function
+        // In production, this won't be needed
+        res.json({
+            error: 'Please use the Vercel deployment or update frontend to use /api/execute directly'
+        })
     } catch (error) {
         console.error('Execution error:', error)
         res.status(500).json({
@@ -36,5 +23,6 @@ app.post('/api/execute', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`🚀 Autograder server running on http://localhost:${PORT}`)
+    console.log(`🚀 Server running on http://localhost:${PORT}`)
+    console.log('⚠️  For code execution, deploy to Vercel or run locally with Vercel CLI')
 })
