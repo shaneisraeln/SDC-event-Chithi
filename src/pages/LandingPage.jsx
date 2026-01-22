@@ -1,15 +1,21 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import ChittiAvatar from '../components/ChittiAvatar'
 import RippleButton from '../components/RippleButton'
 import { useMotion } from '../context/MotionContext'
+import { logPageView } from '../utils/adminLogger'
 
 const LandingPage = () => {
   const navigate = useNavigate()
   const { reducedMotion, toggleReducedMotion } = useMotion()
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
+  
+  // Log page view for admin dashboard
+  useEffect(() => {
+    logPageView('landing')
+  }, [])
   
   // Parallax transforms
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -200])

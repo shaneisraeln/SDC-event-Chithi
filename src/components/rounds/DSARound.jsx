@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import RippleButton from '../RippleButton'
 import { useMotion } from '../../context/MotionContext'
 import { useProgress } from '../../context/ProgressContext'
+import { logSubmission } from '../../utils/adminLogger'
 
 const DSARound = ({ question, onSolved, isAlreadySolved }) => {
   const { reducedMotion } = useMotion()
@@ -105,6 +106,16 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
       }
 
       const result = await response.json()
+      
+      // Log submission for admin dashboard
+      logSubmission({
+        problemId: question.id,
+        language: selectedLanguage,
+        code: code,
+        allPassed: result.allPassed,
+        results: result.results,
+        error: result.error
+      })
       
       if (result.error) {
         throw new Error(result.error)

@@ -6,6 +6,7 @@ import { problems, storySegments } from '../data/problems'
 import StoryModal from '../components/StoryModal'
 import RippleButton from '../components/RippleButton'
 import { useMotion } from '../context/MotionContext'
+import { logPageView } from '../utils/adminLogger'
 
 // Round-specific components
 import MCQRound from '../components/rounds/MCQRound'
@@ -18,6 +19,13 @@ const LevelPage = () => {
   const navigate = useNavigate()
   const { reducedMotion } = useMotion()
   const { progress, markQuestionSolved, markLevelComplete } = useProgress()
+
+  // Log page view for admin dashboard
+  useEffect(() => {
+    if (levelId) {
+      logPageView(`level-${levelId}`)
+    }
+  }, [levelId])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [showStory, setShowStory] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)

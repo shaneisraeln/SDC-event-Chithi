@@ -1,18 +1,24 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useProgress } from '../context/ProgressContext'
 import RippleButton from '../components/RippleButton'
 import FinalPasswordModal from '../components/FinalPasswordModal'
 import ChittiAvatar from '../components/ChittiAvatar'
 import { problems, storySegments } from '../data/problems'
 import { useMotion } from '../context/MotionContext'
+import { logPageView } from '../utils/adminLogger'
 
 const Dashboard = () => {
   const navigate = useNavigate()
   const { progress, resetProgress, exportProgress } = useProgress()
   const { reducedMotion } = useMotion()
   const [showFinalModal, setShowFinalModal] = useState(false)
+
+  // Log page view for admin dashboard
+  useEffect(() => {
+    logPageView('dashboard')
+  }, [])
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [hoveredLevel, setHoveredLevel] = useState(null)
   const totalLevels = 5 // 5 rounds total
@@ -153,6 +159,14 @@ const Dashboard = () => {
               className="px-6 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg neon-border font-semibold"
             >
               🔄 Reset Progress
+            </RippleButton>
+            {/* Secret Admin Link */}
+            <RippleButton
+              onClick={() => navigate('/admin-dashboard')}
+              className="px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 rounded-lg border border-gray-600 font-semibold text-xs opacity-50 hover:opacity-100 transition-opacity"
+              title="Admin Dashboard (Secret)"
+            >
+              🛠️
             </RippleButton>
           </div>
         </motion.div>
