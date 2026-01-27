@@ -18,7 +18,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import RippleButton from '../RippleButton'
+import F1Button from '../F1Button'
 import { useMotion } from '../../context/MotionContext'
 import { useProgress } from '../../context/ProgressContext'
 
@@ -206,8 +206,8 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
         >
           🔧
         </motion.div>
-        <h3 className="text-2xl font-bold text-green-400 mb-2">Code Fixed!</h3>
-        <p className="text-purple-300">You've already solved this coding challenge.</p>
+        <h3 className="text-2xl font-bold text-green-400 mb-2">Setup Configuration Complete!</h3>
+        <p className="text-purple-300">You've already solved this technical challenge.</p>
         <div className="mt-6 bg-gray-900 rounded-lg p-4 border border-gray-600">
           <pre className="text-green-400 text-left">
             <code>{getCorrectCode()}</code>
@@ -240,7 +240,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
             {question.language.toUpperCase()}
           </span>
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-blue-600/20 text-blue-300">
-            No Time Limit
+            No Lap Time Limit
           </span>
         </div>
       </div>
@@ -252,7 +252,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.2 }}
         className="bg-gradient-to-r from-orange-900/20 to-red-900/20 rounded-xl p-6 border border-orange-400/30"
       >
-        <h3 className="text-xl font-semibold text-white mb-2">Mission:</h3>
+        <h3 className="text-xl font-semibold text-white mb-2">Racing Mission:</h3>
         <p className="text-lg text-orange-100 leading-relaxed">{question.description}</p>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
@@ -260,7 +260,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
             <code className="text-green-400 bg-gray-800 px-2 py-1 rounded">{question.expectedOutput}</code>
           </div>
           <div>
-            <span className="text-orange-300 font-semibold">Test Input: </span>
+            <span className="text-orange-300 font-semibold">Race Data Input: </span>
             <code className="text-blue-400 bg-gray-800 px-2 py-1 rounded">{question.testInput}</code>
           </div>
         </div>
@@ -274,14 +274,14 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
         className="bg-gray-900 rounded-xl p-6 border border-gray-600"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-white">Drag lines to fix the code:</h3>
+          <h3 className="text-xl font-semibold text-white">Drag setup lines to fix the race configuration:</h3>
           <div className="flex gap-2">
             {hasBeenAttempted && !isAlreadySolved && (
               <div className="px-3 py-1 bg-orange-600/20 text-orange-300 rounded-lg text-sm">
                 Previously Attempted
               </div>
             )}
-            <RippleButton
+            <F1Button
               onClick={resetCode}
               disabled={isDisabled}
               className={`px-4 py-2 rounded-lg text-sm ${
@@ -289,9 +289,10 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
                   ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                   : 'bg-gray-700 hover:bg-gray-600 text-white'
               }`}
+              variant="pit_stop"
             >
-              🔄 Reset
-            </RippleButton>
+              🔄 Pit Stop Reset
+            </F1Button>
           </div>
         </div>
 
@@ -327,7 +328,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-gray-900 rounded-xl p-6 border border-gray-600"
         >
-          <h3 className="text-xl font-semibold text-white mb-4">Your Code:</h3>
+          <h3 className="text-xl font-semibold text-white mb-4">Your Race Setup:</h3>
           <pre className={`text-sm font-mono p-4 rounded-lg border ${
             isCorrect 
               ? 'border-green-500 bg-green-500/10 text-green-400' 
@@ -346,7 +347,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
           transition={{ delay: 0.6 }}
           className="text-center pt-4"
         >
-          <RippleButton
+          <F1Button
             onClick={checkSolution}
             disabled={isDisabled}
             className={`px-8 py-4 text-xl font-bold rounded-xl transition-all duration-300 ${
@@ -354,9 +355,10 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
                 ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white shadow-lg shadow-orange-500/25'
             }`}
+            variant="victory"
           >
-            {isDisabled ? `Wait ${timeoutCountdown}s...` : '🔧 Test Code'}
-          </RippleButton>
+            {isDisabled ? `Pit Stop ${timeoutCountdown}s...` : '🔧 Technical Inspection'}
+          </F1Button>
         </motion.div>
       )}
 
@@ -380,12 +382,12 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
               <h3 className={`text-2xl font-bold mb-2 ${
                 isCorrect ? 'text-green-400' : 'text-red-400'
               }`}>
-                {isCorrect ? 'Code Fixed!' : 'Not Quite Right'}
+                {isCorrect ? 'Technical Inspection Passed!' : 'Setup Configuration Error!'}
               </h3>
               <p className={`text-lg ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                 {isCorrect 
-                  ? 'Perfect! Your code runs correctly. Moving to next challenge...' 
-                  : `The code order isn't correct yet. ${timeoutCountdown > 0 ? `You can try again in ${timeoutCountdown} seconds.` : 'Try rearranging the lines!'}`
+                  ? 'Perfect! Your race setup runs flawlessly. Advancing to next circuit...' 
+                  : `The setup configuration isn't optimal yet. ${timeoutCountdown > 0 ? `You can return to pit lane in ${timeoutCountdown} seconds.` : 'Try rearranging the setup lines!'}`
                 }
               </p>
             </div>
@@ -393,8 +395,8 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Show correct solution only if not attempted before or if correct */}
             {!isCorrect && !hasBeenAttempted && (
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600/50">
-                <h4 className="text-lg font-semibold text-orange-300 mb-2">Hint:</h4>
-                <p className="text-orange-100">Try to think about the logical flow of the program.</p>
+                <h4 className="text-lg font-semibold text-orange-300 mb-2">Pit Crew Hint:</h4>
+                <p className="text-orange-100">Try to think about the logical flow of the race setup.</p>
               </div>
             )}
 
@@ -403,7 +405,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
               <div className="bg-orange-900/20 border border-orange-500/50 rounded-lg p-4 mt-4">
                 <div className="text-orange-400 text-2xl mb-2 text-center">🤔</div>
                 <p className="text-orange-300 font-semibold text-center">
-                  You've attempted this before. Think about the program structure!
+                  You've attempted this before. Think about the race setup structure!
                 </p>
               </div>
             )}
@@ -413,7 +415,7 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
               <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 mt-4">
                 <div className="text-red-400 text-2xl mb-2 text-center">⏱️</div>
                 <p className="text-red-300 font-semibold text-center">
-                  Please wait {timeoutCountdown} seconds before trying again
+                  Please wait {timeoutCountdown} seconds before returning to pit lane
                 </p>
                 <div className="w-full bg-red-900/50 rounded-full h-2 mt-3">
                   <motion.div
@@ -428,12 +430,13 @@ const CodeAlignRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Try Again Button */}
             {!isCorrect && timeoutCountdown === 0 && !isDisabled && (
               <div className="text-center mt-4">
-                <RippleButton
+                <F1Button
                   onClick={resetCode}
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold"
+                  variant="normal"
                 >
-                  🔄 Try Again
-                </RippleButton>
+                  🔄 Return to Pit Lane
+                </F1Button>
               </div>
             )}
           </motion.div>

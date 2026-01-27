@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import RippleButton from '../RippleButton'
+import F1Button from '../F1Button'
 import { useMotion } from '../../context/MotionContext'
 import { useProgress } from '../../context/ProgressContext'
 
@@ -116,8 +116,8 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
         >
           🔮
         </motion.div>
-        <h3 className="text-2xl font-bold text-green-400 mb-2">Oracle Mastered!</h3>
-        <p className="text-purple-300">You've already predicted this output correctly.</p>
+        <h3 className="text-2xl font-bold text-green-400 mb-2">Strategy Mastered!</h3>
+        <p className="text-purple-300">You've already predicted this race outcome correctly.</p>
         <div className="mt-6 bg-gray-900 rounded-lg p-4 border border-gray-600">
           <pre className="text-left font-mono">
             {formatCode(question.code)}
@@ -147,7 +147,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
             {question.difficulty}
           </span>
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-violet-600/20 text-violet-300">
-            No Time Limit
+            No Lap Time Limit
           </span>
         </div>
       </div>
@@ -160,7 +160,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
         className="bg-gray-900 rounded-xl p-6 border border-violet-400/30"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-white">Analyze this code:</h3>
+          <h3 className="text-xl font-semibold text-white">Analyze this race simulation:</h3>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -183,7 +183,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
         className="bg-gradient-to-r from-violet-900/20 to-purple-900/20 rounded-xl p-6 border border-violet-400/30"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-semibold text-white">Prediction Challenge:</h3>
+          <h3 className="text-xl font-semibold text-white">Strategy Prediction Challenge:</h3>
           {hasBeenAttempted && !isAlreadySolved && (
             <div className="px-3 py-1 bg-orange-600/20 text-orange-300 rounded-lg text-sm">
               Previously Attempted
@@ -195,7 +195,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
         {hasBeenAttempted && !showResult && (
           <div className="mt-4 bg-orange-900/20 border border-orange-500/50 rounded-lg p-3">
             <p className="text-orange-300 text-sm text-center">
-              🤔 You've tried this before. Trace through the code step by step!
+              🤔 You've tried this before. Trace through the race simulation step by step!
             </p>
           </div>
         )}
@@ -208,7 +208,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.6 }}
         className="space-y-3"
       >
-        <h3 className="text-xl font-semibold text-white mb-4">What will be the output?</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">What will be the race simulation output?</h3>
         {question.options.map((option, index) => (
           <motion.button
             key={index}
@@ -271,7 +271,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
           transition={{ delay: 1.0 }}
           className="text-center pt-4"
         >
-          <RippleButton
+          <F1Button
             onClick={handleSubmit}
             disabled={selectedOption === null || isDisabled}
             className={`px-8 py-4 text-xl font-bold rounded-xl transition-all duration-300 ${
@@ -279,9 +279,10 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
                 ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white shadow-lg shadow-violet-500/25'
             }`}
+            variant="victory"
           >
-            {isDisabled ? `Wait ${timeoutCountdown}s...` : '🔮 Predict Output'}
-          </RippleButton>
+            {isDisabled ? `Pit Stop ${timeoutCountdown}s...` : '🔮 Predict Race Outcome'}
+          </F1Button>
         </motion.div>
       )}
 
@@ -305,12 +306,12 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
               <h3 className={`text-2xl font-bold mb-2 ${
                 isCorrect ? 'text-green-400' : 'text-red-400'
               }`}>
-                {isCorrect ? 'Perfect Prediction!' : 'Prediction Missed'}
+                {isCorrect ? 'Perfect Strategy Prediction!' : 'Strategy Miscalculation!'}
               </h3>
               <p className={`text-lg ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                 {isCorrect 
-                  ? 'You traced through the code perfectly! Moving to next challenge...' 
-                  : `Incorrect prediction. ${timeoutCountdown > 0 ? `You can try again in ${timeoutCountdown} seconds.` : ''}`
+                  ? 'You traced through the race simulation perfectly! Advancing to next circuit...' 
+                  : `Incorrect prediction. ${timeoutCountdown > 0 ? `You can return to track in ${timeoutCountdown} seconds.` : ''}`
                 }
               </p>
             </div>
@@ -318,7 +319,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Explanation - only show if correct or first attempt */}
             {question.explanation && (!hasBeenAttempted || isCorrect) && (
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600/50">
-                <h4 className="text-lg font-semibold text-violet-300 mb-2">Execution Trace:</h4>
+                <h4 className="text-lg font-semibold text-violet-300 mb-2">Race Simulation Trace:</h4>
                 <p className="text-violet-100 leading-relaxed">{question.explanation}</p>
               </div>
             )}
@@ -326,7 +327,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Show correct output only if correct */}
             {isCorrect && (
               <div className="mt-4 bg-black rounded-lg p-4 border border-gray-700">
-                <h4 className="text-lg font-semibold text-green-300 mb-2">Actual Output:</h4>
+                <h4 className="text-lg font-semibold text-green-300 mb-2">Actual Race Output:</h4>
                 <pre className="text-green-400 font-mono text-lg">
                   {question.options[question.correct]}
                 </pre>
@@ -338,7 +339,7 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
               <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 mt-4">
                 <div className="text-red-400 text-2xl mb-2 text-center">⏱️</div>
                 <p className="text-red-300 font-semibold text-center">
-                  Please wait {timeoutCountdown} seconds before trying again
+                  Please wait {timeoutCountdown} seconds before returning to track
                 </p>
                 <div className="w-full bg-red-900/50 rounded-full h-2 mt-3">
                   <motion.div
@@ -353,12 +354,13 @@ const OutputPredictRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Try Again Button */}
             {!isCorrect && timeoutCountdown === 0 && !isDisabled && (
               <div className="text-center mt-4">
-                <RippleButton
+                <F1Button
                   onClick={handleRetry}
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold"
+                  variant="normal"
                 >
-                  🔄 Try Again
-                </RippleButton>
+                  🔄 Return to Track
+                </F1Button>
               </div>
             )}
           </motion.div>

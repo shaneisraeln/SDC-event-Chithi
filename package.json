@@ -7,7 +7,10 @@
         "build": "vite build",
         "preview": "vite preview",
         "server": "node server/index.js",
-        "verify": "node verify-setup.js"
+        "verify": "node verify-setup.js",
+        "test": "vitest --run",
+        "test:watch": "vitest",
+        "test:ui": "vitest --ui"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.3.1",
@@ -28,10 +31,15 @@
         "react-router-dom": "^6.20.0"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
         "@vitejs/plugin-react": "^4.2.1",
         "autoprefixer": "^10.4.16",
+        "fast-check": "^4.5.3",
+        "jsdom": "^27.4.0",
         "postcss": "^8.4.32",
         "tailwindcss": "^3.4.0",
-        "vite": "^5.0.8"
+        "vite": "^5.0.8",
+        "vitest": "^4.0.18"
     }
 }

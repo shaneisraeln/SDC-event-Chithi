@@ -47,12 +47,12 @@ console.log('');
 // Check components
 console.log('🧩 Checking components...');
 const components = [
-    'src/components/ChittiAvatar.jsx',
+    'src/components/F1DriverAvatar.jsx',
     'src/components/CodeEditor.jsx',
     'src/components/CursorTrail.jsx',
     'src/components/FinalPasswordModal.jsx',
-    'src/components/ParallaxBackground.jsx',
-    'src/components/RippleButton.jsx',
+    'src/components/RacingTrackBackground.jsx',
+    'src/components/F1Button.jsx',
     'src/components/StoryModal.jsx',
     'src/components/TiltCard.jsx',
 ];

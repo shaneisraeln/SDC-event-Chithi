@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import RippleButton from './RippleButton'
+import F1Button from './F1Button'
 import { useMotion } from '../context/MotionContext'
 
 const StoryModal = ({ story, onClose }) => {
@@ -14,10 +14,14 @@ const StoryModal = ({ story, onClose }) => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="max-w-3xl w-full glass-effect neon-border rounded-lg p-8 relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #1C1C1C 0%, #DC143C 50%, #1C1C1C 100%)',
+          borderColor: '#FFD700'
+        }}
       >
-        {/* Holographic effect */}
+        {/* Pit garage aesthetic background */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-purple-600 via-transparent to-pink-600 opacity-20"
+          className="absolute inset-0 bg-gradient-to-br from-red-600 via-transparent to-yellow-600 opacity-20"
           animate={!reducedMotion ? {
             opacity: [0.1, 0.3, 0.1],
             scale: [1, 1.05, 1]
@@ -25,38 +29,43 @@ const StoryModal = ({ story, onClose }) => {
           transition={{ duration: 3, repeat: Infinity }}
         />
 
+        {/* Racing stripes */}
+        <div className="absolute top-0 left-1/4 w-0.5 h-full bg-yellow-400 opacity-30" />
+        <div className="absolute top-0 right-1/4 w-0.5 h-full bg-yellow-400 opacity-30" />
+
         <div className="relative z-10">
           <motion.h2
-            className="text-4xl font-bold text-purple-400 text-glow mb-6 text-center"
+            className="text-4xl font-bold text-red-400 text-glow mb-6 text-center"
             animate={!reducedMotion ? {
               textShadow: [
-                '0 0 10px #a855f7',
-                '0 0 20px #a855f7, 0 0 30px #a855f7',
-                '0 0 10px #a855f7'
+                '0 0 10px #DC143C',
+                '0 0 20px #DC143C, 0 0 30px #DC143C',
+                '0 0 10px #DC143C'
               ]
             } : {}}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            {story.title}
+            🏁 PIT RADIO: {story.title}
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-purple-200 text-lg leading-relaxed mb-8"
+            className="text-red-200 text-lg leading-relaxed mb-8"
           >
             {story.content}
           </motion.p>
 
           {!showClue ? (
             <div className="text-center">
-              <RippleButton
+              <F1Button
                 onClick={() => setShowClue(true)}
-                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg text-xl font-bold neon-border"
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-lg text-xl font-bold neon-border"
+                variant="victory"
               >
-                Reveal Clue
-              </RippleButton>
+                🏆 Reveal Championship Clue
+              </F1Button>
             </div>
           ) : (
             <motion.div
@@ -66,12 +75,13 @@ const StoryModal = ({ story, onClose }) => {
               className="text-center"
             >
               <motion.div
-                className="inline-block w-32 h-32 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center text-6xl font-bold neon-border mb-6"
+                className="inline-block w-32 h-32 bg-gradient-to-br from-red-600 to-yellow-600 rounded-lg flex items-center justify-center text-6xl font-bold neon-border mb-6"
+                style={{ borderColor: '#FFD700' }}
                 animate={!reducedMotion ? {
                   boxShadow: [
-                    '0 0 20px #a855f7',
-                    '0 0 40px #a855f7, 0 0 60px #ec4899',
-                    '0 0 20px #a855f7'
+                    '0 0 20px #DC143C',
+                    '0 0 40px #DC143C, 0 0 60px #FFD700',
+                    '0 0 20px #DC143C'
                   ],
                   scale: [1, 1.1, 1]
                 } : {}}
@@ -81,27 +91,28 @@ const StoryModal = ({ story, onClose }) => {
                 {story.clue}
               </motion.div>
 
-              <p className="text-purple-300 mb-6">
-                Clue letter collected: <span className="text-2xl font-bold text-purple-400">{story.clue}</span>
+              <p className="text-red-300 mb-6">
+                Championship clue collected: <span className="text-2xl font-bold text-yellow-400">{story.clue}</span>
               </p>
 
-              <RippleButton
+              <F1Button
                 onClick={onClose}
-                className="px-8 py-3 bg-purple-700 text-white rounded-lg font-bold neon-border"
+                className="px-8 py-3 bg-red-700 text-white rounded-lg font-bold neon-border"
+                variant="normal"
               >
-                Continue
-              </RippleButton>
+                🏎️ Return to Track
+              </F1Button>
             </motion.div>
           )}
         </div>
 
-        {/* Particle effects */}
+        {/* Pit crew activity particles */}
         {showClue && !reducedMotion && (
           <>
             {[...Array(20)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 bg-purple-400 rounded-full"
+                className="absolute w-2 h-2 bg-yellow-400 rounded-full"
                 initial={{
                   x: '50%',
                   y: '50%',

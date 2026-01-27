@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Editor from '@monaco-editor/react'
 import { useProgress } from '../context/ProgressContext'
-import RippleButton from './RippleButton'
+import F1Button from './F1Button'
 import { testcases } from '../data/testcases'
 
 const CodeEditor = ({ problem, levelId, onSolved }) => {
@@ -104,37 +104,38 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="glass-effect neon-border rounded-lg p-6"
+        className="f1-card rounded-lg p-6 racing-stripes"
       >
+        <div className="sponsor-logo"></div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-purple-400">{problem.title}</h2>
-          <span className={`px-3 py-1 rounded text-sm ${
-            problem.difficulty === 'Easy' ? 'bg-green-700' :
-            problem.difficulty === 'Medium' ? 'bg-yellow-700' : 'bg-red-700'
+          <h2 className="text-2xl font-bold text-red-400 f1-typography">{problem.title}</h2>
+          <span className={`px-3 py-1 rounded text-sm f1-body-text ${
+            problem.difficulty === 'Easy' ? 'bg-f1-aston-green text-white' :
+            problem.difficulty === 'Medium' ? 'bg-f1-pit-lane-yellow text-black' : 'bg-f1-racing-red text-white'
           }`}>
             {problem.difficulty}
           </span>
         </div>
         
-        <p className="text-purple-200 mb-4">{problem.description}</p>
+        <p className="text-red-200 mb-4 f1-body-text">{problem.description}</p>
         
         <div className="space-y-3">
           <div>
-            <h3 className="text-purple-300 font-semibold mb-2">Examples:</h3>
+            <h3 className="text-red-300 font-semibold mb-2 f1-typography">Race Examples:</h3>
             {problem.examples.map((ex, i) => (
-              <div key={i} className="bg-gray-800 p-3 rounded mb-2 text-sm">
-                <p className="text-purple-200">Input: {ex.input}</p>
-                <p className="text-purple-200">Output: {ex.output}</p>
+              <div key={i} className="carbon-fiber p-3 rounded mb-2 text-sm border border-f1-championship-gold">
+                <p className="text-red-200 f1-body-text">Input: {ex.input}</p>
+                <p className="text-red-200 f1-body-text">Output: {ex.output}</p>
                 {ex.explanation && (
-                  <p className="text-purple-300 text-xs mt-1">{ex.explanation}</p>
+                  <p className="text-red-300 text-xs mt-1 f1-body-text">{ex.explanation}</p>
                 )}
               </div>
             ))}
           </div>
 
           <div>
-            <h3 className="text-purple-300 font-semibold mb-2">Constraints:</h3>
-            <ul className="list-disc list-inside text-purple-200 text-sm space-y-1">
+            <h3 className="text-red-300 font-semibold mb-2 f1-typography">Circuit Constraints:</h3>
+            <ul className="list-disc list-inside text-red-200 text-sm space-y-1 f1-body-text">
               {problem.constraints.map((c, i) => (
                 <li key={i}>{c}</li>
               ))}
@@ -144,20 +145,21 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
 
         {/* Hints */}
         <div className="mt-4 space-y-2">
-          <h3 className="text-purple-300 font-semibold">Hints:</h3>
+          <h3 className="text-red-300 font-semibold f1-typography">Pit Radio Hints:</h3>
           {problem.hints.map((hint, i) => (
             <div key={i}>
               {showHints[i] ? (
-                <div className="bg-yellow-900 bg-opacity-30 p-3 rounded text-yellow-200 text-sm">
+                <div className="bg-f1-pit-lane-yellow bg-opacity-30 p-3 rounded text-black text-sm f1-body-text border border-f1-championship-gold">
                   💡 {hint}
                 </div>
               ) : (
-                <RippleButton
+                <F1Button
                   onClick={() => revealHint(i)}
-                  className="px-3 py-1 bg-gray-700 text-purple-300 rounded text-sm"
+                  className="px-3 py-1 rounded text-sm"
+                  variant="penalty"
                 >
-                  Reveal Hint {i + 1} (Penalty)
-                </RippleButton>
+                  Reveal Hint {i + 1} (Time Penalty)
+                </F1Button>
               )}
             </div>
           ))}
@@ -165,45 +167,44 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
       </motion.div>
 
       {/* Code Editor */}
-      <div className="glass-effect neon-border rounded-lg overflow-hidden">
-        <div className="bg-gradient-to-r from-gray-900 via-purple-900/20 to-gray-900 p-4 flex items-center justify-between border-b border-purple-500/30">
-          <div className="flex gap-2 flex-wrap">
+      <div className="f1-panel rounded-lg overflow-hidden">
+        <div className="bg-gradient-to-r from-f1-carbon-black via-f1-racing-red/20 to-f1-carbon-black p-2 md:p-4 flex flex-col md:flex-row items-start md:items-center justify-between border-b border-f1-championship-gold/30 racing-stripes gap-4">
+          <div className="flex gap-1 md:gap-2 flex-wrap w-full md:w-auto">
             {allLanguages.map(lang => (
-              <button
+              <F1Button
                 key={lang.id}
                 onClick={() => handleLanguageChange(lang.id)}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
-                  language === lang.id 
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/50 scale-105' 
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                className={`px-2 md:px-4 py-1 md:py-2 rounded-lg font-semibold flex items-center gap-1 md:gap-2 text-sm md:text-base ${
+                  language === lang.id ? '' : 'opacity-70'
                 }`}
+                variant={language === lang.id ? 'victory' : 'normal'}
               >
-                <span>{lang.icon}</span>
-                <span>{lang.name}</span>
-              </button>
+                <span className="text-xs md:text-base">{lang.icon}</span>
+                <span className="hidden sm:inline">{lang.name}</span>
+                <span className="sm:hidden">{lang.id.toUpperCase()}</span>
+              </F1Button>
             ))}
           </div>
           
-          <RippleButton
+          <F1Button
             onClick={runTests}
             disabled={isRunning || isSolved}
-            className={`px-4 py-2 rounded font-semibold ${
-              isSolved ? 'bg-green-700' : 'bg-purple-600 hover:bg-purple-700'
-            }`}
+            className="px-3 md:px-4 py-2 rounded font-semibold text-sm md:text-base w-full md:w-auto"
+            variant={isSolved ? 'victory' : 'normal'}
           >
-            {isRunning ? 'Running...' : isSolved ? '✓ Solved' : 'Run Tests'}
-          </RippleButton>
+            {isRunning ? '🏎️ Racing...' : isSolved ? '🏆 Victory!' : '🏁 Start Race'}
+          </F1Button>
         </div>
 
         <Editor
-          height="450px"
+          height="300px md:450px"
           language={allLanguages.find(l => l.id === language)?.monacoLang || 'python'}
           value={code}
           onChange={(value) => setCode(value)}
           theme="vs-dark"
           options={{
-            minimap: { enabled: false },
-            fontSize: 15,
+            minimap: { enabled: window.innerWidth > 768 },
+            fontSize: window.innerWidth > 768 ? 15 : 13,
             lineNumbers: 'on',
             scrollBeyondLastLine: false,
             automaticLayout: true,
@@ -212,7 +213,8 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
             cursorBlinking: 'smooth',
             cursorSmoothCaretAnimation: true,
             smoothScrolling: true,
-            padding: { top: 16, bottom: 16 }
+            padding: { top: 16, bottom: 16 },
+            wordWrap: window.innerWidth < 768 ? 'on' : 'off'
           }}
         />
       </div>
@@ -222,32 +224,35 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-effect neon-border rounded-lg p-4"
+          className="f1-card rounded-lg p-4 racing-stripes"
         >
-          <h3 className="text-xl font-bold mb-3 text-purple-400">
-            Test Results
+          <div className="sponsor-logo"></div>
+          <h3 className="text-xl font-bold mb-3 text-red-400 f1-typography">
+            🏁 Race Results
           </h3>
           
           {testResults.error ? (
-            <div className="bg-red-900 bg-opacity-30 p-3 rounded text-red-200">
-              ❌ {testResults.error}
+            <div className="bg-f1-racing-red bg-opacity-30 p-3 rounded text-red-200 f1-body-text border border-f1-racing-red">
+              ❌ Technical Difficulty: {testResults.error}
             </div>
           ) : (
             <div className="space-y-2">
               {testResults.results?.map((result, i) => (
                 <div
                   key={i}
-                  className={`p-3 rounded ${
-                    result.passed ? 'bg-green-900 bg-opacity-30' : 'bg-red-900 bg-opacity-30'
+                  className={`p-3 rounded border ${
+                    result.passed 
+                      ? 'bg-f1-aston-green bg-opacity-30 border-f1-aston-green' 
+                      : 'bg-f1-racing-red bg-opacity-30 border-f1-racing-red'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className={result.passed ? 'text-green-300' : 'text-red-300'}>
-                      {result.passed ? '✓' : '✗'} Test Case {i + 1}
+                    <span className={`f1-body-text ${result.passed ? 'text-green-300' : 'text-red-300'}`}>
+                      {result.passed ? '🏆' : '🚩'} Lap {i + 1}
                     </span>
                   </div>
                   {!result.passed && result.error && (
-                    <p className="text-red-200 text-sm mt-1">{result.error}</p>
+                    <p className="text-red-200 text-sm mt-1 f1-body-text">{result.error}</p>
                   )}
                 </div>
               ))}
@@ -256,9 +261,9 @@ const CodeEditor = ({ problem, levelId, onSolved }) => {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="bg-green-700 p-4 rounded text-center text-white font-bold text-lg"
+                  className="bg-f1-championship-gold p-4 rounded text-center text-black font-bold text-lg f1-typography border-2 border-f1-racing-red"
                 >
-                  🎉 All Tests Passed!
+                  🏁 Checkered Flag! Perfect Lap!
                 </motion.div>
               )}
             </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useProgress } from '../context/ProgressContext'
 import { problems, storySegments } from '../data/problems'
 import StoryModal from '../components/StoryModal'
-import RippleButton from '../components/RippleButton'
+import F1Button from '../components/F1Button'
 import { useMotion } from '../context/MotionContext'
 import { logPageView } from '../utils/adminLogger'
 
@@ -183,12 +183,13 @@ const LevelPage = () => {
           <h2 className="text-2xl text-red-400 mb-4">Round Not Found</h2>
           <p className="text-gray-400 mb-4">Level ID: {levelId}</p>
           <p className="text-gray-400 mb-4">Available levels: {Object.keys(problems).join(', ')}</p>
-          <RippleButton
+          <F1Button
             onClick={() => navigate('/dashboard')}
             className="px-6 py-3 bg-purple-600 text-white rounded-lg"
+            variant="pit_stop"
           >
             Return to Dashboard
-          </RippleButton>
+          </F1Button>
         </div>
       </div>
     )
@@ -206,12 +207,13 @@ const LevelPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6"
         >
-          <RippleButton
+          <F1Button
             onClick={() => navigate('/dashboard')}
             className="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg neon-border mb-4 transition-colors"
+            variant="pit_stop"
           >
             ← Back to Battle Arena
-          </RippleButton>
+          </F1Button>
           
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">

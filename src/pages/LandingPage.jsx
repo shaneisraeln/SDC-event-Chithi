@@ -1,14 +1,17 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
-import ChittiAvatar from '../components/ChittiAvatar'
-import RippleButton from '../components/RippleButton'
+import F1DriverAvatar from '../components/F1DriverAvatar'
+import F1Button from '../components/F1Button'
+import F1AudioControls from '../components/F1AudioControls'
 import { useMotion } from '../context/MotionContext'
+import { useF1Audio } from '../context/F1AudioContext'
 import { logPageView } from '../utils/adminLogger'
 
 const LandingPage = () => {
   const navigate = useNavigate()
   const { reducedMotion, toggleReducedMotion } = useMotion()
+  const { playVictoryCelebration } = useF1Audio()
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   
@@ -35,7 +38,7 @@ const LandingPage = () => {
           transition={{ duration: 1.2, type: "spring", bounce: 0.4 }}
           className="mb-8"
         >
-          <ChittiAvatar size="large" />
+          <F1DriverAvatar size="large" team="FERRARI" driverNumber={1} />
         </motion.div>
 
         <motion.div
@@ -47,7 +50,7 @@ const LandingPage = () => {
           <motion.h1
             className="text-7xl md:text-8xl font-black mb-6 leading-none"
             style={{
-              background: 'linear-gradient(135deg, #8b5cf6, #3b82f6, #8b5cf6)',
+              background: 'linear-gradient(135deg, #DC143C, #FFD700, #DC143C)',
               backgroundSize: '200% 200%',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -58,18 +61,18 @@ const LandingPage = () => {
             } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           >
-            THINK
+            RACE
             <br />
-            <span className="text-6xl md:text-7xl">FAST</span>
+            <span className="text-6xl md:text-7xl">TO</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="text-2xl md:text-3xl text-blue-200 font-light tracking-wide"
+            className="text-2xl md:text-3xl text-red-200 font-light tracking-wide"
           >
-            CODE FASTER
+            POLE POSITION
           </motion.p>
         </motion.div>
 
@@ -79,8 +82,8 @@ const LandingPage = () => {
           transition={{ delay: 1.5, duration: 0.6 }}
           className="absolute bottom-12 animate-bounce"
         >
-          <div className="w-6 h-10 border-2 border-purple-400 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-purple-400 rounded-full mt-2 animate-pulse" />
+          <div className="w-6 h-10 border-2 border-red-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-red-400 rounded-full mt-2 animate-pulse" />
           </div>
         </motion.div>
       </motion.section>
@@ -101,26 +104,25 @@ const LandingPage = () => {
             className="text-5xl md:text-6xl font-bold mb-8 text-white"
             whileInView={{ 
               textShadow: [
-                "0 0 0px #8b5cf6",
-                "0 0 20px #8b5cf6",
-                "0 0 0px #8b5cf6"
+                "0 0 0px #DC143C",
+                "0 0 20px #DC143C",
+                "0 0 0px #DC143C"
               ]
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            We Are The Student Developers Cell (SDC)
+            Welcome to the F1 Racing Academy
           </motion.h2>
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-xl md:text-2xl text-blue-100 leading-relaxed mb-8"
+            className="text-xl md:text-2xl text-red-100 leading-relaxed mb-8"
           >
-            The Student Developers Cell (SDC) is a student-driven tech community built on curiosity, creativity, and collaboration. We bridge the gap between theory and real-world application - turning ideas into innovation through hackathons, coding sprints, workshops, and live projects.
+            The F1 Racing Academy is where coding meets the high-octane world of Formula 1 racing. Experience the thrill of championship competition as you navigate through coding challenges designed to test your speed, precision, and strategic thinking.
 
-
-Our initiatives connect students with industry leaders, alumni innovators, and like-minded peers, creating a network where knowledge meets opportunity. We're not just preparing developers for the future - we're building the next generation of tech leaders ready to code, create, and lead change.
+Join the elite ranks of racing developers who combine technical mastery with the relentless pursuit of pole position. From qualifying rounds to championship victories, every challenge brings you closer to becoming a coding champion worthy of the podium.
           </motion.p>
 
           <motion.div
@@ -149,7 +151,7 @@ Our initiatives connect students with industry leaders, alumni innovators, and l
           <motion.h2
             className="text-6xl md:text-7xl font-black mb-12"
             style={{
-              background: 'linear-gradient(45deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6)',
+              background: 'linear-gradient(45deg, #DC143C, #FFD700, #1C1C1C, #DC143C, #FFD700, #1C1C1C)',
               backgroundSize: '300% 300%',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -160,7 +162,7 @@ Our initiatives connect students with industry leaders, alumni innovators, and l
             } : {}}
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           >
-            Let's Begin
+            Start Your Engines
           </motion.h2>
 
           <motion.div
@@ -179,24 +181,27 @@ Our initiatives connect students with industry leaders, alumni innovators, and l
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-6"
           >
-            <RippleButton
-              onClick={() => navigate('/dashboard')}
-              className="px-12 py-6 text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 
-                        hover:from-purple-500 hover:to-blue-500 text-white rounded-2xl
-                        shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40
+            <F1Button
+              onClick={() => {
+                playVictoryCelebration()
+                navigate('/dashboard')
+              }}
+              className="px-12 py-6 text-2xl font-bold bg-gradient-to-r from-red-600 to-yellow-600 
+                        hover:from-red-500 hover:to-yellow-500 text-white rounded-2xl
+                        shadow-lg shadow-red-500/25 hover:shadow-red-500/40
                         transform hover:scale-105 transition-all duration-300
-                        border border-purple-400/50 hover:border-purple-400/80"
+                        border border-red-400/50 hover:border-red-400/80"
             >
-              ENTER THE ARENA
-            </RippleButton>
+              ENTER THE CHAMPIONSHIP
+            </F1Button>
 
             <motion.p
-              className="text-purple-300 text-lg"
+              className="text-red-300 text-lg"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              No registration • Jump straight into battle
+              No qualifying required • Race straight to victory
             </motion.p>
 
             <motion.div
@@ -205,15 +210,18 @@ Our initiatives connect students with industry leaders, alumni innovators, and l
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
-              <label className="flex items-center gap-2 text-purple-300 cursor-pointer hover:text-purple-200 transition-colors">
+              <label className="flex items-center gap-2 text-red-300 cursor-pointer hover:text-red-200 transition-colors">
                 <input
                   type="checkbox"
                   checked={reducedMotion}
                   onChange={toggleReducedMotion}
-                  className="w-4 h-4 accent-purple-500"
+                  className="w-4 h-4 accent-red-500"
                 />
                 <span>Reduce Motion</span>
               </label>
+              
+              {/* F1 Audio Controls */}
+              <F1AudioControls />
             </motion.div>
           </motion.div>
         </motion.div>

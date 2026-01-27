@@ -3,17 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../context/ProgressContext'
 import { useMotion } from '../context/MotionContext'
-import ChittiAvatar from '../components/ChittiAvatar'
+import { useF1Audio } from '../context/F1AudioContext'
+import F1DriverAvatar from '../components/F1DriverAvatar'
+import { transformToF1Progress, getChampionshipMessage } from '../utils/f1AchievementSystem'
 
 const VictoryPage = () => {
   const navigate = useNavigate()
   const { progress } = useProgress()
   const { reducedMotion } = useMotion()
+  const { playVictoryCelebration, playCheckeredFlag, playEngineRev } = useF1Audio()
   const [password, setPassword] = useState('')
   const [showError, setShowError] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
   const [stage, setStage] = useState('password') // password, unlocking, victory
   const correctPassword = 'TRACE'
+  const f1Progress = transformToF1Progress(progress)
 
   // Check if all levels are completed
   useEffect(() => {
@@ -30,7 +34,11 @@ const VictoryPage = () => {
     if (password.toUpperCase() === correctPassword) {
       setShowError(false)
       setStage('unlocking')
-      setTimeout(() => setStage('victory'), 3000)
+      playEngineRev('high')
+      setTimeout(() => {
+        setStage('victory')
+        playVictoryCelebration()
+      }, 3000)
     } else {
       setShowError(true)
       setTimeout(() => setShowError(false), 2000)
@@ -75,7 +83,7 @@ const VictoryPage = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="max-w-2xl mx-auto mt-20"
+              className="max-w-2xl mx-auto mt-8 md:mt-20 px-4"
             >
               {/* Header */}
               <motion.div 
@@ -84,15 +92,15 @@ const VictoryPage = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent f1-typography">
                   The Final Challenge
                 </h1>
-                <p className="text-purple-300 text-xl">
+                <p className="text-purple-300 text-lg md:text-xl f1-body-text">
                   You have collected all the clues. Now, unlock the truth.
                 </p>
               </motion.div>
 
-              {/* Chitti Avatar */}
+              {/* F1 Driver Avatar */}
               <motion.div 
                 className="flex justify-center mb-8"
                 animate={!reducedMotion ? {
@@ -100,27 +108,28 @@ const VictoryPage = () => {
                 } : {}}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <ChittiAvatar size="large" />
+                <F1DriverAvatar size="large" celebrationMode={true} />
               </motion.div>
 
               {/* Collected Clues Display */}
               <motion.div 
-                className="glass-effect rounded-2xl p-8 mb-8 neon-border"
+                className="f1-panel rounded-2xl p-8 mb-8 racing-stripes"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <h2 className="text-2xl font-bold text-purple-300 mb-4 text-center">
-                  Collected Clues
+                <div className="sponsor-logo"></div>
+                <h2 className="text-2xl font-bold text-red-300 mb-4 text-center f1-typography">
+                  🏆 Championship Clues Collected
                 </h2>
-                <div className="flex justify-center gap-4 mb-6">
+                <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6">
                   {['T', 'R', 'A', 'C', 'E'].map((letter, index) => (
                     <motion.div
                       key={letter}
-                      className={`w-16 h-16 rounded-lg flex items-center justify-center text-3xl font-bold ${
+                      className={`w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center text-2xl md:text-3xl font-bold f1-typography ${
                         collectedClues.includes(letter)
-                          ? 'bg-purple-600 text-white neon-border'
-                          : 'bg-gray-800 text-gray-600'
+                          ? 'bg-gradient-to-br from-f1-racing-red to-f1-championship-gold text-white border-2 border-f1-championship-gold'
+                          : 'bg-f1-carbon-black text-f1-tire-smoke border-2 border-f1-tire-smoke'
                       }`}
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
@@ -130,28 +139,29 @@ const VictoryPage = () => {
                     </motion.div>
                   ))}
                 </div>
-                <p className="text-center text-purple-400 italic">
-                  "The path you've taken reveals the answer..."
+                <p className="text-center text-red-400 italic f1-body-text">
+                  "The racing line you've taken reveals the championship code..."
                 </p>
               </motion.div>
 
               {/* Password Input */}
               <motion.form 
                 onSubmit={handleSubmit}
-                className="glass-effect rounded-2xl p-8 neon-border"
+                className="f1-card rounded-2xl p-8 racing-stripes"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
               >
-                <label className="block text-purple-300 text-lg mb-4 text-center">
-                  Enter the Final Password
+                <div className="sponsor-logo"></div>
+                <label className="block text-red-300 text-lg mb-4 text-center f1-typography">
+                  🏁 Final Championship Code
                 </label>
                 <input
                   type="text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-6 py-4 bg-black/50 border-2 border-purple-500 rounded-lg text-white text-center text-2xl tracking-widest uppercase focus:outline-none focus:border-purple-400 transition-colors"
-                  placeholder="_ _ _ _ _"
+                  className="w-full px-4 md:px-6 py-3 md:py-4 f1-input rounded-lg text-center text-xl md:text-2xl tracking-widest uppercase"
+                  placeholder="ENTER CHAMPIONSHIP CODE"
                   maxLength={5}
                   autoFocus
                 />
@@ -245,7 +255,7 @@ const VictoryPage = () => {
                 transition={{ type: 'spring', duration: 1 }}
                 className="mb-8"
               >
-                <ChittiAvatar size="large" />
+                <F1DriverAvatar size="large" celebrationMode={true} />
               </motion.div>
 
               <motion.h1
@@ -278,8 +288,7 @@ const VictoryPage = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2 }}
                 >
-                  You have conquered all 5 levels, solved 15 challenging problems, 
-                  and demonstrated mastery over data structures and algorithms.
+                  {getChampionshipMessage(progress)}
                 </motion.p>
 
                 <motion.p
@@ -293,24 +302,28 @@ const VictoryPage = () => {
                 </motion.p>
               </motion.div>
 
-              {/* Stats */}
+              {/* Championship Stats */}
               <motion.div
-                className="grid grid-cols-3 gap-6 mb-8"
+                className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.8 }}
               >
                 <div className="glass-effect rounded-xl p-6 neon-border">
-                  <div className="text-4xl font-bold text-purple-400">5</div>
-                  <div className="text-purple-300">Levels</div>
+                  <div className="text-4xl font-bold text-purple-400">{f1Progress.circuitsCompleted.length}</div>
+                  <div className="text-purple-300">Circuits</div>
                 </div>
                 <div className="glass-effect rounded-xl p-6 neon-border">
-                  <div className="text-4xl font-bold text-purple-400">15</div>
-                  <div className="text-purple-300">Problems</div>
+                  <div className="text-4xl font-bold text-purple-400">{f1Progress.championshipPoints}</div>
+                  <div className="text-purple-300">Points</div>
                 </div>
                 <div className="glass-effect rounded-xl p-6 neon-border">
-                  <div className="text-4xl font-bold text-purple-400">100%</div>
-                  <div className="text-purple-300">Complete</div>
+                  <div className="text-4xl font-bold text-purple-400">P{f1Progress.currentPosition}</div>
+                  <div className="text-purple-300">Position</div>
+                </div>
+                <div className="glass-effect rounded-xl p-6 neon-border">
+                  <div className="text-4xl font-bold text-purple-400">{f1Progress.unlockedTrophies.length}</div>
+                  <div className="text-purple-300">Trophies</div>
                 </div>
               </motion.div>
 

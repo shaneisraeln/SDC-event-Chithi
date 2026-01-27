@@ -22,7 +22,7 @@ const TiltCard = ({ children, className = '', onClick }) => {
 
   return (
     <motion.div
-      className={`relative ${className}`}
+      className={`relative f1-card ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
@@ -39,10 +39,11 @@ const TiltCard = ({ children, className = '', onClick }) => {
         <motion.div
           className="absolute inset-0 rounded-lg pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${((tilt.y / 10 + 1) / 2) * 100}% ${((tilt.x / 10 + 1) / 2) * 100}%, rgba(168, 85, 247, 0.3), transparent 50%)`,
+            background: `radial-gradient(circle at ${((tilt.y / 10 + 1) / 2) * 100}% ${((tilt.x / 10 + 1) / 2) * 100}%, rgba(220, 20, 60, 0.3), transparent 50%)`,
           }}
         />
       )}
+      <div className="sponsor-logo"></div>
       {children}
     </motion.div>
   )

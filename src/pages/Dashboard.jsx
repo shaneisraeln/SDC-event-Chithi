@@ -2,12 +2,16 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useProgress } from '../context/ProgressContext'
-import RippleButton from '../components/RippleButton'
+import F1Button from '../components/F1Button'
+import F1LoadingIndicator from '../components/F1LoadingIndicator'
+import F1SpeedEffect from '../components/F1SpeedEffect'
 import FinalPasswordModal from '../components/FinalPasswordModal'
-import ChittiAvatar from '../components/ChittiAvatar'
+import F1DriverAvatar from '../components/F1DriverAvatar'
+import ChampionshipProgress from '../components/ChampionshipProgress'
 import { problems, storySegments } from '../data/problems'
 import { useMotion } from '../context/MotionContext'
 import { logPageView } from '../utils/adminLogger'
+import { F1_ANIMATION_PRESETS } from '../utils/f1Animations'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -21,7 +25,20 @@ const Dashboard = () => {
   }, [])
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [hoveredLevel, setHoveredLevel] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [showSpeedEffect, setShowSpeedEffect] = useState(false)
   const totalLevels = 5 // 5 rounds total
+
+  // Simulate loading for dramatic effect
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false)
+      setShowSpeedEffect(true)
+      setTimeout(() => setShowSpeedEffect(false), 2000)
+    }, 1500)
+    
+    return () => clearTimeout(loadingTimer)
+  }, [])
 
   const sortedLevelIds = Object.keys(storySegments)
     .map(Number)
@@ -35,58 +52,58 @@ const Dashboard = () => {
   const levels = [
     { 
       id: 1, 
-      name: 'APTITUDE ARENA', 
-      subtitle: 'Test Your Mental Speed',
+      name: 'MONACO GRAND PRIX', 
+      subtitle: 'Precision Qualifying',
       questions: 10, 
       type: 'MCQ',
-      icon: '🧠',
+      icon: '🏎️',
       gradient: 'from-emerald-500 via-teal-500 to-cyan-500',
       glowColor: 'rgba(16, 185, 129, 0.6)',
-      description: 'Lightning-fast aptitude questions to warm up your brain'
+      description: 'Lightning-fast qualifying session to secure your grid position'
     },
     { 
       id: 2, 
-      name: 'CODE CHAOS', 
-      subtitle: 'Fix the Scrambled Logic',
+      name: 'SILVERSTONE CIRCUIT', 
+      subtitle: 'Technical Challenge',
       questions: 3, 
       type: 'CODE_ALIGN',
       icon: '🔧',
       gradient: 'from-orange-500 via-red-500 to-pink-500',
       glowColor: 'rgba(249, 115, 22, 0.6)',
-      description: 'Drag and drop jumbled code lines to make programs run'
+      description: 'Navigate technical sections and optimize your racing line'
     },
     { 
       id: 3, 
-      name: 'OUTPUT ORACLE', 
-      subtitle: 'Predict the Future',
+      name: 'MONZA SPEEDWAY', 
+      subtitle: 'Strategy Prediction',
       questions: 5, 
       type: 'OUTPUT_PREDICT',
-      icon: '🔮',
+      icon: '🏁',
       gradient: 'from-violet-500 via-purple-500 to-indigo-500',
       glowColor: 'rgba(139, 92, 246, 0.6)',
-      description: 'Analyze code and predict what it will output'
+      description: 'Predict race outcomes and master strategic decision-making'
     },
     { 
       id: 4, 
-      name: 'ALGORITHM FORGE', 
-      subtitle: 'Easy DSA Challenges',
+      name: 'SPA-FRANCORCHAMPS', 
+      subtitle: 'Championship Points',
       questions: 5, 
       type: 'DSA',
-      icon: '⚔️',
+      icon: '🏆',
       gradient: 'from-blue-500 via-indigo-500 to-purple-500',
       glowColor: 'rgba(59, 130, 246, 0.6)',
-      description: 'Master fundamental string and array problems from LeetCode'
+      description: 'Score crucial championship points in this legendary circuit'
     },
     { 
       id: 5, 
-      name: 'MASTER\'S TRIAL', 
-      subtitle: 'Medium DSA Mastery',
+      name: 'SUZUKA CHAMPIONSHIP', 
+      subtitle: 'Title Decider',
       questions: 5, 
       type: 'DSA',
       icon: '👑',
       gradient: 'from-purple-500 via-pink-500 to-red-500',
       glowColor: 'rgba(168, 85, 247, 0.6)',
-      description: 'Conquer advanced algorithmic challenges and prove your mastery'
+      description: 'The ultimate championship decider - claim your racing crown'
     }
   ]
 
@@ -109,9 +126,38 @@ const Dashboard = () => {
 
   const readyForFinale = progress.completedLevels.length === totalLevels
 
+  // Show loading screen
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <F1LoadingIndicator 
+            type="moving_car" 
+            size="large" 
+            message="Preparing Championship Dashboard..."
+          />
+          <motion.p
+            className="mt-8 text-xl text-red-300"
+            {...F1_ANIMATION_PRESETS.RACING_PULSE}
+          >
+            Engines warming up...
+          </motion.p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-4 md:p-8 relative">
+      {/* Speed effect overlay */}
+      <F1SpeedEffect 
+        isActive={showSpeedEffect} 
+        intensity="high" 
+        direction="horizontal"
+        className="z-10"
+      />
+      
+      <div className="max-w-7xl mx-auto relative z-20">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -119,13 +165,13 @@ const Dashboard = () => {
           className="text-center mb-12 relative"
         >
           <div className="flex items-center justify-center gap-6 mb-6">
-            <ChittiAvatar size="medium" interactive={true} />
+            <F1DriverAvatar size="medium" interactive={true} team="MCLAREN" driverNumber={44} />
             <div>
-              <h1 className="text-6xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2">
-                BATTLE ARENA
+              <h1 className="text-6xl font-bold bg-gradient-to-r from-red-400 via-yellow-400 to-red-400 bg-clip-text text-transparent mb-2">
+                RACING CHAMPIONSHIP
               </h1>
-              <p className="text-xl text-purple-300">
-                5 Rounds • 28 Challenges • 1 Ultimate Victory
+              <p className="text-xl text-red-300">
+                5 Circuits • 28 Challenges • 1 Championship Title
               </p>
             </div>
           </div>
@@ -133,12 +179,12 @@ const Dashboard = () => {
           {/* Progress Bar */}
           <div className="max-w-2xl mx-auto mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-purple-400 font-semibold">Overall Progress</span>
-              <span className="text-purple-300">{progress.completedLevels.length}/5 Rounds</span>
+              <span className="text-red-400 font-semibold">Championship Progress</span>
+              <span className="text-red-300">{progress.completedLevels.length}/5 Circuits</span>
             </div>
             <div className="h-3 bg-gray-800 rounded-full overflow-hidden neon-border">
               <motion.div
-                className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"
+                className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-red-500"
                 initial={{ width: 0 }}
                 animate={{ width: `${(progress.completedLevels.length / totalLevels) * 100}%` }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -148,26 +194,29 @@ const Dashboard = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center flex-wrap">
-            <RippleButton
+            <F1Button
               onClick={exportProgress}
-              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg neon-border font-semibold"
+              className="px-6 py-2 bg-gradient-to-r from-red-600 to-yellow-600 text-white rounded-lg neon-border font-semibold"
+              variant="normal"
             >
-              💾 Export Progress
-            </RippleButton>
-            <RippleButton
+              💾 Export Championship Data
+            </F1Button>
+            <F1Button
               onClick={() => setShowResetConfirm(true)}
               className="px-6 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg neon-border font-semibold"
+              variant="penalty"
             >
-              🔄 Reset Progress
-            </RippleButton>
+              🔄 Reset Season
+            </F1Button>
             {/* Secret Admin Link */}
-            <RippleButton
+            <F1Button
               onClick={() => navigate('/admin-dashboard')}
               className="px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 rounded-lg border border-gray-600 font-semibold text-xs opacity-50 hover:opacity-100 transition-opacity"
-              title="Admin Dashboard (Secret)"
+              title="Pit Lane Control (Secret)"
+              variant="pit_stop"
             >
               🛠️
-            </RippleButton>
+            </F1Button>
           </div>
         </motion.div>
 
@@ -175,43 +224,48 @@ const Dashboard = () => {
         <div className="max-w-3xl mx-auto mb-10">
           <div className="glass-effect neon-border rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-purple-400 text-glow">Battle Progress</h3>
-              <span className="text-purple-300 font-semibold">
-                {unlockedClues.length}/5 rounds conquered
+              <h3 className="text-2xl font-bold text-red-400 text-glow">Championship Standings</h3>
+              <span className="text-red-300 font-semibold">
+                {unlockedClues.length}/5 circuits conquered
               </span>
             </div>
             <div className="grid grid-cols-5 gap-4">
               {[
-                { id: 1, name: 'APTITUDE', icon: '🧠', color: 'emerald' },
-                { id: 2, name: 'CODE FIX', icon: '🔧', color: 'orange' },
-                { id: 3, name: 'PREDICT', icon: '🔮', color: 'violet' },
-                { id: 4, name: 'EASY DSA', icon: '⚔️', color: 'blue' },
-                { id: 5, name: 'HARD DSA', icon: '👑', color: 'purple' }
-              ].map((round) => {
-                const unlocked = progress.completedLevels.includes(round.id)
-                const clue = storySegments[round.id]?.clue
+                { id: 1, name: 'MONACO', icon: '🧠', color: 'emerald' },
+                { id: 2, name: 'SILVERSTONE', icon: '🔧', color: 'orange' },
+                { id: 3, name: 'MONZA', icon: '🔮', color: 'violet' },
+                { id: 4, name: 'SPA', icon: '⚔️', color: 'blue' },
+                { id: 5, name: 'SUZUKA', icon: '👑', color: 'purple' }
+              ].map((circuit) => {
+                const unlocked = progress.completedLevels.includes(circuit.id)
+                const clue = storySegments[circuit.id]?.clue
                 return (
                   <div
-                    key={round.id}
+                    key={circuit.id}
                     className={`p-6 rounded-xl border text-center transition-all duration-300 ${
                       unlocked
-                        ? `border-${round.color}-500/60 bg-${round.color}-500/10 text-${round.color}-300 shadow-lg shadow-${round.color}-500/20`
-                        : 'border-purple-500/30 bg-purple-900/20 text-purple-300'
+                        ? `border-${circuit.color}-500/60 bg-${circuit.color}-500/10 text-${circuit.color}-300 shadow-lg shadow-${circuit.color}-500/20`
+                        : 'border-red-500/30 bg-red-900/20 text-red-300'
                     }`}
                   >
-                    <div className="text-4xl mb-2">{round.icon}</div>
-                    <div className="text-sm font-semibold mb-2">{round.name}</div>
+                    <div className="text-4xl mb-2">{circuit.icon}</div>
+                    <div className="text-sm font-semibold mb-2">{circuit.name}</div>
                     <div className="text-2xl font-bold tracking-widest">
                       {unlocked ? clue : '—'}
                     </div>
                     <div className="text-xs mt-2 opacity-75">
-                      {unlocked ? 'CONQUERED' : 'LOCKED'}
+                      {unlocked ? 'VICTORY' : 'LOCKED'}
                     </div>
                   </div>
                 )
               })}
             </div>
           </div>
+        </div>
+
+        {/* Championship Progress Component */}
+        <div className="mb-10">
+          <ChampionshipProgress variant="compact" />
         </div>
 
         {/* Levels Grid */}
@@ -305,9 +359,10 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between p-3 bg-black/30 rounded-lg border border-purple-500/20">
                         <span className="text-purple-300">Type</span>
                         <span className="text-white font-bold text-sm">
-                          {level.type === 'MCQ' ? 'Multiple Choice' : 
-                           level.type === 'CODE_ALIGN' ? 'Code Fixing' : 
-                           'Output Prediction'}
+                          {level.type === 'MCQ' ? 'Qualifying Session' : 
+                           level.type === 'CODE_ALIGN' ? 'Technical Section' : 
+                           level.type === 'OUTPUT_PREDICT' ? 'Strategy Planning' :
+                           'Championship Race'}
                         </span>
                       </div>
                       
@@ -334,7 +389,7 @@ const Dashboard = () => {
                           ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
                           : 'bg-gray-500/20 text-gray-400 border border-gray-500/50'
                       }`}>
-                        {complete ? '🏆 CONQUERED' : unlocked ? '⚔️ BATTLE READY' : '🔒 LOCKED'}
+                        {complete ? '🏆 VICTORY' : unlocked ? '🏎️ RACE READY' : '🔒 LOCKED'}
                       </div>
                     </div>
 
@@ -344,9 +399,10 @@ const Dashboard = () => {
                         className="mt-4 text-center text-purple-400 text-sm font-semibold"
                         animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       >
-                        {level.type === 'MCQ' ? '🧠 Test Your Speed →' :
-                         level.type === 'CODE_ALIGN' ? '🔧 Fix The Code →' :
-                         '🔮 Predict Output →'}
+                        {level.type === 'MCQ' ? '🏎️ Start Qualifying →' :
+                         level.type === 'CODE_ALIGN' ? '🔧 Enter Pit Lane →' :
+                         level.type === 'OUTPUT_PREDICT' ? '🏁 Plan Strategy →' :
+                         '🏆 Race for Points →'}
                       </motion.div>
                     )}
                   </div>
@@ -383,18 +439,19 @@ const Dashboard = () => {
               >
                 🏆
               </motion.div>
-              <h2 className="text-3xl font-bold text-purple-300 mb-3">
-                All Rounds Conquered!
+              <h2 className="text-3xl font-bold text-red-300 mb-3">
+                All Circuits Conquered!
               </h2>
-              <p className="text-purple-400 mb-6">
-                You have mastered all 3 battle rounds. The ultimate challenge awaits...
+              <p className="text-red-400 mb-6">
+                You have mastered all 5 championship circuits. The title fight awaits...
               </p>
-              <RippleButton
+              <F1Button
                 onClick={() => navigate('/victory')}
-                className="px-10 py-5 bg-gradient-to-r from-yellow-500 via-purple-600 to-pink-600 text-white rounded-xl text-2xl font-bold neon-border animate-pulse-slow shadow-2xl"
+                className="px-10 py-5 bg-gradient-to-r from-yellow-500 via-red-600 to-yellow-600 text-white rounded-xl text-2xl font-bold neon-border animate-pulse-slow shadow-2xl"
+                variant="victory"
               >
-                ⚡ Enter Final Challenge ⚡
-              </RippleButton>
+                🏆 CLAIM CHAMPIONSHIP TITLE 🏆
+              </F1Button>
             </motion.div>
           </motion.div>
         )}
@@ -406,26 +463,28 @@ const Dashboard = () => {
               animate={{ scale: 1, opacity: 1 }}
               className="bg-gray-900 p-8 rounded-lg neon-border max-w-md"
             >
-              <h3 className="text-2xl font-bold text-purple-400 mb-4">Reset Progress?</h3>
-              <p className="text-purple-300 mb-6">
-                This will delete all your progress. This action cannot be undone.
+              <h3 className="text-2xl font-bold text-red-400 mb-4">Reset Championship Season?</h3>
+              <p className="text-red-300 mb-6">
+                This will delete all your championship progress. This action cannot be undone.
               </p>
               <div className="flex gap-4">
-                <RippleButton
+                <F1Button
                   onClick={() => {
                     resetProgress()
                     setShowResetConfirm(false)
                   }}
                   className="flex-1 px-4 py-2 bg-red-600 text-white rounded"
+                  variant="penalty"
                 >
-                  Reset
-                </RippleButton>
-                <RippleButton
+                  Reset Season
+                </F1Button>
+                <F1Button
                   onClick={() => setShowResetConfirm(false)}
                   className="flex-1 px-4 py-2 bg-gray-700 text-white rounded"
+                  variant="pit_stop"
                 >
                   Cancel
-                </RippleButton>
+                </F1Button>
               </div>
             </motion.div>
           </div>

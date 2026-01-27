@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import RippleButton from '../RippleButton'
+import F1Button from '../F1Button'
 import { useMotion } from '../../context/MotionContext'
 import { useProgress } from '../../context/ProgressContext'
 
@@ -108,8 +108,8 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
         >
           ✅
         </motion.div>
-        <h3 className="text-2xl font-bold text-green-400 mb-2">Already Solved!</h3>
-        <p className="text-purple-300">You've already conquered this question.</p>
+        <h3 className="text-2xl font-bold text-red-400 mb-2">Circuit Already Conquered!</h3>
+        <p className="text-purple-300">You've already mastered this racing challenge.</p>
       </div>
     )
   }
@@ -134,7 +134,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
             {question.difficulty}
           </span>
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-emerald-600/20 text-emerald-300">
-            No Time Limit
+            No Lap Time Limit
           </span>
         </div>
       </div>
@@ -146,7 +146,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.2 }}
         className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-xl p-6 border border-purple-400/30"
       >
-        <h3 className="text-xl font-semibold text-white mb-4">Question:</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">Racing Challenge:</h3>
         <p className="text-lg text-purple-100 leading-relaxed">{question.question}</p>
       </motion.div>
 
@@ -157,7 +157,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.4 }}
         className="space-y-3"
       >
-        <h3 className="text-xl font-semibold text-white mb-4">Choose your answer:</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">Choose your racing strategy:</h3>
         {question.options.map((option, index) => (
           <motion.button
             key={index}
@@ -218,7 +218,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
           transition={{ delay: 0.8 }}
           className="text-center pt-4"
         >
-          <RippleButton
+          <F1Button
             onClick={handleSubmit}
             disabled={selectedOption === null || isDisabled}
             className={`px-8 py-4 text-xl font-bold rounded-xl transition-all duration-300 ${
@@ -226,9 +226,10 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
                 ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/25'
             }`}
+            variant="victory"
           >
-            {isDisabled ? `Wait ${timeoutCountdown}s...` : 'Submit Answer'}
-          </RippleButton>
+            {isDisabled ? `Pit Stop ${timeoutCountdown}s...` : 'Cross Finish Line'}
+          </F1Button>
         </motion.div>
       )}
 
@@ -252,12 +253,12 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
               <h3 className={`text-2xl font-bold mb-2 ${
                 isCorrect ? 'text-green-400' : 'text-red-400'
               }`}>
-                {isCorrect ? 'Correct!' : 'Incorrect!'}
+                {isCorrect ? 'Pole Position Achieved!' : 'Pit Stop Required!'}
               </h3>
               <p className={`text-lg ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                 {isCorrect 
-                  ? 'Excellent work! Moving to next question...' 
-                  : `Incorrect answer. ${timeoutCountdown > 0 ? `You can try again in ${timeoutCountdown} seconds.` : ''}`
+                  ? 'Fastest lap recorded! Advancing to next racing challenge...' 
+                  : `Technical difficulty occurred. ${timeoutCountdown > 0 ? `You can return to track in ${timeoutCountdown} seconds.` : ''}`
                 }
               </p>
             </div>
@@ -265,7 +266,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Explanation - only show if answered correctly or first attempt */}
             {question.explanation && (isCorrect || !hasBeenAttempted) && (
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600/50">
-                <h4 className="text-lg font-semibold text-purple-300 mb-2">Explanation:</h4>
+                <h4 className="text-lg font-semibold text-purple-300 mb-2">Race Analysis:</h4>
                 <p className="text-purple-100 leading-relaxed">{question.explanation}</p>
               </div>
             )}
@@ -273,12 +274,13 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Retry Button for wrong answers */}
             {!isCorrect && timeoutCountdown === 0 && !isDisabled && (
               <div className="text-center mt-4">
-                <RippleButton
+                <F1Button
                   onClick={handleRetry}
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold"
+                  variant="normal"
                 >
-                  🔄 Try Again
-                </RippleButton>
+                  🔄 Return to Track
+                </F1Button>
               </div>
             )}
 
@@ -288,7 +290,7 @@ const MCQRound = ({ question, onSolved, isAlreadySolved }) => {
                 <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4">
                   <div className="text-red-400 text-2xl mb-2">⏱️</div>
                   <p className="text-red-300 font-semibold">
-                    Please wait {timeoutCountdown} seconds before trying again
+                    Please wait {timeoutCountdown} seconds before returning to track
                   </p>
                   <div className="w-full bg-red-900/50 rounded-full h-2 mt-3">
                     <motion.div

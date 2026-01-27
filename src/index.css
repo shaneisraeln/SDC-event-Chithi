@@ -32,6 +32,160 @@ body {
         border: 1px solid rgba(168, 85, 247, 0.2);
     }
 
+    /* F1 Racing Styled Components */
+    .f1-card {
+        background: linear-gradient(135deg, #1C1C1C 0%, #2D2D2D 50%, #1C1C1C 100%);
+        border: 2px solid #FFD700;
+        box-shadow:
+            0 0 20px rgba(220, 20, 60, 0.3),
+            inset 0 0 20px rgba(255, 215, 0, 0.1);
+        position: relative;
+    }
+
+    .f1-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #DC143C, #FFD700, #DC143C);
+        border-radius: 2px 2px 0 0;
+    }
+
+    .f1-panel {
+        background: linear-gradient(145deg, #1C1C1C 0%, #2B4562 30%, #1C1C1C 100%);
+        border: 1px solid #C0C0C0;
+        box-shadow:
+            0 4px 20px rgba(192, 192, 192, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .f1-input {
+        background: linear-gradient(135deg, #1C1C1C 0%, #2D2D2D 100%);
+        border: 2px solid #FFD700;
+        color: #FFFFFF;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+    }
+
+    .f1-input:focus {
+        border-color: #DC143C;
+        box-shadow:
+            0 0 15px rgba(220, 20, 60, 0.5),
+            inset 0 0 10px rgba(255, 215, 0, 0.1);
+        outline: none;
+    }
+
+    .f1-input::placeholder {
+        color: #808080;
+        font-style: italic;
+    }
+
+    .carbon-fiber {
+        background:
+            radial-gradient(circle at 25% 25%, #2D2D2D 2px, transparent 2px),
+            radial-gradient(circle at 75% 75%, #1C1C1C 2px, transparent 2px),
+            linear-gradient(45deg, #1C1C1C 25%, #2D2D2D 25%, #2D2D2D 50%, #1C1C1C 50%, #1C1C1C 75%, #2D2D2D 75%);
+        background-size: 8px 8px, 8px 8px, 16px 16px;
+    }
+
+    .racing-stripes {
+        position: relative;
+    }
+
+    .racing-stripes::before,
+    .racing-stripes::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent, #FFD700, transparent);
+        opacity: 0.6;
+    }
+
+    .racing-stripes::before {
+        left: 25%;
+    }
+
+    .racing-stripes::after {
+        right: 25%;
+    }
+
+    .f1-typography {
+        font-family: 'Orbitron', monospace;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .f1-body-text {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.025em;
+    }
+
+    .racing-text {
+        font-family: 'Racing Sans One', cursive;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .sponsor-logo {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        background: linear-gradient(45deg, #FFD700, #DC143C);
+        border-radius: 50%;
+        opacity: 0.7;
+    }
+
+    .pit-stop-modal {
+        background: linear-gradient(135deg, #1C1C1C 0%, #DC143C 50%, #1C1C1C 100%);
+        border: 3px solid #FFD700;
+        box-shadow:
+            0 0 30px rgba(220, 20, 60, 0.5),
+            inset 0 0 30px rgba(255, 215, 0, 0.1);
+        position: relative;
+    }
+
+    .pit-stop-modal::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(45deg, #DC143C, #FFD700, #DC143C, #FFD700);
+        border-radius: inherit;
+        z-index: -1;
+        animation: checkered-wave 2s linear infinite;
+    }
+
+    .championship-progress {
+        background: linear-gradient(135deg, #1C1C1C 0%, #2B4562 50%, #1C1C1C 100%);
+        border: 2px solid #C0C0C0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .championship-progress::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+        animation: f1-speed 2s ease-in-out infinite;
+    }
+
     .animate-shake {
         animation: shake 0.5s;
     }
@@ -170,6 +324,137 @@ html {
 @media (max-width: 768px) {
     .hero-text {
         font-size: clamp(3rem, 8vw, 5rem);
+    }
+
+    /* F1 Mobile Optimizations */
+    .f1-card {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .f1-input {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+
+    .f1-typography {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .racing-stripes::before,
+    .racing-stripes::after {
+        width: 1px;
+        opacity: 0.4;
+    }
+
+    .sponsor-logo {
+        width: 16px;
+        height: 16px;
+        top: 4px;
+        right: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .f1-card {
+        padding: 0.75rem;
+        margin: 0.25rem;
+    }
+
+    .f1-panel {
+        padding: 1rem;
+    }
+
+    .carbon-fiber {
+        background-size: 4px 4px, 4px 4px, 8px 8px;
+    }
+
+    .f1-typography {
+        font-size: clamp(1.25rem, 5vw, 1.75rem);
+        letter-spacing: 0.025em;
+    }
+
+    .f1-body-text {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .f1-card {
+        padding: 1.5rem;
+    }
+
+    .f1-input {
+        font-size: 1.125rem;
+        padding: 1rem;
+    }
+
+    .racing-stripes::before {
+        left: 20%;
+    }
+
+    .racing-stripes::after {
+        right: 20%;
+    }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1440px) {
+    .f1-card {
+        padding: 2rem;
+    }
+
+    .f1-typography {
+        font-size: clamp(2rem, 3vw, 3rem);
+    }
+
+    .sponsor-logo {
+        width: 32px;
+        height: 32px;
+        top: 12px;
+        right: 12px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .f1-card {
+        border-width: 3px;
+        box-shadow:
+            0 0 30px rgba(220, 20, 60, 0.6),
+            inset 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+
+    .f1-input {
+        border-width: 3px;
+    }
+
+    .f1-input:focus {
+        box-shadow:
+            0 0 20px rgba(220, 20, 60, 0.8),
+            inset 0 0 15px rgba(255, 215, 0, 0.2);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .championship-progress::before {
+        animation: none;
+    }
+
+    .pit-stop-modal::before {
+        animation: none;
+    }
+
+    .f1-speed,
+    .f1-drift,
+    .checkered-wave,
+    .pit-stop,
+    .victory-celebration,
+    .engine-rev {
+        animation: none;
     }
 }
 

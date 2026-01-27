@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import RippleButton from '../RippleButton'
+import F1Button from '../F1Button'
 import { useMotion } from '../../context/MotionContext'
 import { useProgress } from '../../context/ProgressContext'
 import { logSubmission } from '../../utils/adminLogger'
@@ -181,8 +181,8 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         >
           🏆
         </motion.div>
-        <h3 className="text-2xl font-bold text-green-400 mb-2">Problem Solved!</h3>
-        <p className="text-purple-300">You've already conquered this coding challenge.</p>
+        <h3 className="text-2xl font-bold text-green-400 mb-2">Racing Challenge Mastered!</h3>
+        <p className="text-purple-300">You've already conquered this championship challenge.</p>
       </div>
     )
   }
@@ -206,10 +206,10 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
             {question.difficulty}
           </span>
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-blue-600/20 text-blue-300">
-            LeetCode Style
+            Championship Style
           </span>
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-purple-600/20 text-purple-300">
-            No Time Limit
+            No Lap Time Limit
           </span>
           {hasBeenAttempted && !isAlreadySolved && (
             <span className="px-3 py-1 rounded-full text-sm font-semibold bg-orange-600/20 text-orange-300">
@@ -226,12 +226,12 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.2 }}
         className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl p-6 border border-blue-400/30"
       >
-        <h3 className="text-xl font-semibold text-white mb-4">Problem Description</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">Racing Challenge Description</h3>
         <p className="text-lg text-blue-100 leading-relaxed mb-4">{question.description}</p>
         
         {/* Examples */}
         <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-blue-300">Examples:</h4>
+          <h4 className="text-lg font-semibold text-blue-300">Racing Examples:</h4>
           {question.examples.map((example, index) => (
             <div key={index} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600/50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -272,23 +272,20 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         transition={{ delay: 0.4 }}
         className="bg-gray-900 rounded-xl p-4 border border-gray-600"
       >
-        <h3 className="text-lg font-semibold text-white mb-3">Choose Language:</h3>
+        <h3 className="text-lg font-semibold text-white mb-3">Choose Racing Language:</h3>
         <div className="flex gap-2 flex-wrap">
           {Object.keys(question.starterCode).map((lang) => (
-            <button
+            <F1Button
               key={lang}
               onClick={() => !isDisabled && handleLanguageChange(lang)}
               disabled={isDisabled}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                selectedLanguage === lang
-                  ? `bg-${getLanguageColor(lang)}-600 text-white border-2 border-${getLanguageColor(lang)}-400`
-                  : isDisabled
-                  ? 'bg-gray-700 text-gray-400 border-2 border-gray-600 cursor-not-allowed'
-                  : `bg-gray-700 hover:bg-${getLanguageColor(lang)}-700 text-gray-300 hover:text-white border-2 border-gray-600 hover:border-${getLanguageColor(lang)}-400`
+              className={`px-4 py-2 rounded-lg font-semibold ${
+                selectedLanguage === lang ? '' : 'opacity-70'
               }`}
+              variant={selectedLanguage === lang ? 'pit_stop' : 'normal'}
             >
               {getLanguageIcon(lang)} {lang.toUpperCase()}
-            </button>
+            </F1Button>
           ))}
         </div>
       </motion.div>
@@ -301,25 +298,23 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         className="bg-gray-900 rounded-xl p-4 border border-gray-600"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-white">Code Editor</h3>
+          <h3 className="text-lg font-semibold text-white">Race Setup Editor</h3>
           <div className="flex gap-2">
-            <button
+            <F1Button
               onClick={() => setShowHints(!showHints)}
-              className="px-3 py-1 bg-yellow-600/20 hover:bg-yellow-600/30 text-yellow-300 rounded-lg text-sm transition-colors"
+              className="px-3 py-1 rounded-lg text-sm"
+              variant="pit_stop"
             >
               💡 {showHints ? 'Hide' : 'Show'} Hints
-            </button>
-            <button
+            </F1Button>
+            <F1Button
               onClick={handleReset}
               disabled={isDisabled}
-              className={`px-3 py-1 rounded-lg text-sm transition-colors ${
-                isDisabled
-                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                  : 'bg-gray-700 hover:bg-gray-600 text-white'
-              }`}
+              className="px-3 py-1 rounded-lg text-sm"
+              variant="normal"
             >
               🔄 Reset
-            </button>
+            </F1Button>
           </div>
         </div>
 
@@ -332,7 +327,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
               exit={{ opacity: 0, height: 0 }}
               className="mb-4 bg-yellow-900/20 border border-yellow-500/50 rounded-lg p-4"
             >
-              <h4 className="text-yellow-300 font-semibold mb-2">💡 Hints:</h4>
+              <h4 className="text-yellow-300 font-semibold mb-2">💡 Pit Crew Hints:</h4>
               <ul className="list-disc list-inside space-y-1">
                 {question.hints.map((hint, index) => (
                   <li key={index} className="text-yellow-200 text-sm">{hint}</li>
@@ -361,7 +356,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
             className={`w-full h-64 p-4 bg-black text-green-400 font-mono text-sm resize-none focus:outline-none ${
               isDisabled ? 'cursor-not-allowed opacity-50' : ''
             }`}
-            placeholder="Write your solution here..."
+            placeholder="Write your racing strategy here..."
             spellCheck={false}
           />
         </div>
@@ -375,7 +370,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
           transition={{ delay: 0.8 }}
           className="text-center pt-4"
         >
-          <RippleButton
+          <F1Button
             onClick={handleSubmit}
             disabled={isDisabled || isSubmitting || code.trim() === ''}
             className={`px-8 py-4 text-xl font-bold rounded-xl transition-all duration-300 ${
@@ -383,14 +378,15 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
                 ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg shadow-blue-500/25'
             }`}
+            variant="victory"
           >
             {isDisabled 
-              ? `Wait ${timeoutCountdown}s...` 
+              ? `Pit Stop ${timeoutCountdown}s...` 
               : isSubmitting 
-              ? '🔄 Running Tests...' 
-              : '🚀 Submit Solution'
+              ? '🔄 Running Race Tests...' 
+              : '🚀 Submit Racing Strategy'
             }
-          </RippleButton>
+          </F1Button>
         </motion.div>
       )}
 
@@ -414,19 +410,19 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
               <h3 className={`text-2xl font-bold mb-2 ${
                 isCorrect ? 'text-green-400' : 'text-red-400'
               }`}>
-                {isCorrect ? 'Solution Accepted!' : 'Solution Failed'}
+                {isCorrect ? 'Championship Performance!' : 'DNF - Did Not Finish!'}
               </h3>
               <p className={`text-lg ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                 {isCorrect 
-                  ? 'Excellent work! Your solution passed all test cases. Moving to next problem...' 
-                  : `Your solution didn't pass all test cases. ${timeoutCountdown > 0 ? `You can try again in ${timeoutCountdown} seconds.` : 'Review your logic and try again!'}`
+                  ? 'Excellent racecraft! Your strategy passed all race tests. Advancing to next challenge...' 
+                  : `Your racing strategy didn't pass all tests. ${timeoutCountdown > 0 ? `You can return to track in ${timeoutCountdown} seconds.` : 'Review your strategy and race again!'}`
                 }
               </p>
             </div>
 
             {/* Test Results */}
             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-600/50 mb-4">
-              <h4 className="text-lg font-semibold text-white mb-2">Test Results:</h4>
+              <h4 className="text-lg font-semibold text-white mb-2">Race Test Results:</h4>
               {submissionError ? (
                 <div className="bg-red-900/20 text-red-300 p-3 rounded">
                   <strong>Error:</strong> {submissionError}
@@ -440,7 +436,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
                       <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
                         {isCorrect ? '✓' : '✗'}
                       </span>
-                      <span className="text-sm">Test Case {index + 1}</span>
+                      <span className="text-sm">Race Test {index + 1}</span>
                       <span className="text-xs opacity-75">
                         {isCorrect ? 'Passed' : 'Failed'}
                       </span>
@@ -448,7 +444,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
                   ))}
                   {!isCorrect && !submissionError && (
                     <div className="text-red-300 text-sm mt-2">
-                      Some test cases failed. Check your logic and try again.
+                      Some race tests failed. Check your strategy and race again.
                     </div>
                   )}
                 </div>
@@ -460,7 +456,7 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
               <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 mt-4">
                 <div className="text-red-400 text-2xl mb-2 text-center">⏱️</div>
                 <p className="text-red-300 font-semibold text-center">
-                  Please wait {timeoutCountdown} seconds before trying again
+                  Please wait {timeoutCountdown} seconds before returning to track
                 </p>
                 <div className="w-full bg-red-900/50 rounded-full h-2 mt-3">
                   <motion.div
@@ -475,15 +471,16 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
             {/* Try Again Button */}
             {!isCorrect && timeoutCountdown === 0 && !isDisabled && (
               <div className="text-center mt-4">
-                <RippleButton
+                <F1Button
                   onClick={() => {
                     setShowResult(false)
                     setIsCorrect(false)
                   }}
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-semibold"
+                  variant="normal"
                 >
-                  🔄 Try Again
-                </RippleButton>
+                  🔄 Return to Track
+                </F1Button>
               </div>
             )}
           </motion.div>
@@ -499,9 +496,9 @@ const DSARound = ({ question, onSolved, isAlreadySolved }) => {
         >
           <div className="text-center">
             <div className="text-red-400 text-6xl mb-4">⏱️</div>
-            <h3 className="text-2xl font-bold text-red-400 mb-2">Solution Failed</h3>
+            <h3 className="text-2xl font-bold text-red-400 mb-2">Racing Strategy Failed</h3>
             <p className="text-red-300 font-semibold mb-4">
-              Please wait {timeoutCountdown} seconds before trying again
+              Please wait {timeoutCountdown} seconds before returning to track
             </p>
             <div className="w-full bg-red-900/50 rounded-full h-3">
               <motion.div

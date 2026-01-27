@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useProgress } from '../context/ProgressContext'
+import F1Button from '../components/F1Button'
 import { 
   subscribeToSubmissions, 
   subscribeToUsers, 
@@ -151,11 +152,12 @@ const AdminPage = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700 max-w-md w-full mx-4"
+          className="f1-panel backdrop-blur-lg rounded-2xl p-8 border max-w-md w-full mx-4 racing-stripes"
         >
+          <div className="sponsor-logo"></div>
           <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-white mb-2">🔐 Admin Access</h1>
-            <p className="text-gray-300">Enter admin password to continue</p>
+            <h1 className="text-3xl font-bold text-white mb-2 f1-typography">🔐 Pit Lane Access</h1>
+            <p className="text-gray-300 f1-body-text">Enter admin credentials to continue</p>
           </div>
           
           <div className="space-y-4">
@@ -165,15 +167,16 @@ const AdminPage = () => {
               value={adminPassword}
               onChange={(e) => setAdminPassword(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-3 f1-input rounded-lg placeholder-gray-400"
             />
             
-            <button
+            <F1Button
               onClick={handleLogin}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+              className="w-full py-3 rounded-lg font-semibold"
+              variant="pit_stop"
             >
               Login to Admin Panel
-            </button>
+            </F1Button>
           </div>
           
           <p className="text-xs text-gray-500 mt-4 text-center">
@@ -203,7 +206,7 @@ const AdminPage = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <button
+              <F1Button
                 onClick={() => {
                   if (confirm('Clear all tracking data? This cannot be undone.')) {
                     // Clear both Firebase and localStorage
@@ -218,41 +221,43 @@ const AdminPage = () => {
                     loadAdminData()
                   }
                 }}
-                className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors"
+                className="px-3 py-1 text-sm rounded"
+                variant="penalty"
               >
                 Clear Local Data
-              </button>
-              <button
+              </F1Button>
+              <F1Button
                 onClick={() => setIsAuthenticated(false)}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-sm"
+                variant="normal"
               >
                 Logout
-              </button>
+              </F1Button>
             </div>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex space-x-1 bg-gray-800/30 rounded-lg p-1 mb-6">
+      <div className="max-w-7xl mx-auto px-2 md:px-4 py-6">
+        <div className="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1 bg-gray-800/30 rounded-lg p-1 mb-6">
           {[
             { id: 'overview', label: '📊 Overview', icon: '📊' },
             { id: 'submissions', label: '📝 Submissions', icon: '📝' },
             { id: 'users', label: '👥 Users', icon: '👥' },
             { id: 'analytics', label: '📈 Analytics', icon: '📈' }
           ].map((tab) => (
-            <button
+            <F1Button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                activeTab === tab.id
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+              className={`flex-1 py-2 px-2 md:px-4 rounded-md text-xs md:text-sm font-medium ${
+                activeTab === tab.id ? '' : 'opacity-70'
               }`}
+              variant={activeTab === tab.id ? 'pit_stop' : 'normal'}
             >
-              {tab.label}
-            </button>
+              <span className="sm:hidden">{tab.icon}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
+            </F1Button>
           ))}
         </div>
 
