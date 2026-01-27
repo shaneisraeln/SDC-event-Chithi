@@ -38,7 +38,7 @@ This document outlines the requirements for transforming the existing robot-them
 1. WHEN a user's avatar is displayed THEN the F1_System SHALL show a Driver_Avatar wearing F1 racing gear including helmet and racing suit
 2. WHEN user progress is shown THEN the F1_System SHALL use Racing_Terminology such as "lap times," "pole position," and "championship points"
 3. WHEN user achievements are displayed THEN the F1_System SHALL present them as racing trophies, podium finishes, and championship titles
-4. WHEN the user interacts with the system THEN the F1_System SHALL provide audio-visual feedback using F1 racing sounds and effects
+4. WHEN the user interacts with the system THEN the F1_System SHALL provide visual feedback using F1 racing effects and animations
 
 ### Requirement 3
 

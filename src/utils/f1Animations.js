@@ -406,24 +406,20 @@ export const F1AnimationUtils = {
         const lines = []
         for (let i = 0; i < count; i++) {
             lines.push({
-                initial: direction === 'horizontal' ?
-                    {
-                        x: 0,
-                        opacity: 0
-                    } :
-                    {
-                        y: 0,
-                        opacity: 0
-                    },
-                animate: direction === 'horizontal' ?
-                    {
-                        x: -window.innerWidth - 100,
-                        opacity: [0, 0.6, 0]
-                    } :
-                    {
-                        y: window.innerHeight + 100,
-                        opacity: [0, 0.6, 0]
-                    },
+                initial: direction === 'horizontal' ? {
+                    x: 0,
+                    opacity: 0
+                } : {
+                    y: 0,
+                    opacity: 0
+                },
+                animate: direction === 'horizontal' ? {
+                    x: -window.innerWidth - 100,
+                    opacity: [0, 0.6, 0]
+                } : {
+                    y: window.innerHeight + 100,
+                    opacity: [0, 0.6, 0]
+                },
                 transition: {
                     duration: 0.8,
                     delay: i * 0.05,
@@ -506,44 +502,7 @@ export const F1AnimationUtils = {
     }
 }
 
-// F1 sound effect triggers (for use with Web Audio API)
-export const F1_SOUND_TRIGGERS = {
-    ENGINE_REV: {
-        frequency: {
-            start: 200,
-            end: 400
-        },
-        duration: 0.1,
-        volume: 0.1
-    },
-
-    TIRE_SCREECH: {
-        frequency: {
-            start: 800,
-            end: 200
-        },
-        duration: 0.2,
-        volume: 0.1
-    },
-
-    VICTORY_HORN: {
-        frequency: {
-            start: 400,
-            end: 600
-        },
-        duration: 0.5,
-        volume: 0.15
-    },
-
-    PIT_RADIO: {
-        frequency: {
-            start: 300,
-            end: 300
-        },
-        duration: 0.1,
-        volume: 0.08
-    }
-}
+// F1 sound triggers removed - audio system disabled
 
 export default {
     F1_ANIMATION_PRESETS,
@@ -551,6 +510,5 @@ export default {
     F1_LOADING_ANIMATIONS,
     F1_HOVER_EFFECTS,
     F1_VICTORY_ANIMATIONS,
-    F1AnimationUtils,
-    F1_SOUND_TRIGGERS
+    F1AnimationUtils
 }

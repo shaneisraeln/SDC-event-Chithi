@@ -7,7 +7,7 @@
 
 
   - Create F1 theme configuration system with racing color palettes and typography
-  - Set up F1 asset directories for images, sounds, and racing graphics
+  - Set up F1 asset directories for images and racing graphics
   - Update Tailwind config with F1 color schemes (racing red, carbon fiber black, championship gold)
   - Create F1 theme context provider for consistent theming across components
   - _Requirements: 1.3, 3.5_
@@ -55,7 +55,6 @@
 
 
   - Style buttons with metallic finishes and racing stripes
-  - Add F1 sound effects (engine revs, tire screech on hover)
   - Implement racing-themed hover effects and animations
   - Create different button states (normal, pit_stop, victory, penalty)
   - _Requirements: 3.1, 2.4, 5.3_
@@ -126,11 +125,11 @@
   - **Property 8: F1 Animation Triggers**
   - **Validates: Requirements 5.1**
 
-- [x] 5.3 Add F1 audio system and sound effects
-  - Integrate F1 racing sounds (engine revs, tire screeches, pit radio)
-  - Add audio feedback for user interactions and achievements
-  - Implement racing celebration sounds for success states
-  - Create audio fallback system for missing sound files
+- [x] 5.3 F1 visual effects and animations (audio removed)
+  - Implement F1 racing visual effects and animations
+  - Add visual feedback for user interactions and achievements
+  - Implement racing celebration animations for success states
+  - Create visual fallback system for enhanced user experience
   - _Requirements: 2.4_
 
 - [x] 6. Update progress and achievement systems

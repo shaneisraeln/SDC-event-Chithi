@@ -3,15 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
 import F1DriverAvatar from '../components/F1DriverAvatar'
 import F1Button from '../components/F1Button'
-import F1AudioControls from '../components/F1AudioControls'
 import { useMotion } from '../context/MotionContext'
-import { useF1Audio } from '../context/F1AudioContext'
 import { logPageView } from '../utils/adminLogger'
 
 const LandingPage = () => {
   const navigate = useNavigate()
   const { reducedMotion, toggleReducedMotion } = useMotion()
-  const { playVictoryCelebration } = useF1Audio()
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
   
@@ -183,7 +180,7 @@ Join the elite ranks of racing developers who combine technical mastery with the
           >
             <F1Button
               onClick={() => {
-                playVictoryCelebration()
+                // Audio removed - visual effects only
                 navigate('/dashboard')
               }}
               className="px-12 py-6 text-2xl font-bold bg-gradient-to-r from-red-600 to-yellow-600 
@@ -220,8 +217,7 @@ Join the elite ranks of racing developers who combine technical mastery with the
                 <span>Reduce Motion</span>
               </label>
               
-              {/* F1 Audio Controls */}
-              <F1AudioControls />
+              {/* Audio controls removed - visual F1 theme only */}
             </motion.div>
           </motion.div>
         </motion.div>

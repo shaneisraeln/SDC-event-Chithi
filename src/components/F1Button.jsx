@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState, useRef } from 'react'
 import { useMotion } from '../context/MotionContext'
-import { useF1Audio } from '../context/F1AudioContext'
 import { F1_COLORS } from '../config/f1Theme'
 
 const F1Button = ({ 
@@ -16,7 +15,6 @@ const F1Button = ({
   const [ripples, setRipples] = useState([])
   const [isHovered, setIsHovered] = useState(false)
   const { reducedMotion } = useMotion()
-  const { playButtonHover, playEngineRev, playTireScreech, playVictoryHorn } = useF1Audio()
   const audioRef = useRef()
 
   // F1 button variants with different styling
@@ -45,33 +43,10 @@ const F1Button = ({
 
   const currentVariant = variants[variant] || variants.normal
 
+  // F1 visual effects only (audio removed)
   const playF1Sound = async (soundType) => {
-    if (!playSound || reducedMotion) return
-    
-    try {
-      switch (soundType) {
-        case 'hover':
-          await playButtonHover()
-          break
-        case 'click':
-          switch (variant) {
-            case 'victory':
-              await playVictoryHorn()
-              break
-            case 'pit_stop':
-              await playTireScreech(200)
-              break
-            default:
-              await playEngineRev('low')
-          }
-          break
-        default:
-          await playButtonHover()
-      }
-    } catch (error) {
-      // Fallback for browsers that don't support Web Audio API
-      console.log(`F1 sound effect would play here: ${soundType}`)
-    }
+    // Audio system removed - visual effects only
+    console.log(`F1 visual effect: ${soundType}`)
   }
 
   const handleMouseEnter = () => {

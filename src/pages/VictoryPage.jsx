@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../context/ProgressContext'
 import { useMotion } from '../context/MotionContext'
-import { useF1Audio } from '../context/F1AudioContext'
 import F1DriverAvatar from '../components/F1DriverAvatar'
 import { transformToF1Progress, getChampionshipMessage } from '../utils/f1AchievementSystem'
 
@@ -11,7 +10,6 @@ const VictoryPage = () => {
   const navigate = useNavigate()
   const { progress } = useProgress()
   const { reducedMotion } = useMotion()
-  const { playVictoryCelebration, playCheckeredFlag, playEngineRev } = useF1Audio()
   const [password, setPassword] = useState('')
   const [showError, setShowError] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
@@ -34,10 +32,10 @@ const VictoryPage = () => {
     if (password.toUpperCase() === correctPassword) {
       setShowError(false)
       setStage('unlocking')
-      playEngineRev('high')
+      // Audio removed - visual effects only
       setTimeout(() => {
         setStage('victory')
-        playVictoryCelebration()
+        // Audio removed - visual effects only
       }, 3000)
     } else {
       setShowError(true)
