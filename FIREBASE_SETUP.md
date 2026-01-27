@@ -6,7 +6,7 @@ The admin dashboard now supports real-time multi-device tracking using Firebase 
 
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Click "Create a project" or "Add project"
-3. Enter project name: `chitti-challenge` (or your preferred name)
+3. Enter project name: `code-prix` (or your preferred name)
 4. Enable Google Analytics (optional)
 5. Create project
 
@@ -22,7 +22,7 @@ The admin dashboard now supports real-time multi-device tracking using Firebase 
 1. Go to Project Settings (gear icon)
 2. Scroll down to "Your apps" section
 3. Click "Web" icon (</>) to add a web app
-4. Register app with name: `chitti-challenge-web`
+4. Register app with name: `code-prix-web`
 5. Copy the Firebase configuration object
 
 ## 4. Add Environment Variables
@@ -69,7 +69,7 @@ service cloud.firestore {
 
 1. Start your development server: `npm run dev`
 2. Navigate to a challenge and submit some code
-3. Go to `/admin-dashboard` and login with password: `chitti-admin-2024`
+3. Go to `/admin-dashboard` and login with password: `code-prix-admin-2024`
 4. You should see "🔥 Firebase Real-time" in the header if connected
 5. Open another browser/device and submit code - it should appear in real-time
 

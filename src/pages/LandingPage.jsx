@@ -35,6 +35,22 @@ const LandingPage = () => {
           transition={{ duration: 1.2, type: "spring", bounce: 0.4 }}
           className="mb-8"
         >
+          {/* Code Prix Logo */}
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            <img 
+              src="/code-prix-logo.png" 
+              alt="Code Prix Logo" 
+              className="w-32 h-16 mx-auto object-contain"
+              style={{
+                filter: 'drop-shadow(0 0 20px rgba(220, 20, 60, 0.5))'
+              }}
+            />
+          </motion.div>
           <F1DriverAvatar size="large" team="FERRARI" driverNumber={1} />
         </motion.div>
 
@@ -58,9 +74,9 @@ const LandingPage = () => {
             } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           >
-            RACE
+            CODE
             <br />
-            <span className="text-6xl md:text-7xl">TO</span>
+            <span className="text-6xl md:text-7xl">PRIX</span>
           </motion.h1>
 
           <motion.p
@@ -69,7 +85,7 @@ const LandingPage = () => {
             transition={{ delay: 1, duration: 0.6 }}
             className="text-2xl md:text-3xl text-red-200 font-light tracking-wide"
           >
-            POLE POSITION
+            THE ULTIMATE LAP
           </motion.p>
         </motion.div>
 
@@ -108,7 +124,7 @@ const LandingPage = () => {
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            Welcome to the F1 Racing Academy
+            Welcome to Code Prix
           </motion.h2>
           
           <motion.p
@@ -117,7 +133,7 @@ const LandingPage = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-xl md:text-2xl text-red-100 leading-relaxed mb-8"
           >
-            The F1 Racing Academy is where coding meets the high-octane world of Formula 1 racing. Experience the thrill of championship competition as you navigate through coding challenges designed to test your speed, precision, and strategic thinking.
+            Code Prix: The Ultimate Lap is where coding meets the high-octane world of Formula 1 racing. Experience the thrill of championship competition as you navigate through coding challenges designed to test your speed, precision, and strategic thinking.
 
 Join the elite ranks of racing developers who combine technical mastery with the relentless pursuit of pole position. From qualifying rounds to championship victories, every challenge brings you closer to becoming a coding champion worthy of the podium.
           </motion.p>

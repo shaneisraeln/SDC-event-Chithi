@@ -21,7 +21,7 @@ const AdminPage = () => {
 
   // Simple admin authentication
   const handleLogin = () => {
-    if (adminPassword === 'chitti-admin-2024') {
+    if (adminPassword === 'code-prix-admin-2024') {
       setIsAuthenticated(true)
       loadAdminData()
     } else {
@@ -179,9 +179,7 @@ const AdminPage = () => {
             </F1Button>
           </div>
           
-          <p className="text-xs text-gray-500 mt-4 text-center">
-            Password: chitti-admin-2024
-          </p>
+
         </motion.div>
       </div>
     )
@@ -194,7 +192,7 @@ const AdminPage = () => {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white">🛠️ Chitti Challenge Admin</h1>
+              <h1 className="text-2xl font-bold text-white">🛠️ Code Prix Admin</h1>
               <div className="flex items-center space-x-2">
                 <p className="text-gray-400 text-sm">
                   {isFirebaseConnected ? '🔥 Firebase Real-time' : '💾 localStorage Fallback'}

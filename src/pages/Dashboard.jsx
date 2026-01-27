@@ -168,7 +168,7 @@ const Dashboard = () => {
             <F1DriverAvatar size="medium" interactive={true} team="MCLAREN" driverNumber={44} />
             <div>
               <h1 className="text-6xl font-bold bg-gradient-to-r from-red-400 via-yellow-400 to-red-400 bg-clip-text text-transparent mb-2">
-                RACING CHAMPIONSHIP
+                CODE PRIX CHAMPIONSHIP
               </h1>
               <p className="text-xl text-red-300">
                 5 Circuits • 28 Challenges • 1 Championship Title

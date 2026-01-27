@@ -10,12 +10,12 @@ export const useMotion = () => {
 
 export const MotionProvider = ({ children }) => {
   const [reducedMotion, setReducedMotion] = useState(() => {
-    const saved = localStorage.getItem('chitti-reduced-motion')
+    const saved = localStorage.getItem('code-prix-reduced-motion')
     return saved === 'true'
   })
 
   useEffect(() => {
-    localStorage.setItem('chitti-reduced-motion', reducedMotion)
+    localStorage.setItem('code-prix-reduced-motion', reducedMotion)
   }, [reducedMotion])
 
   const toggleReducedMotion = () => {

@@ -1,38 +1,46 @@
-# Chitti Challenge - Battle of Intelligence
+# Code Prix: The Ultimate Lap
 
-A fully functional challenge web application where users compete against Chitti the Robot in a 5-level DSA storyline with reactive UI elements, multi-language autograder, and cinematic story modals.
+A fully functional F1-themed challenge web application where users compete in a championship-style coding competition through 5 racing circuits with reactive UI elements, multi-language autograder, and cinematic F1 story modals.
 
 ## 🆕 Latest Updates (v3.0)
 
+### 🏎️ **F1 Racing Theme Transformation**
+- ✨ **Complete visual overhaul** from robot theme to Formula 1 racing
+- 🏁 **F1 Driver Avatar** with team colors and racing numbers  
+- 🏆 **Racing terminology** throughout the application
+- ⚡ **F1 animations** and speed effects
+- 🏁 **Championship progression** system
+- 🏎️ **Racing circuit backgrounds** and track elements
+
+### 💻 **Technical Enhancements**
 - ✨ **Full Multi-Language Support**: JavaScript, Python, C, C++, and Java
 - 🔧 **Complete Compiler Integration** with proper struct/class definitions
 - 🎯 **Simplified Problem Set** with easier, more approachable challenges
 - 🌳 **Data Structure Problems** including Linked Lists and Binary Trees
 - 🐛 **Bug Fixes** for C compilation issues and struct redefinitions
-- 🎨 **Improved Visual Effects** with gradients and animations
 
 ## Features
 
 ### 🎨 UI/UX
-- **Modern cinematic interface** with purple + black palette
-- **Neon glow accents** and holographic elements
+- **Modern F1 racing interface** with red, yellow, and black F1 palette
+- **Racing-themed glow effects** and speed elements
 - **Cursor-reactive elements**:
   - Cursor-hover glow on cards and tiles
   - Particle trail following cursor
   - Parallax background layers
   - Element tilt on hover (3D transform)
   - Ripple effects on button clicks
-- **Chitti avatar** with reactive animations
+- **F1 Driver Avatar** with team colors and racing numbers
 - **Accessibility**: Motion reduction toggle
 - **Fully responsive** design
 
-### 🎮 Gameplay
-- **5 levels** with increasing difficulty
-- **15 DSA problems** total (1+2+3+4+5 questions)
+### 🏁 Gameplay
+- **5 racing circuits** with increasing difficulty
+- **28 coding challenges** total across all circuits
 - **No login required** - progress stored in localStorage
-- **Story modals** after each level completion
-- **Clue collection** system (T-R-A-C-E)
-- **Final password challenge**
+- **F1 story modals** after each circuit completion
+- **Championship clue collection** system (T-R-A-C-E)
+- **Final championship password challenge**
 
 ### 💻 Code Editor
 - **Monaco editor** integration
@@ -118,10 +126,10 @@ Navigate to `http://localhost:5173` in your browser
 ## Project Structure
 
 ```
-chitti-challenge/
+code-prix/
 ├── src/
 │   ├── components/
-│   │   ├── ChittiAvatar.jsx       # Animated robot avatar
+│   │   ├── F1DriverAvatar.jsx      # F1 racing driver avatar
 │   │   ├── CodeEditor.jsx         # Monaco editor integration
 │   │   ├── CursorTrail.jsx        # Cursor particle effects
 │   │   ├── FinalPasswordModal.jsx # Final challenge modal
@@ -339,7 +347,9 @@ colors: {
 ## Progress Management
 
 ### localStorage Keys
-- `chitti-progress`: Stores all progress data
+- `code-prix-progress`: Stores all championship progress data
+- `code-prix-reduced-motion`: Motion preference setting
+- `code-prix-f1-theme`: F1 theme customization settings
 - `chitti-reduced-motion`: Motion preference
 
 ### Export/Import

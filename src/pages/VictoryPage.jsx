@@ -296,7 +296,7 @@ const VictoryPage = () => {
                   transition={{ delay: 1.5 }}
                 >
                   The path you TRACED has led you to victory. 
-                  You are now among the elite who have defeated Chitti's challenge.
+                  You are now among the elite who have conquered the ultimate racing championship.
                 </motion.p>
               </motion.div>
 

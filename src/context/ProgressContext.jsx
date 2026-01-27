@@ -11,7 +11,7 @@ export const useProgress = () => {
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(() => {
     try {
-      const saved = localStorage.getItem('chitti-progress')
+      const saved = localStorage.getItem('code-prix-progress')
       const defaultProgress = {
         completedLevels: [],
         solvedQuestions: {},
@@ -49,7 +49,7 @@ export const ProgressProvider = ({ children }) => {
   })
 
   useEffect(() => {
-    localStorage.setItem('chitti-progress', JSON.stringify(progress))
+    localStorage.setItem('code-prix-progress', JSON.stringify(progress))
   }, [progress])
 
   const markQuestionSolved = (levelId, questionId) => {
@@ -138,7 +138,7 @@ export const ProgressProvider = ({ children }) => {
       questionAttempts: {}
     }
     setProgress(emptyProgress)
-    localStorage.setItem('chitti-progress', JSON.stringify(emptyProgress))
+    localStorage.setItem('code-prix-progress', JSON.stringify(emptyProgress))
   }
 
   const exportProgress = () => {
@@ -147,7 +147,7 @@ export const ProgressProvider = ({ children }) => {
     const url = URL.createObjectURL(dataBlob)
     const link = document.createElement('a')
     link.href = url
-    link.download = 'chitti-progress.json'
+    link.download = 'code-prix-progress.json'
     link.click()
   }
 

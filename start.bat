@@ -1,15 +1,15 @@
 @echo off
 echo ========================================
-echo   Chitti Challenge - Starting Servers
+echo   Code Prix - Starting Servers
 echo ========================================
 echo.
 
 echo [1/2] Starting Backend Server...
-start "Chitti Backend" cmd /k "npm run server"
+start "Code Prix Backend" cmd /k "npm run server"
 timeout /t 3 /nobreak > nul
 
 echo [2/2] Starting Frontend Server...
-start "Chitti Frontend" cmd /k "npm run dev"
+start "Code Prix Frontend" cmd /k "npm run dev"
 
 echo.
 echo ========================================

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "========================================"
-echo "  Chitti Challenge - Starting Servers"
+echo "  Code Prix - Starting Servers"
 echo "========================================"
 echo ""
 

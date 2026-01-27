@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('🔍 Chitti Challenge - Setup Verification\n');
+console.log('🔍 Code Prix - Setup Verification\n');
 console.log('========================================\n');
 
 let errors = 0;

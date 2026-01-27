@@ -14,13 +14,13 @@ export const useF1Theme = () => {
 export const F1ThemeProvider = ({ children }) => {
   // Initialize theme from localStorage or use default
   const [f1Theme, setF1Theme] = useState(() => {
-    const savedTheme = localStorage.getItem('chitti-f1-theme')
+    const savedTheme = localStorage.getItem('code-prix-f1-theme')
     return savedTheme ? JSON.parse(savedTheme) : DEFAULT_F1_THEME
   })
 
   // Persist theme changes to localStorage
   useEffect(() => {
-    localStorage.setItem('chitti-f1-theme', JSON.stringify(f1Theme))
+    localStorage.setItem('code-prix-f1-theme', JSON.stringify(f1Theme))
   }, [f1Theme])
 
   // Update team selection

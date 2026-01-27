@@ -1,8 +1,8 @@
 # Public Assets
 
-## Chitti Logo
+## Code Prix Logo
 
-Please save the purple robot logo image as `chitti-logo.png` in this directory.
+Please save the F1-themed gradient logo image as `code-prix-logo.png` in this directory.
 
 The logo should be:
 - Purple robot mascot with neon glow
